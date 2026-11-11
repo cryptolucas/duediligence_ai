@@ -58,7 +58,9 @@ Para probar la carga de archivos propios con documentos reales del caso demo (XL
 | GET | `/api/benchmarks` | Benchmarks por CIIU |
 | GET | `/api/deals` | Lista de operaciones con KPIs |
 | GET | `/api/deals/{id}` | Expediente, cálculos del motor, memo renderizado, bitácora y chat |
-| POST | `/api/deals/upload` | Multipart: `files[]` (PDF/XLSX/CSV), `llm_mode` (`CLOUD_API`/`LOCAL_OLLAMA`), o `use_demo=true` |
+| POST | `/api/deals/upload` | `use_demo=true` → 201 con el expediente. Archivos (`files[]` PDF/XLSX/CSV + `llm_mode`) → se validan y parsean al instante y responde **202** con el estado del job; el grafo corre en segundo plano |
+| GET | `/api/deals/{id}/status` | Progreso del job: nodo actual, % (nodos completados), llamadas LLM, eventos, error |
+| GET | `/api/jobs` | Procesamientos en curso o fallidos |
 | POST | `/api/deals/{id}/recalculate` | Toggles de ajustes, ajustes manuales, descartar red flags; recálculo determinista |
 | POST | `/api/deals/{id}/chat` | Preguntas sobre fuentes y simulación de escenarios |
 
@@ -74,7 +76,9 @@ Para probar la carga de archivos propios con documentos reales del caso demo (XL
 Si se pide `LOCAL_OLLAMA` y Ollama no responde, el deal **nunca** se envía a la nube: cae a `RULES_FALLBACK`.
 Si el modelo de `OLLAMA_MODEL` no está descargado, se usa el primero instalado (ver `GET /api/llm/status`), con
 una ventana de contexto de `OLLAMA_NUM_CTX` (32.768 por defecto). Con un modelo de 8B en CPU/GPU modesta, cada
-llamada puede tardar minutos; el procesamiento completo de un deal es síncrono y puede tomar bastante tiempo.
+llamada puede tardar minutos. Por eso el procesamiento de documentos propios es asíncrono: la carga responde de
+inmediato y `/deals/[id]` muestra el avance nodo por nodo (LangGraph en modo streaming), incluida cada llamada al LLM.
+Si el servidor se reinicia a mitad de un procesamiento, el job queda marcado como fallido al arrancar.
 
 ### Piezas clave
 

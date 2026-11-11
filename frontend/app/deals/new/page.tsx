@@ -54,8 +54,8 @@ export default function NewDealPage() {
     setBusy("upload");
     setError(null);
     try {
-      const view = await api.uploadDeal(files, mode, hints);
-      router.push(`/deals/${view.dossier.deal_id}`);
+      const job = await api.uploadDeal(files, mode, hints);
+      router.push(`/deals/${job.deal_id}`);
     } catch (e) {
       setError((e as ApiError).message);
       setBusy(null);
@@ -232,11 +232,11 @@ export default function NewDealPage() {
 
           <Button onClick={upload} disabled={busy !== null || files.length === 0} className="w-full">
             {busy === "upload" ? <Loader2 className="animate-spin" /> : <Upload />}
-            {busy === "upload" ? "Procesando con el grafo de agentes…" : `Generar expediente (${files.length} archivo${files.length === 1 ? "" : "s"})`}
+            {busy === "upload" ? "Leyendo y validando archivos…" : `Generar expediente (${files.length} archivo${files.length === 1 ? "" : "s"})`}
           </Button>
-          {busy === "upload" && (
-            <p className="text-center text-xs text-muted-foreground">Con LLM puede tardar varios minutos. No cierre esta pestaña.</p>
-          )}
+          <p className="text-center text-xs text-muted-foreground">
+            El grafo de agentes corre en segundo plano y verá su progreso paso a paso.
+          </p>
         </CardContent>
       </Card>
     </main>

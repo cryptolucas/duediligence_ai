@@ -35,6 +35,7 @@ STATEMENT_PAGE_RE = re.compile(
     r"estado\s+de\s+situaci[óo]n\s+financiera|balance\s+general|estado\s+de\s+resultados", re.IGNORECASE
 )
 YEAR_RE = re.compile(r"(?<!\d)(20\d{2})(?!\d)")
+LLM_REVIEW_BELOW_CONFIDENCE = 0.9
 
 
 class IngestionError(ValueError):
@@ -44,7 +45,13 @@ class IngestionError(ValueError):
 def _llm_review_categories(
     rows: Sequence[TrialBalanceRow], runtime: AgentRuntime, log_notes: list[str]
 ) -> dict[str, tuple[str, str, float]]:
-    """Pide al LLM revisar la categoría de cada cuenta. Devuelve {row_key: (categoría, rationale, confianza)}."""
+    """Pide al LLM revisar solo las cuentas ambiguas. Devuelve {row_key: (categoría, rationale, confianza)}.
+
+    Las cuentas cuya regla PUC es inequívoca (confianza >= LLM_REVIEW_BELOW_CONFIDENCE: caja, clientes,
+    inventarios, ingresos, costo de ventas...) no se envían: el prompt es más corto y barato, y viable con
+    modelos locales lentos.
+    """
+    rows = [r for r in rows if rule_based_mapping(r.code, r.name).confidence < LLM_REVIEW_BELOW_CONFIDENCE]
     if not runtime.uses_llm or not rows:
         return {}
     reviewed: dict[str, tuple[str, str, float]] = {}
@@ -253,6 +260,21 @@ def map_pdf_statements(
     return accounts, unreadable
 
 
+NO_FINANCIALS_MESSAGE = (
+    "No se encontraron cifras financieras legibles. Cargue el balance de prueba (XLSX/CSV) o active un LLM "
+    "para leer los estados financieros en PDF."
+)
+
+
+def precheck_ingestable(parsed: Sequence[ParsedDocument], uses_llm: bool) -> Optional[str]:
+    """Validación rápida antes de encolar: ¿hay algo de lo que el ingestor pueda extraer cifras?"""
+    if any(r.display_value for p in parsed for r in p.trial_balance_rows):
+        return None
+    if uses_llm and _statement_lines([p.source for p in parsed]):
+        return None
+    return NO_FINANCIALS_MESSAGE
+
+
 def run_ingestor(parsed: Sequence[ParsedDocument], runtime: AgentRuntime) -> dict:
     timer = NodeTimer("node_ingestor_and_puc_mapper", runtime.effective_mode)
     calls_before = getattr(runtime.llm, "calls", 0)
@@ -274,10 +296,7 @@ def run_ingestor(parsed: Sequence[ParsedDocument], runtime: AgentRuntime) -> dic
         notes.extend(p.warnings)
     mapped = [a for a in accounts if a.standard_category != "UNMAPPED"]
     if not mapped:
-        raise IngestionError(
-            "No se encontraron cifras financieras legibles. Cargue el balance de prueba (XLSX/CSV) o active un LLM "
-            "para leer los estados financieros en PDF."
-        )
+        raise IngestionError(NO_FINANCIALS_MESSAGE)
     periods = sorted({a.period for a in accounts})
     return {
         "documents": documents,

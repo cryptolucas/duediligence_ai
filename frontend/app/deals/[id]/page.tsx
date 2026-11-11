@@ -7,7 +7,8 @@ import { AlertTriangle, FileText, Loader2, ShieldAlert, SlidersHorizontal } from
 import { api, ApiError } from "@/lib/api";
 import { buildCitationIndex } from "@/lib/citations";
 import type { DisplayUnit } from "@/lib/format";
-import type { DealView, RecalculateRequest, SourceCitation } from "@/lib/types";
+import type { DealView, JobStatus, RecalculateRequest, SourceCitation } from "@/lib/types";
+import { ProcessingView } from "@/components/processing-view";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChatPanel } from "@/components/workspace/chat-panel";
@@ -19,6 +20,7 @@ import { RedFlagsTab } from "@/components/workspace/redflags-tab";
 import { type InspectorState, WorkspaceContext, type WorkspaceContextValue } from "@/components/workspace/workspace-context";
 
 const DEFAULT_TRM = 4000;
+const POLL_MS = 1500;
 
 export default function DealWorkspacePage() {
   const { id } = useParams<{ id: string }>();
@@ -32,11 +34,35 @@ export default function DealWorkspacePage() {
   const [lastRecalcMs, setLastRecalcMs] = useState<number | null>(null);
   const [extraCitations, setExtraCitations] = useState<SourceCitation[]>([]);
 
+  const [job, setJob] = useState<JobStatus | null>(null);
+
+  // Si el deal sigue procesándose en segundo plano, se consulta su estado hasta que termine.
   useEffect(() => {
-    api
-      .getDeal(id)
-      .then(setView)
-      .catch((e: ApiError) => setError(e.message));
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    async function poll() {
+      try {
+        const status = await api.getStatus(id);
+        if (cancelled) return;
+        if (status.status === "DONE") {
+          const loaded = await api.getDeal(id);
+          if (!cancelled) {
+            setView(loaded);
+            setJob(null);
+          }
+          return;
+        }
+        setJob(status);
+        if (status.status !== "FAILED") timer = setTimeout(poll, POLL_MS);
+      } catch (e) {
+        if (!cancelled) setError((e as ApiError).message);
+      }
+    }
+    poll();
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
   }, [id]);
 
   const citationIndex = useMemo(
@@ -99,6 +125,7 @@ export default function DealWorkspacePage() {
       </main>
     );
   }
+  if (!view && job) return <ProcessingView job={job} />;
   if (!view) {
     return (
       <main className="flex h-[calc(100vh-3rem)] items-center justify-center gap-2 text-sm text-muted-foreground">

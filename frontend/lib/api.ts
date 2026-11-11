@@ -2,6 +2,7 @@ import type {
   ChatResponse,
   DealSummary,
   DealView,
+  JobStatus,
   LlmStatus,
   RecalculateRequest,
   RecalculateResponse,
@@ -50,13 +51,16 @@ export const api = {
     form.append("use_demo", "true");
     return request<DealView>("/api/deals/upload", { method: "POST", body: form });
   },
+  /** Valida y parsea los archivos; el grafo de agentes sigue en segundo plano (202 + estado del job). */
   uploadDeal: (files: File[], llmMode: "CLOUD_API" | "LOCAL_OLLAMA", hints: { company_name?: string; nit?: string; ciiu_code?: string }) => {
     const form = new FormData();
     files.forEach((f) => form.append("files", f));
     form.append("llm_mode", llmMode);
     Object.entries(hints).forEach(([k, v]) => v && form.append(k, v));
-    return request<DealView>("/api/deals/upload", { method: "POST", body: form });
+    return request<JobStatus>("/api/deals/upload", { method: "POST", body: form });
   },
+  getStatus: (id: string) => request<JobStatus>(`/api/deals/${encodeURIComponent(id)}/status`),
+  listJobs: () => request<JobStatus[]>("/api/jobs"),
   recalculate: (id: string, body: RecalculateRequest) =>
     request<RecalculateResponse>(`/api/deals/${encodeURIComponent(id)}/recalculate`, json(body)),
   chat: (id: string, message: string) => request<ChatResponse>(`/api/deals/${encodeURIComponent(id)}/chat`, json({ message })),

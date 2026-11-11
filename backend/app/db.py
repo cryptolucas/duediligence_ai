@@ -32,6 +32,32 @@ class DealRecord(SQLModel, table=True):
     chat_json: str = Field(default="[]", sa_column=Column(Text, nullable=False))
 
 
+class DealJob(SQLModel, table=True):
+    """Estado del procesamiento asíncrono de una operación (grafo de agentes en segundo plano)."""
+
+    __tablename__ = "deal_jobs"
+
+    deal_id: str = Field(primary_key=True)
+    status: str  # QUEUED | RUNNING | DONE | FAILED
+    requested_mode: str
+    effective_mode: str
+    mode_reason: str = ""
+    document_names_json: str = Field(default="[]", sa_column=Column(Text, nullable=False))
+    current_node: Optional[str] = None
+    current_message: str = ""
+    completed_nodes_json: str = Field(default="[]", sa_column=Column(Text, nullable=False))
+    events_json: str = Field(default="[]", sa_column=Column(Text, nullable=False))
+    llm_calls: int = 0
+    error: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    finished_at: Optional[datetime] = None
+
+
+MAX_JOB_EVENTS = 60
+INTERRUPTED_MESSAGE = "El servidor se reinició mientras se procesaba la operación. Vuelva a cargar los documentos."
+
+
 def _now() -> datetime:
     return datetime.now(timezone.utc)
 
@@ -104,6 +130,69 @@ class DealRepository:
         with self._lock:
             self._cache[dossier.deal_id] = (record.updated_at, dossier.model_copy(deep=True))
         return record
+
+    # ------------------------------------------------------------------ jobs
+
+    def create_job(
+        self, deal_id: str, requested_mode: str, effective_mode: str, mode_reason: str, document_names: list[str]
+    ) -> DealJob:
+        now = _now()
+        job = DealJob(
+            deal_id=deal_id,
+            status="QUEUED",
+            requested_mode=requested_mode,
+            effective_mode=effective_mode,
+            mode_reason=mode_reason,
+            document_names_json=json.dumps(document_names, ensure_ascii=False),
+            current_message="En cola",
+            created_at=now,
+            updated_at=now,
+        )
+        with Session(self.engine) as session:
+            session.add(job)
+            session.commit()
+            session.refresh(job)
+        return job
+
+    def get_job(self, deal_id: str) -> Optional[DealJob]:
+        with Session(self.engine) as session:
+            return session.get(DealJob, deal_id)
+
+    def list_jobs(self, statuses: tuple[str, ...] = ("QUEUED", "RUNNING", "FAILED"), limit: int = 20) -> list[DealJob]:
+        with Session(self.engine) as session:
+            query = select(DealJob).where(DealJob.status.in_(statuses)).order_by(DealJob.created_at.desc()).limit(limit)
+            return list(session.exec(query))
+
+    def update_job(self, deal_id: str, *, event: Optional[dict] = None, completed_node: Optional[str] = None, **fields) -> None:
+        """Actualiza un job; ``event`` se agrega a la bitácora (últimos MAX_JOB_EVENTS)."""
+        with self._lock, Session(self.engine) as session:
+            job = session.get(DealJob, deal_id)
+            if job is None:
+                return
+            for key, value in fields.items():
+                setattr(job, key, value)
+            if completed_node:
+                done = json.loads(job.completed_nodes_json)
+                if completed_node not in done:
+                    done.append(completed_node)
+                job.completed_nodes_json = json.dumps(done)
+            if event is not None:
+                events = json.loads(job.events_json)
+                events.append({"at": _now().isoformat(), **event})
+                job.events_json = json.dumps(events[-MAX_JOB_EVENTS:], ensure_ascii=False, default=str)
+            job.updated_at = _now()
+            if fields.get("status") in ("DONE", "FAILED"):
+                job.finished_at = job.updated_at
+            session.add(job)
+            session.commit()
+
+    def fail_interrupted_jobs(self) -> int:
+        """Al arrancar: los jobs que quedaron en curso murieron con el proceso anterior."""
+        count = 0
+        for job in self.list_jobs(("QUEUED", "RUNNING"), limit=1000):
+            self.update_job(job.deal_id, status="FAILED", error=INTERRUPTED_MESSAGE, current_message="Interrumpido")
+            count += 1
+        return count
 
     def append_chat(self, deal_id: str, entries: list[dict]) -> None:
         with Session(self.engine) as session:

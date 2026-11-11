@@ -6,7 +6,9 @@ Endpoints:
     GET  /api/benchmarks                  Benchmarks sectoriales por CIIU.
     GET  /api/deals                       Lista de operaciones.
     GET  /api/deals/{deal_id}             Expediente completo + cálculos + memo renderizado.
-    POST /api/deals/upload                Procesa documentos (PDF/XLSX/CSV) o inicializa el caso demo.
+    POST /api/deals/upload                Caso demo (201, síncrono) o documentos PDF/XLSX/CSV (202, en segundo plano).
+    GET  /api/deals/{deal_id}/status      Progreso del grafo de agentes (nodo actual, llamadas LLM, eventos).
+    GET  /api/jobs                        Procesamientos en curso o fallidos.
     POST /api/deals/{deal_id}/recalculate Toggles de ajustes/red flags y recálculo determinista instantáneo.
     POST /api/deals/{deal_id}/chat        Chat con el expediente (fuentes y escenarios).
 """
@@ -20,21 +22,27 @@ import time
 import uuid
 from typing import Callable, List, Optional
 
-from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from datetime import datetime, timezone
+
+from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app import __version__
-from app.agents.graph import run_deal_pipeline
-from app.agents.ingestor import IngestionError
+from app.agents.graph import NODE_LABELS, NODE_SEQUENCE, run_deal_pipeline
+from app.agents.ingestor import IngestionError, precheck_ingestable
 from app.core.config import Settings
-from app.db import DealRecord, DealRepository
+from app.db import DealJob, DealRecord, DealRepository
 from app.schemas.api import (
     ChatRequest,
     ChatResponse,
     DealSummary,
     DealView,
+    JobStatus,
     LlmStatus,
     ManualAdjustmentInput,
+    PipelineStep,
     RecalculateRequest,
     RecalculateResponse,
 )
@@ -49,6 +57,11 @@ from app.services.memo_renderer import render_memo
 
 MAX_FILE_BYTES = 25 * 1024 * 1024
 LlmResolver = Callable[[str, Settings], LLMResolution]
+
+
+def _utc(dt: datetime) -> datetime:
+    """SQLite devuelve datetimes sin zona: se interpretan como UTC."""
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
 
 
 def _safe_filename(name: str) -> str:
@@ -67,6 +80,7 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
     )
     app.state.settings = settings
     app.state.repo = DealRepository(settings.database_url)
+    app.state.repo.fail_interrupted_jobs()
     app.state.llm_resolver = llm_resolver or resolve_llm
 
     # ------------------------------------------------------------------ utilidades
@@ -150,33 +164,172 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
             )
         return summaries
 
+    def build_job_status(job: DealJob) -> JobStatus:
+        completed = json.loads(job.completed_nodes_json)
+        steps = []
+        for node, _ in NODE_SEQUENCE:
+            if node in completed:
+                state = "done"
+            elif node == job.current_node and job.status == "FAILED":
+                state = "failed"
+            elif node == job.current_node and job.status == "RUNNING":
+                state = "running"
+            else:
+                state = "pending"
+            steps.append(PipelineStep(node=node, label=NODE_LABELS[node], state=state))
+        progress = 100 if job.status == "DONE" else int(len(completed) * 100 / len(NODE_SEQUENCE))
+        end = _utc(job.finished_at) if job.finished_at else datetime.now(timezone.utc)
+        return JobStatus(
+            deal_id=job.deal_id,
+            status=job.status,  # type: ignore[arg-type]
+            requested_mode=job.requested_mode,
+            effective_mode=job.effective_mode,
+            mode_reason=job.mode_reason,
+            document_names=json.loads(job.document_names_json),
+            progress_pct=progress,
+            current_node=job.current_node,
+            current_message=job.current_message,
+            steps=steps,
+            events=json.loads(job.events_json),
+            llm_calls=job.llm_calls,
+            error=job.error,
+            created_at=job.created_at,
+            updated_at=job.updated_at,
+            finished_at=job.finished_at,
+            elapsed_s=round((end - _utc(job.created_at)).total_seconds(), 1),
+        )
+
+    def run_job(deal_id: str, parsed: list, resolution: LLMResolution, requested_mode: str, hints: dict, storage) -> None:
+        """Ejecuta el grafo en segundo plano y deja el progreso en la tabla deal_jobs."""
+        r: DealRepository = app.state.repo
+        started = time.perf_counter()
+        r.update_job(
+            deal_id,
+            status="RUNNING",
+            current_message="Iniciando el grafo de agentes…",
+            event={"type": "info", "message": resolution.reason},
+        )
+
+        def on_progress(event: dict) -> None:
+            fields: dict = {"current_message": event.get("message", ""), "llm_calls": getattr(resolution.client, "calls", 0)}
+            if event["type"] == "node_started":
+                fields["current_node"] = event["node"]
+            r.update_job(
+                deal_id,
+                event=event,
+                completed_node=event["node"] if event["type"] == "node_finished" else None,
+                **fields,
+            )
+
+        try:
+            dossier, _, log = run_deal_pipeline(
+                deal_id=deal_id,
+                effective_mode=resolution.effective_mode,
+                benchmarks=load_benchmarks(),
+                llm=resolution.client,
+                parsed_documents=parsed,
+                company_hints=hints,
+                on_progress=on_progress,
+            )
+            calls = getattr(resolution.client, "calls", 0)
+            elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
+            log.insert(0, {"node": "llm_resolution", "mode": resolution.effective_mode, "duration_ms": 0, "llm_calls": 0, "message": resolution.reason})
+            log.append(
+                {
+                    "node": "pipeline",
+                    "mode": resolution.effective_mode,
+                    "duration_ms": elapsed_ms,
+                    "llm_calls": calls,
+                    "message": f"Expediente generado a partir de {len(parsed)} documento(s).",
+                }
+            )
+            r.create(dossier, requested_mode, resolution.reason, log)
+            r.update_job(
+                deal_id,
+                status="DONE",
+                current_node=None,
+                current_message="Expediente listo",
+                llm_calls=calls,
+                event={"type": "done", "message": f"Expediente listo en {elapsed_ms / 1000:.1f} s."},
+            )
+        except Exception as exc:  # noqa: BLE001 - cualquier fallo queda registrado en el job
+            message = str(exc) if isinstance(exc, IngestionError) else f"{type(exc).__name__}: {exc}"
+            r.update_job(deal_id, status="FAILED", error=message, current_message="Error", event={"type": "error", "message": message})
+            shutil.rmtree(storage, ignore_errors=True)
+
+    @app.get("/api/jobs", response_model=List[JobStatus])
+    def list_jobs(request: Request) -> List[JobStatus]:
+        return [build_job_status(job) for job in repo(request).list_jobs()]
+
+    @app.get("/api/deals/{deal_id}/status", response_model=JobStatus)
+    def deal_status(deal_id: str, request: Request) -> JobStatus:
+        job = repo(request).get_job(deal_id)
+        if job is not None:
+            return build_job_status(job)
+        record = repo(request).get_record(deal_id)
+        if record is None:
+            raise HTTPException(status_code=404, detail=f"Operación {deal_id} no encontrada.")
+        # Deals sin job (caso demo): procesados de forma síncrona.
+        return JobStatus(
+            deal_id=deal_id,
+            status="DONE",
+            requested_mode=record.requested_mode,
+            effective_mode=record.llm_mode,
+            mode_reason=record.mode_reason,
+            document_names=[],
+            progress_pct=100,
+            current_node=None,
+            current_message="Expediente listo",
+            steps=[PipelineStep(node=n, label=NODE_LABELS[n], state="done") for n, _ in NODE_SEQUENCE],
+            events=[],
+            llm_calls=0,
+            error=None,
+            created_at=record.created_at,
+            updated_at=record.updated_at,
+            finished_at=record.created_at,
+            elapsed_s=0.0,
+        )
+
     @app.get("/api/deals/{deal_id}", response_model=DealView)
     def get_deal(deal_id: str, request: Request) -> DealView:
-        return build_view(request, get_record_or_404(request, deal_id))
+        record = repo(request).get_record(deal_id)
+        if record is None:
+            job = repo(request).get_job(deal_id)
+            if job is not None and job.status in ("QUEUED", "RUNNING"):
+                raise HTTPException(status_code=409, detail="La operación aún se está procesando.")
+            if job is not None and job.status == "FAILED":
+                raise HTTPException(status_code=409, detail=f"El procesamiento falló: {job.error}")
+            raise HTTPException(status_code=404, detail=f"Operación {deal_id} no encontrada.")
+        return build_view(request, record)
 
-    @app.post("/api/deals/upload", response_model=DealView, status_code=201)
+    @app.post(
+        "/api/deals/upload",
+        response_model=None,
+        responses={201: {"model": DealView, "description": "Caso demo listo"}, 202: {"model": JobStatus, "description": "Procesamiento en curso"}},
+    )
     def upload_deal(
         request: Request,
+        background_tasks: BackgroundTasks,
         files: List[UploadFile] = File(default=[]),
         llm_mode: str = Form("CLOUD_API"),
         use_demo: bool = Form(False),
         company_name: Optional[str] = Form(None),
         nit: Optional[str] = Form(None),
         ciiu_code: Optional[str] = Form(None),
-    ) -> DealView:
+    ) -> JSONResponse:
+        """Caso demo: síncrono (201 + expediente). Archivos propios: se validan y parsean de inmediato y el
+        grafo de agentes corre en segundo plano (202 + estado); el progreso se consulta en /status."""
         s: Settings = request.app.state.settings
-        benchmarks_data = load_benchmarks()
-        started = time.perf_counter()
 
         if use_demo:
             deal_id = f"demo-{uuid.uuid4().hex[:10]}"
             seed = load_demo_dossier()
             dossier, _, log = run_deal_pipeline(
-                deal_id=deal_id, effective_mode="SEED_FALLBACK", benchmarks=benchmarks_data, seed=seed
+                deal_id=deal_id, effective_mode="SEED_FALLBACK", benchmarks=load_benchmarks(), seed=seed
             )
             reason = "Caso demo precargado (Alimentos y Conservas del Oriente S.A.S.); cifras recalculadas por el motor."
             record = repo(request).create(dossier, "SEED_FALLBACK", reason, log)
-            return build_view(request, record)
+            return JSONResponse(status_code=201, content=jsonable_encoder(build_view(request, record)))
 
         if llm_mode not in ("CLOUD_API", "LOCAL_OLLAMA"):
             raise HTTPException(status_code=422, detail="llm_mode debe ser CLOUD_API o LOCAL_OLLAMA.")
@@ -211,40 +364,18 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
             raise HTTPException(status_code=422, detail=f"No se pudo leer un archivo: {type(exc).__name__}: {exc}") from exc
 
         resolution: LLMResolution = request.app.state.llm_resolver(llm_mode, s)
-        hints = {"company_name": company_name, "nit": nit, "ciiu_code": ciiu_code}
-        try:
-            dossier, _, log = run_deal_pipeline(
-                deal_id=deal_id,
-                effective_mode=resolution.effective_mode,
-                benchmarks=benchmarks_data,
-                llm=resolution.client,
-                parsed_documents=parsed,
-                company_hints={k: v for k, v in hints.items() if v},
-            )
-        except IngestionError as exc:
+        problem = precheck_ingestable(parsed, resolution.client is not None)
+        if problem:
             shutil.rmtree(storage, ignore_errors=True)
-            raise HTTPException(status_code=422, detail=str(exc)) from exc
-        log.insert(
-            0,
-            {
-                "node": "llm_resolution",
-                "mode": resolution.effective_mode,
-                "duration_ms": 0,
-                "llm_calls": 0,
-                "message": resolution.reason,
-            },
+            raise HTTPException(status_code=422, detail=problem)
+        hints = {"company_name": company_name, "nit": nit, "ciiu_code": ciiu_code}
+        job = repo(request).create_job(
+            deal_id, llm_mode, resolution.effective_mode, resolution.reason, [p.source.document_name for p in parsed]
         )
-        log.append(
-            {
-                "node": "pipeline",
-                "mode": resolution.effective_mode,
-                "duration_ms": round((time.perf_counter() - started) * 1000, 2),
-                "llm_calls": getattr(resolution.client, "calls", 0),
-                "message": f"Expediente generado a partir de {len(parsed)} documento(s).",
-            }
+        background_tasks.add_task(
+            run_job, deal_id, parsed, resolution, llm_mode, {k: v for k, v in hints.items() if v}, storage
         )
-        record = repo(request).create(dossier, llm_mode, resolution.reason, log)
-        return build_view(request, record)
+        return JSONResponse(status_code=202, content=jsonable_encoder(build_job_status(job)))
 
     def _manual_adjustment(dossier: DealDossier, item: ManualAdjustmentInput) -> EbitdaAdjustment:
         if item.period not in dossier.periods:

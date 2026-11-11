@@ -40,6 +40,7 @@ class Settings:
     llm_timeout_s: float
     api_keys: dict[str, str] = field(default_factory=dict)
     ollama_num_ctx: int = 32768
+    ollama_timeout_s: float = 1800.0
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -58,6 +59,8 @@ class Settings:
             llm_timeout_s=float(os.environ.get("LLM_TIMEOUT_S", "600")),
             api_keys=keys,
             ollama_num_ctx=int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
+            # Los modelos locales son mucho más lentos: con 600 s el memo de qwen3:8b expiraba en CPU/GPU modesta.
+            ollama_timeout_s=float(os.environ.get("OLLAMA_TIMEOUT_S", "1800")),
         )
 
     def cloud_model(self) -> Optional[str]:

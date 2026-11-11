@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import operator
 from functools import lru_cache
-from typing import Annotated, Any, Mapping, Optional, Sequence, TypedDict
+from typing import Annotated, Any, Callable, Mapping, Optional, Sequence, TypedDict
 
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, StateGraph
@@ -208,6 +208,48 @@ def build_graph():
     return graph.compile()
 
 
+NODE_LABELS = {
+    "node_ingestor_and_puc_mapper": "Ingesta y mapeo PUC",
+    "node_financial_and_legal_analyst": "Analista financiero y societario",
+    "node_deterministic_financial_engine": "Motor financiero determinista",
+    "node_skeptic_red_team": "Agente escéptico (red team)",
+    "node_ic_memo_writer": "Redactor del memo de Comité",
+}
+LLM_TASK_LABELS = {
+    "ingestor.accounts": "clasificando cuentas del balance de prueba",
+    "ingestor.statements": "leyendo estados financieros en PDF",
+    "analyst": "analizando notas, certificado y teaser",
+    "skeptic": "atacando la tesis de inversión",
+    "memo_writer": "redactando el memo",
+}
+
+ProgressCallback = Callable[[dict], None]
+
+
+class ProgressReportingLLM:
+    """Envuelve el cliente LLM para reportar cada llamada (útil con modelos locales lentos)."""
+
+    def __init__(self, inner: StructuredLLM, emit: ProgressCallback):
+        self._inner = inner
+        self._emit = emit
+        self.mode = inner.mode
+        self.model = inner.model
+
+    @property
+    def calls(self) -> int:
+        return self._inner.calls
+
+    def complete_json(self, system, user, schema, *, deal_id, task):
+        self._emit(
+            {
+                "type": "llm_call",
+                "task": task,
+                "message": f"Llamada {self._inner.calls + 1} al LLM ({self.model}): {LLM_TASK_LABELS.get(task, task)}…",
+            }
+        )
+        return self._inner.complete_json(system, user, schema, deal_id=deal_id, task=task)
+
+
 def run_deal_pipeline(
     *,
     deal_id: str,
@@ -218,10 +260,18 @@ def run_deal_pipeline(
     seed: Optional[DealDossier] = None,
     company_hints: Optional[dict] = None,
     created_at=None,
+    on_progress: Optional[ProgressCallback] = None,
 ) -> tuple[DealDossier, FinancialEngineResult, list[dict]]:
-    """Ejecuta el grafo completo para una operación y devuelve el expediente validado."""
+    """Ejecuta el grafo completo para una operación y devuelve el expediente validado.
+
+    ``on_progress`` recibe eventos ``node_started`` / ``node_finished`` / ``llm_call`` mientras el grafo
+    avanza (LangGraph en modo streaming), para mostrar el progreso de procesamientos largos.
+    """
     from datetime import datetime, timezone
 
+    emit: ProgressCallback = on_progress or (lambda event: None)
+    if llm is not None and on_progress is not None:
+        llm = ProgressReportingLLM(llm, emit)  # type: ignore[assignment]
     runtime = AgentRuntime(deal_id=deal_id, effective_mode=effective_mode, benchmarks=benchmarks, llm=llm)
     initial: DealDossierState = {
         "deal_id": deal_id,
@@ -231,7 +281,20 @@ def run_deal_pipeline(
         "seed": seed,
         "processing_log": [],
     }
-    final = build_graph().invoke(initial, config={"configurable": {"runtime": runtime}})
+    order = [name for name, _ in NODE_SEQUENCE]
+    final: dict[str, Any] = dict(initial)
+    emit({"type": "node_started", "node": order[0], "message": f"{NODE_LABELS[order[0]]}…"})
+    for chunk in build_graph().stream(initial, config={"configurable": {"runtime": runtime}}, stream_mode="updates"):
+        for node, update in chunk.items():
+            update = update or {}
+            for key, value in update.items():
+                final[key] = final.get(key, []) + value if key == "processing_log" else value
+            log = update.get("processing_log") or [{}]
+            emit({"type": "node_finished", "node": node, "message": log[-1].get("message", "")})
+            position = order.index(node) if node in order else -1
+            if 0 <= position < len(order) - 1:
+                nxt = order[position + 1]
+                emit({"type": "node_started", "node": nxt, "message": f"{NODE_LABELS[nxt]}…"})
     company = final["company"]
     dossier = DealDossier(
         deal_id=deal_id,

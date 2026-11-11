@@ -380,6 +380,40 @@ export interface ChatResponse {
   mode: string;
 }
 
+export interface PipelineStep {
+  node: string;
+  label: string;
+  state: "pending" | "running" | "done" | "failed";
+}
+
+export interface JobEvent {
+  at: string;
+  type: "info" | "node_started" | "node_finished" | "llm_call" | "done" | "error";
+  node?: string;
+  task?: string;
+  message: string;
+}
+
+export interface JobStatus {
+  deal_id: string;
+  status: "QUEUED" | "RUNNING" | "DONE" | "FAILED";
+  requested_mode: string;
+  effective_mode: string;
+  mode_reason: string;
+  document_names: string[];
+  progress_pct: number;
+  current_node: string | null;
+  current_message: string;
+  steps: PipelineStep[];
+  events: JobEvent[];
+  llm_calls: number;
+  error: string | null;
+  created_at: string;
+  updated_at: string;
+  finished_at: string | null;
+  elapsed_s: number;
+}
+
 export interface LlmStatus {
   cloud_model: string | null;
   cloud_available: boolean;

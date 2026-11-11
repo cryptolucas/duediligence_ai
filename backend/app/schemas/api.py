@@ -101,6 +101,34 @@ class ChatResponse(BaseModel):
     mode: str
 
 
+class PipelineStep(BaseModel):
+    node: str
+    label: str
+    state: Literal["pending", "running", "done", "failed"]
+
+
+class JobStatus(BaseModel):
+    """Progreso del procesamiento asíncrono de una operación."""
+
+    deal_id: str
+    status: Literal["QUEUED", "RUNNING", "DONE", "FAILED"]
+    requested_mode: str
+    effective_mode: str
+    mode_reason: str
+    document_names: List[str]
+    progress_pct: int
+    current_node: Optional[str]
+    current_message: str
+    steps: List[PipelineStep]
+    events: List[dict]
+    llm_calls: int
+    error: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+    finished_at: Optional[datetime]
+    elapsed_s: float
+
+
 class LlmStatus(BaseModel):
     cloud_model: Optional[str]
     cloud_available: bool

@@ -150,7 +150,7 @@ def resolve_llm(requested_mode: str, settings: Settings) -> LLMResolution:
                 mode="LOCAL_OLLAMA",
                 model=model,
                 api_base=settings.ollama_base_url,
-                timeout_s=settings.llm_timeout_s,
+                timeout_s=settings.ollama_timeout_s,
                 # Ollama usa por defecto una ventana de contexto corta: se amplía para notas y balances completos.
                 extra_params={"num_ctx": settings.ollama_num_ctx},
             )

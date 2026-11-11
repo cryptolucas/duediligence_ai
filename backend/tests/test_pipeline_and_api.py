@@ -183,7 +183,7 @@ def test_llm_mode_guards_against_hallucinations(demo_files):
     dossier, result, log = run_deal_pipeline(
         deal_id="deal-llm", effective_mode="CLOUD_API", benchmarks=load_benchmarks(), llm=llm, parsed_documents=parse_demo_files(demo_files)
     )
-    assert llm.calls == 6  # cuentas, EEFF PDF, analista, escéptico, redactor (+1 lote de cuentas)
+    assert llm.calls == 5  # cuentas ambiguas, EEFF PDF, analista, escéptico, redactor
     assert all(deal_id == "deal-llm" for _, deal_id, _ in llm.prompts)  # aislamiento por operación
     adjustments = {a.title: a for a in dossier.ebitda_adjustments}
     # Ajuste válido: monto convertido de miles a COP por código, no por el LLM
@@ -348,26 +348,91 @@ def test_chat_finds_sources(client, demo_deal):
     assert "COP 28.150 M" in summary["answer_markdown"]
 
 
-def test_upload_real_files_rules_mode(client, demo_files):
+def upload_demo_files(client, demo_files, mode="CLOUD_API"):
     files = [("files", (name, (demo_files / name).read_bytes())) for name in DEMO_FILE_IDS]
-    response = client.post("/api/deals/upload", data={"llm_mode": "LOCAL_OLLAMA"}, files=files)
-    assert response.status_code == 201, response.text
-    view = response.json()
+    return client.post("/api/deals/upload", data={"llm_mode": mode}, files=files)
+
+
+def test_upload_real_files_runs_in_background_with_progress(client, demo_files):
+    response = upload_demo_files(client, demo_files, "LOCAL_OLLAMA")
+    assert response.status_code == 202, response.text
+    accepted = response.json()
+    deal_id = accepted["deal_id"]
+    assert deal_id.startswith("deal-")
+    assert accepted["effective_mode"] == "RULES_FALLBACK" and "confidencialidad" in accepted["mode_reason"]
+    assert len(accepted["document_names"]) == 6
+    # TestClient ejecuta la tarea de fondo antes de devolver la respuesta: el job ya terminó.
+    status = client.get(f"/api/deals/{deal_id}/status").json()
+    assert status["status"] == "DONE" and status["progress_pct"] == 100
+    assert [s["state"] for s in status["steps"]] == ["done"] * 5
+    kinds = [e["type"] for e in status["events"]]
+    assert kinds[0] == "info" and kinds[-1] == "done"
+    assert kinds.count("node_started") == 5 and kinds.count("node_finished") == 5
+    view = client.get(f"/api/deals/{deal_id}").json()
     assert view["dossier"]["llm_mode"] == "RULES_FALLBACK"
     assert view["requested_mode"] == "LOCAL_OLLAMA"
-    assert "confidencialidad" in view["mode_reason"]
-    assert view["dossier"]["deal_id"].startswith("deal-")
     assert all(b["balance_check"]["is_balanced"] for b in view["financials"]["balance_sheet"])
     assert view["processing_log"][0]["node"] == "llm_resolution"
+    assert client.get("/api/jobs").json() == []  # solo lista jobs en curso o fallidos
+
+
+def test_failed_background_job_is_reported(settings, demo_files):
+    def boom(prompt):
+        raise RuntimeError("el modelo se cayó")
+
+    llm = FakeLLM({**_fake_handlers(), "analyst": boom})
+    client = TestClient(create_app(settings, llm_resolver=lambda mode, s: LLMResolution("CLOUD_API", llm, "fake")))
+    deal_id = upload_demo_files(client, demo_files).json()["deal_id"]
+    status = client.get(f"/api/deals/{deal_id}/status").json()
+    assert status["status"] == "FAILED"
+    assert "el modelo se cayó" in status["error"]
+    states = {s["node"]: s["state"] for s in status["steps"]}
+    assert states["node_ingestor_and_puc_mapper"] == "done"
+    assert states["node_financial_and_legal_analyst"] == "failed"
+    assert client.get(f"/api/deals/{deal_id}").status_code == 409
+    assert [j["deal_id"] for j in client.get("/api/jobs").json()] == [deal_id]
+    assert not (settings.storage_dir / "deals" / deal_id).exists()
+
+
+def test_interrupted_jobs_are_failed_on_restart(settings):
+    first = create_app(settings)
+    first.state.repo.create_job("deal-colgado", "CLOUD_API", "CLOUD_API", "x", ["a.pdf"])
+    client = TestClient(create_app(settings))  # "reinicio" del servidor con la misma base
+    status = client.get("/api/deals/deal-colgado/status").json()
+    assert status["status"] == "FAILED" and "reinició" in status["error"]
+
+
+def test_pipeline_emits_progress_and_llm_call_events(demo_files):
+    events = []
+    llm = FakeLLM(_fake_handlers())
+    run_deal_pipeline(
+        deal_id="deal-ev",
+        effective_mode="CLOUD_API",
+        benchmarks=load_benchmarks(),
+        llm=llm,
+        parsed_documents=parse_demo_files(demo_files),
+        on_progress=events.append,
+    )
+    started = [e["node"] for e in events if e["type"] == "node_started"]
+    finished = [e["node"] for e in events if e["type"] == "node_finished"]
+    assert started == finished == [n for n, _ in NODE_SEQUENCE]
+    llm_tasks = [e["task"] for e in events if e["type"] == "llm_call"]
+    assert llm_tasks == ["ingestor.accounts", "ingestor.statements", "analyst", "skeptic", "memo_writer"]
+    assert llm.calls == 5
+
+
+def test_deal_status_for_demo_and_unknown(client, demo_deal):
+    status = client.get(f"/api/deals/{demo_deal['dossier']['deal_id']}/status").json()
+    assert status["status"] == "DONE"
+    assert client.get("/api/deals/no-existe/status").status_code == 404
 
 
 def test_upload_with_fake_cloud_llm(settings, demo_files):
     llm = FakeLLM(_fake_handlers())
     app = create_app(settings, llm_resolver=lambda mode, s: LLMResolution("CLOUD_API", llm, "fake"))
     client = TestClient(app)
-    files = [("files", (name, (demo_files / name).read_bytes())) for name in DEMO_FILE_IDS]
-    view = client.post("/api/deals/upload", data={"llm_mode": "CLOUD_API"}, files=files).json()
-    deal_id = view["dossier"]["deal_id"]
+    deal_id = upload_demo_files(client, demo_files).json()["deal_id"]
+    view = client.get(f"/api/deals/{deal_id}").json()
     assert view["dossier"]["llm_mode"] == "CLOUD_API"
     ids = {f"doc_{i:02d}" for i in range(1, 7)}
     assert {d["document_id"][:6] for d in view["dossier"]["documents"]} == ids
@@ -397,3 +462,14 @@ def test_llm_status_and_health(client):
     assert client.get("/api/health").json()["status"] == "ok"
     status = client.get("/api/llm/status").json()
     assert status["cloud_available"] is False and status["ollama_available"] is False
+
+
+def test_only_ambiguous_accounts_are_sent_to_the_llm(demo_files):
+    llm = FakeLLM(_fake_handlers())
+    run_deal_pipeline(
+        deal_id="deal-amb", effective_mode="CLOUD_API", benchmarks=load_benchmarks(), llm=llm, parsed_documents=parse_demo_files(demo_files)
+    )
+    prompt = next(user for task, _, user in llm.prompts if task == "ingestor.accounts")
+    assert "código 1380 " in prompt and "código 2355 " in prompt  # deudores varios / deudas con socios: ambiguas
+    assert "código 1105 " not in prompt and "código 4120 " not in prompt and "código 6120 " not in prompt
+    assert len(row_ids(prompt)) < 60

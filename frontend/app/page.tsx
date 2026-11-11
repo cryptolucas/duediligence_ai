@@ -4,21 +4,41 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle2, FolderOpen, Loader2, Plus } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
-import type { DealSummary } from "@/lib/types";
+import type { DealSummary, JobStatus } from "@/lib/types";
 import { MODE_LABEL, moneyWithUnit } from "@/lib/format";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function HomePage() {
   const [deals, setDeals] = useState<DealSummary[] | null>(null);
+  const [jobs, setJobs] = useState<JobStatus[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    api
-      .listDeals()
-      .then(setDeals)
-      .catch((e: ApiError) => setError(e.message));
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let activeBefore = 0;
+    async function refresh() {
+      try {
+        const [list, pending] = await Promise.all([api.listDeals(), api.listJobs()]);
+        if (cancelled) return;
+        setDeals(list);
+        setJobs(pending);
+        const active = pending.filter((j) => j.status === "QUEUED" || j.status === "RUNNING").length;
+        // Mientras haya procesos en curso se refresca; al terminar uno aparece en la tabla.
+        if (active > 0 || activeBefore > 0) timer = setTimeout(refresh, 3000);
+        activeBefore = active;
+      } catch (e) {
+        if (!cancelled) setError((e as ApiError).message);
+      }
+    }
+    refresh();
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -39,6 +59,41 @@ export default function HomePage() {
         <Card className="mb-4 flex items-center gap-2 border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
           <AlertTriangle className="h-4 w-4" /> {error}
         </Card>
+      )}
+
+      {jobs.length > 0 && (
+        <section className="mb-5 space-y-2">
+          <h2 className="text-sm font-semibold">Procesamientos en curso o con error</h2>
+          <div className="grid gap-2 md:grid-cols-2">
+            {jobs.map((job) => {
+              const failed = job.status === "FAILED";
+              return (
+                <Link key={job.deal_id} href={`/deals/${job.deal_id}`}>
+                  <Card className={cn("space-y-2 p-3 transition-colors hover:bg-accent/40", failed && "border-destructive/40")}>
+                    <div className="flex items-center justify-between gap-2 text-sm">
+                      <span className="flex min-w-0 items-center gap-1.5 font-medium">
+                        {failed ? (
+                          <AlertTriangle className="h-4 w-4 shrink-0 text-destructive" />
+                        ) : (
+                          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-primary" />
+                        )}
+                        <span className="truncate">{job.document_names.join(", ") || job.deal_id}</span>
+                      </span>
+                      <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{failed ? "Error" : `${job.progress_pct} %`}</span>
+                    </div>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                      <div
+                        className={cn("h-full rounded-full", failed ? "bg-destructive" : "bg-primary")}
+                        style={{ width: `${failed ? 100 : Math.max(job.progress_pct, 3)}%` }}
+                      />
+                    </div>
+                    <p className="truncate text-xs text-muted-foreground">{failed ? job.error : job.current_message}</p>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
       )}
 
       {deals === null && !error && (
