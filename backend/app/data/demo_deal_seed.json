@@ -1,0 +1,3651 @@
+{
+  "deal_id": "demo-alimentos-conservas-oriente",
+  "created_at": "2026-11-10T12:00:00Z",
+  "llm_mode": "SEED_FALLBACK",
+  "company_name": "Alimentos y Conservas del Oriente S.A.S.",
+  "nit": "901.234.567-7",
+  "ciiu_code": "1020",
+  "city": "Rionegro, Antioquia",
+  "periods": [
+    "2023",
+    "2024",
+    "2025"
+  ],
+  "pre_closing_trial_balance_periods": [],
+  "documents": [
+    {
+      "document_id": "doc_bp_siigo",
+      "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+      "document_type": "TRIAL_BALANCE_XLSX",
+      "file_format": "XLSX",
+      "description": "Balances de prueba anuales exportados de Siigo Nube (pre-cierre), una hoja por año.",
+      "reported_units": "COP",
+      "pages": [
+        {
+          "page_or_sheet": "BP_2023",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nFila 2 | ALIMENTOS Y CONSERVAS DEL ORIENTE S.A.S. - NIT 901.234.567-7\nFila 3 | BALANCE DE PRUEBA POR CUENTA - 01/01/2023 A 31/12/2023 - Siigo Nube\nFila 4 | Saldos crédito presentados con signo negativo\nFila 6 | Código | Nombre cuenta | Saldo final\nFila 7 | 1105 | Caja | 30.000.000,00\nFila 8 | 1110 | Bancos | 594.000.000,00\nFila 9 | 1305 | Clientes | 3.260.000.000,00\nFila 10 | 1330 | Anticipos y avances | 130.000.000,00\nFila 11 | 1355 | Anticipo de impuestos y contribuciones | 260.000.000,00\nFila 12 | 1380 | Deudores varios | 90.000.000,00\nFila 13 | 1399 | Deterioro de deudores (CR) | -115.000.000,00\nFila 14 | 1405 | Materias primas | 1.050.000.000,00\nFila 15 | 1430 | Productos terminados | 1.620.000.000,00\nFila 16 | 1455 | Materiales, repuestos y accesorios (envases) | 330.000.000,00\nFila 17 | 1504 | Terrenos | 1.200.000.000,00\nFila 18 | 1516 | Construcciones y edificaciones | 2.800.000.000,00\nFila 19 | 1520 | Maquinaria y equipo | 5.700.000.000,00\nFila 20 | 1540 | Flota y equipo de transporte | 980.000.000,00\nFila 21 | 1592 | Depreciación acumulada (CR) | -3.520.000.000,00\nFila 22 | 1635 | Licencias | 120.000.000,00\nFila 23 | 1910 | Valorizaciones de propiedades planta y equipo | 350.000.000,00\nFila 24 | 21051001 | Pagarés entidades bancarias - corto plazo | -1.650.000.000,00\nFila 25 | 21051002 | Pagarés entidades bancarias - largo plazo | -2.700.000.000,00\nFila 26 | 2120 | Compañías de financiamiento (leasing) | -1.100.000.000,00\nFila 27 | 2205 | Proveedores nacionales | -2.240.000.000,00\nFila 28 | 2335 | Costos y gastos por pagar | -430.000.000,00\nFila 29 | 2355 | Deudas con accionistas o socios | -600.000.000,00\nFila 30 | 2365 | Retención en la fuente | -80.000.000,00\nFila 31 | 2404 | Impuesto de renta y complementarios por pagar | -390.000.000,00\nFila 32 | 2505 | Salarios por pagar | -95.000.000,00\nFila 33 | 2510 | Cesantías consolidadas | -210.000.000,00\nFila 34 | 2805 | Anticipos y avances recibidos | -70.000.000,00\nFila 35 | 3105 | Capital suscrito y pagado | -2.000.000.000,00\nFila 36 | 3305 | Reserva legal | -1.000.000.000,00\nFila 37 | 3705 | Utilidades acumuladas | -1.240.000.000,00\nFila 38 | 3805 | Superávit por valorizaciones | -350.000.000,00\nFila 39 | 4120 | Industrias manufactureras | -23.410.000.000,00\nFila 40 | 4175 | Devoluciones en ventas (DB) | 512.000.000,00\nFila 41 | 4210 | Financieros | -28.000.000,00\nFila 42 | 4250 | Recuperaciones | -35.000.000,00\nFila 43 | 5105 | Gastos de personal | 1.980.000.000,00\nFila 44 | 5110 | Honorarios | 310.000.000,00\nFila 45 | 5120 | Arrendamientos | 420.000.000,00\nFila 46 | 5135 | Servicios | 380.000.000,00\nFila 47 | 5160 | Depreciaciones | 610.000.000,00\nFila 48 | 5165 | Amortizaciones | 40.000.000,00\nFila 49 | 5195 | Diversos | 160.000.000,00\nFila 50 | 5199 | Provisiones - deterioro de deudores | 45.000.000,00\nFila 51 | 5205 | Gastos de personal - ventas | 820.000.000,00\nFila 52 | 5235 | Servicios - ventas (fletes y acarreos) | 640.000.000,00\nFila 53 | 5295 | Diversos - ventas (publicidad y degustaciones) | 210.000.000,00\nFila 54 | 5305 | Financieros | 640.000.000,00\nFila 55 | 5315 | Gastos extraordinarios | 22.000.000,00\nFila 56 | 5405 | Impuesto de renta y complementarios | 390.000.000,00\nFila 57 | 6120 | Costo de ventas - industrias manufactureras | 15.570.000.000,00\nFila 59 | TOTALES | Sumas iguales | 0,00",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "BP_2024",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nFila 2 | ALIMENTOS Y CONSERVAS DEL ORIENTE S.A.S. - NIT 901.234.567-7\nFila 3 | BALANCE DE PRUEBA POR CUENTA - 01/01/2024 A 31/12/2024 - Siigo Nube\nFila 4 | Saldos crédito presentados con signo negativo\nFila 6 | Código | Nombre cuenta | Saldo final\nFila 7 | 1105 | Caja | 38.000.000,00\nFila 8 | 1110 | Bancos | 1.121.000.000,00\nFila 9 | 1305 | Clientes | 3.780.000.000,00\nFila 10 | 1330 | Anticipos y avances | 150.000.000,00\nFila 11 | 1355 | Anticipo de impuestos y contribuciones | 290.000.000,00\nFila 12 | 1380 | Deudores varios | 160.000.000,00\nFila 13 | 1399 | Deterioro de deudores (CR) | -150.000.000,00\nFila 14 | 1405 | Materias primas | 1.180.000.000,00\nFila 15 | 1430 | Productos terminados | 1.850.000.000,00\nFila 16 | 1455 | Materiales, repuestos y accesorios (envases) | 370.000.000,00\nFila 17 | 1504 | Terrenos | 1.200.000.000,00\nFila 18 | 1516 | Construcciones y edificaciones | 2.800.000.000,00\nFila 19 | 1520 | Maquinaria y equipo | 6.350.000.000,00\nFila 20 | 1540 | Flota y equipo de transporte | 980.000.000,00\nFila 21 | 1592 | Depreciación acumulada (CR) | -4.100.000.000,00\nFila 22 | 1635 | Licencias | 150.000.000,00\nFila 23 | 21051001 | Pagarés entidades bancarias - corto plazo | -1.800.000.000,00\nFila 24 | 21051002 | Pagarés entidades bancarias - largo plazo | -3.050.000.000,00\nFila 25 | 2120 | Compañías de financiamiento (leasing) | -1.250.000.000,00\nFila 26 | 2205 | Proveedores nacionales | -2.520.000.000,00\nFila 27 | 2335 | Costos y gastos por pagar | -480.000.000,00\nFila 28 | 2355 | Deudas con accionistas o socios | -600.000.000,00\nFila 29 | 2365 | Retención en la fuente | -88.000.000,00\nFila 30 | 2404 | Impuesto de renta y complementarios por pagar | -450.000.000,00\nFila 31 | 2505 | Salarios por pagar | -105.000.000,00\nFila 32 | 2510 | Cesantías consolidadas | -235.000.000,00\nFila 33 | 2805 | Anticipos y avances recibidos | -90.000.000,00\nFila 34 | 3105 | Capital suscrito y pagado | -2.000.000.000,00\nFila 35 | 3305 | Reserva legal | -1.000.000.000,00\nFila 36 | 3705 | Utilidades acumuladas | -1.664.000.000,00\nFila 37 | 4120 | Industrias manufactureras | -25.980.000.000,00\nFila 38 | 4175 | Devoluciones en ventas (DB) | 585.000.000,00\nFila 39 | 4210 | Financieros | -35.000.000,00\nFila 40 | 4250 | Recuperaciones | -28.000.000,00\nFila 41 | 5105 | Gastos de personal | 2.240.000.000,00\nFila 42 | 5110 | Honorarios | 365.000.000,00\nFila 43 | 5120 | Arrendamientos | 456.000.000,00\nFila 44 | 5135 | Servicios | 410.000.000,00\nFila 45 | 5160 | Depreciaciones | 655.000.000,00\nFila 46 | 5165 | Amortizaciones | 45.000.000,00\nFila 47 | 5195 | Diversos | 175.000.000,00\nFila 48 | 5199 | Provisiones - deterioro de deudores | 60.000.000,00\nFila 49 | 5205 | Gastos de personal - ventas | 905.000.000,00\nFila 50 | 5235 | Servicios - ventas (fletes y acarreos) | 715.000.000,00\nFila 51 | 5295 | Diversos - ventas (publicidad y degustaciones) | 230.000.000,00\nFila 52 | 5305 | Financieros | 735.000.000,00\nFila 53 | 5315 | Gastos extraordinarios | 30.000.000,00\nFila 54 | 5405 | Impuesto de renta y complementarios | 450.000.000,00\nFila 55 | 6120 | Costo de ventas - industrias manufactureras | 17.150.000.000,00\nFila 57 | TOTALES | Sumas iguales | 0,00",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "BP_2025",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nFila 2 | ALIMENTOS Y CONSERVAS DEL ORIENTE S.A.S. - NIT 901.234.567-7\nFila 3 | BALANCE DE PRUEBA POR CUENTA - 01/01/2025 A 31/12/2025 - Siigo Nube\nFila 4 | Saldos crédito presentados con signo negativo\nFila 6 | Código | Nombre cuenta | Saldo final\nFila 7 | 1105 | Caja | 45.000.000,00\nFila 8 | 1110 | Bancos | 500.000.000,00\nFila 9 | 1305 | Clientes | 4.980.000.000,00\nFila 10 | 1330 | Anticipos y avances | 180.000.000,00\nFila 11 | 1355 | Anticipo de impuestos y contribuciones | 320.000.000,00\nFila 12 | 1380 | Deudores varios | 410.000.000,00\nFila 13 | 1399 | Deterioro de deudores (CR) | -210.000.000,00\nFila 14 | 1405 | Materias primas | 1.350.000.000,00\nFila 15 | 1430 | Productos terminados | 2.240.000.000,00\nFila 16 | 1455 | Materiales, repuestos y accesorios (envases) | 410.000.000,00\nFila 17 | 1504 | Terrenos | 1.200.000.000,00\nFila 18 | 1516 | Construcciones y edificaciones | 2.800.000.000,00\nFila 19 | 1520 | Maquinaria y equipo | 6.900.000.000,00\nFila 20 | 1540 | Flota y equipo de transporte | 850.000.000,00\nFila 21 | 1592 | Depreciación acumulada (CR) | -4.650.000.000,00\nFila 22 | 1635 | Licencias | 180.000.000,00\nFila 23 | 21051001 | Pagarés entidades bancarias - corto plazo | -2.150.000.000,00\nFila 24 | 21051002 | Pagarés entidades bancarias - largo plazo | -3.400.000.000,00\nFila 25 | 2120 | Compañías de financiamiento (leasing) | -1.100.000.000,00\nFila 26 | 2205 | Proveedores nacionales | -2.760.000.000,00\nFila 27 | 2335 | Costos y gastos por pagar | -540.000.000,00\nFila 28 | 2355 | Deudas con accionistas o socios | -600.000.000,00\nFila 29 | 2365 | Retención en la fuente | -95.000.000,00\nFila 30 | 2404 | Impuesto de renta y complementarios por pagar | -423.000.000,00\nFila 31 | 2505 | Salarios por pagar | -120.000.000,00\nFila 32 | 2510 | Cesantías consolidadas | -260.000.000,00\nFila 33 | 2805 | Anticipos y avances recibidos | -120.000.000,00\nFila 34 | 3105 | Capital suscrito y pagado | -2.000.000.000,00\nFila 35 | 3305 | Reserva legal | -1.000.000.000,00\nFila 36 | 3705 | Utilidades acumuladas | -2.151.000.000,00\nFila 37 | 4120 | Industrias manufactureras | -28.790.000.000,00\nFila 38 | 4175 | Devoluciones en ventas (DB) | 640.000.000,00\nFila 39 | 4210 | Financieros | -46.000.000,00\nFila 40 | 4245 | Utilidad en venta de propiedades, planta y equipo | -38.000.000,00\nFila 41 | 4250 | Recuperaciones | -41.000.000,00\nFila 42 | 5105 | Gastos de personal | 2.510.000.000,00\nFila 43 | 5110 | Honorarios | 690.000.000,00\nFila 44 | 5120 | Arrendamientos | 498.000.000,00\nFila 45 | 5135 | Servicios | 445.000.000,00\nFila 46 | 5160 | Depreciaciones | 720.000.000,00\nFila 47 | 5165 | Amortizaciones | 52.000.000,00\nFila 48 | 5195 | Diversos | 230.000.000,00\nFila 49 | 5199 | Provisiones - deterioro de deudores | 140.000.000,00\nFila 50 | 5205 | Gastos de personal - ventas | 1.010.000.000,00\nFila 51 | 5235 | Servicios - ventas (fletes y acarreos) | 805.000.000,00\nFila 52 | 5295 | Diversos - ventas (publicidad y degustaciones) | 252.000.000,00\nFila 53 | 5305 | Financieros | 790.000.000,00\nFila 54 | 5315 | Gastos extraordinarios | 64.000.000,00\nFila 55 | 5405 | Impuesto de renta y complementarios | 423.000.000,00\nFila 56 | 6120 | Costo de ventas - industrias manufactureras | 18.860.000.000,00\nFila 57 | 2815 | Ingresos recibidos para terceros | #¡REF!\nFila 59 | TOTALES | Sumas iguales | 0,00",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    },
+    {
+      "document_id": "doc_eeff_2025",
+      "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+      "document_type": "FINANCIAL_STATEMENTS_PDF",
+      "file_format": "PDF",
+      "description": "Estados financieros comparativos 2025-2024 bajo NIIF para PYMES (Grupo 2) con notas y dictamen del revisor fiscal.",
+      "reported_units": "Miles de COP",
+      "pages": [
+        {
+          "page_or_sheet": "Página 2",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nDICTAMEN DEL REVISOR FISCAL\nEn mi opinión, los estados financieros adjuntos presentan razonablemente, en todos los aspectos materiales, la situación financiera de la Compañía al 31 de diciembre de 2025.\nPárrafo de énfasis: Sin modificar mi opinión, llamo la atención sobre la Nota 22, en la que se describe un proceso laboral ordinario en contra de la Compañía cuyo desenlace no puede determinarse a la fecha; la administración no ha reconocido provisión alguna.\nFirma: Revisor Fiscal T.P. (sintético) — Rionegro, 6 de marzo de 2026.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 3",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nESTADO DE SITUACIÓN FINANCIERA AL 31 DE DICIEMBRE\n(Cifras expresadas en miles de pesos colombianos) | 2025 | 2024\nEfectivo y equivalentes al efectivo (Nota 5) | 545.000 | 1.159.000\nDeudores comerciales, neto (Nota 7) | 4.770.000 | 3.630.000\nOtras cuentas por cobrar (Nota 7) | 590.000 | 310.000\nActivos por impuestos corrientes | 320.000 | 290.000\nInventarios (Nota 8) | 4.000.000 | 3.400.000\nTotal activo corriente | 10.225.000 | 8.789.000\nPropiedades, planta y equipo, neto (Nota 10) | 7.100.000 | 7.230.000\nActivos intangibles | 180.000 | 150.000\nTotal activo no corriente | 7.280.000 | 7.380.000\nTOTAL ACTIVO | 17.505.000 | 16.169.000\nObligaciones financieras corrientes (Nota 12) | 2.150.000 | 1.800.000\nProveedores | 2.760.000 | 2.520.000\nCuentas por pagar y otros pasivos | 755.000 | 658.000\nPasivos por impuestos corrientes | 423.000 | 450.000\nBeneficios a empleados | 380.000 | 340.000\nTotal pasivo corriente | 6.468.000 | 5.768.000\nObligaciones financieras no corrientes (Nota 12) | 4.500.000 | 4.300.000\nCuentas por pagar a accionistas (Nota 24) | 600.000 | 600.000\nTotal pasivo no corriente | 5.100.000 | 4.900.000\nTOTAL PASIVO | 11.568.000 | 10.668.000\nCapital suscrito y pagado | 2.000.000 | 2.000.000\nReservas | 1.000.000 | 1.000.000\nResultados acumulados | 2.151.000 | 1.664.000\nResultado del ejercicio | 786.000 | 837.000\nTOTAL PATRIMONIO | 5.937.000 | 5.501.000\nTOTAL PASIVO Y PATRIMONIO | 17.505.000 | 16.169.000",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 4",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nESTADO DE RESULTADOS INTEGRAL POR LOS AÑOS TERMINADOS EL 31 DE DICIEMBRE\n(Cifras expresadas en miles de pesos colombianos) | 2025 | 2024\nIngresos de actividades ordinarias (Nota 17) | 28.150.000 | 25.395.000\nCosto de ventas | (18.860.000) | (17.150.000)\nUtilidad bruta | 9.290.000 | 8.245.000\nGastos de administración (Nota 18) | (5.285.000) | (4.406.000)\nGastos de ventas | (2.067.000) | (1.850.000)\nOtros ingresos (Nota 20) | 79.000 | 28.000\nOtros gastos (Nota 19) | (64.000) | (30.000)\nResultado operacional | 1.953.000 | 1.987.000\nIngresos financieros | 46.000 | 35.000\nGastos financieros (Nota 12) | (790.000) | (735.000)\nUtilidad antes de impuestos | 1.209.000 | 1.287.000\nImpuesto de renta (Nota 23) | (423.000) | (450.000)\nRESULTADO DEL EJERCICIO | 786.000 | 837.000",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 9",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 7 - DEUDORES COMERCIALES Y OTRAS CUENTAS POR COBRAR\nAntigüedad de la cartera de clientes (miles de COP) | 2025 | 2024\nCorriente (0-30 días) | 3.050.000 | 2.690.000\nVencida 31-90 días | 1.090.000 | 760.000\nVencida 91-180 días | 520.000 | 210.000\nVencida más de 180 días | 320.000 | 120.000\nTotal clientes | 4.980.000 | 3.780.000\nLa cartera vencida a más de 90 días incluye $620.000 a cargo de Supermercados La Económica del Caribe S.A.S., sociedad admitida a proceso de reorganización empresarial (Ley 1116 de 2006) en septiembre de 2025.\nLa Compañía registró deterioro de cartera por $140.000 en 2025 (2024: $60.000) aplicando el modelo de pérdida incurrida.\nDeudores varios incluye préstamos a accionistas por $410.000 (2024: $160.000), sin plazo de pago ni intereses pactados.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 12",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 12 - OBLIGACIONES FINANCIERAS\nLas obligaciones con entidades bancarias corresponden a pagarés en pesos a tasa IBR + 6,5 puntos, con vencimientos entre 2026 y 2030.\nLos créditos están garantizados con hipoteca abierta de primer grado sobre la planta de producción ubicada en Rionegro, Antioquia.\nLos contratos de crédito establecen que la relación Deuda financiera / EBITDA no debe superar 2,5 veces, medida al cierre de cada año con base en los estados financieros dictaminados.\nEl incumplimiento de esta condición faculta al banco para declarar el plazo vencido de la totalidad de las obligaciones.\nLos contratos de leasing financiero corresponden a dos líneas de esterilización (autoclaves) con opción de compra del 1 %.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 15",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 19 - GASTOS DIVERSOS Y OTROS GASTOS\nEl rubro de gastos diversos de administración (cuenta 5195) por $230.000 (2024: $175.000) incluye $74.000 correspondientes a cuotas de club social y gastos de vehículos asignados a accionistas.\nLos gastos extraordinarios por $64.000 corresponden a multas y sanciones, impuestos asumidos y donaciones.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 16",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 22 - PROVISIONES Y PASIVOS CONTINGENTES\nProceso laboral ordinario promovido por once (11) extrabajadores de la planta de Rionegro que reclaman el reconocimiento de contrato realidad con la Compañía y no con la cooperativa de trabajo asociado que los vinculó entre 2017 y 2021.\nLas pretensiones ascienden a $850.000. Los asesores legales califican la probabilidad de pérdida como posible; en consecuencia no se ha reconocido provisión.\nDurante 2025 la Compañía pagó honorarios de defensa a la firma de abogados externa por $280.000, registrados en el rubro de honorarios (cuenta 5110).",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 17",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 23 - IMPUESTO A LAS GANANCIAS\nLa tarifa nominal de impuesto de renta aplicable es del 35 %.\nEn noviembre de 2025 la DIAN notificó requerimiento especial sobre la declaración de renta del año gravable 2022, proponiendo el rechazo de costos por $310.000 más sanción por inexactitud.\nLa administración, con apoyo de sus asesores tributarios, considera que la probabilidad de un fallo desfavorable es posible y no ha registrado provisión.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 18",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 24 - PARTES RELACIONADAS\nArrendamiento de la bodega de producto terminado ubicada en Rionegro, de propiedad del accionista Jorge Enrique Ramírez Gómez: $498.000 (2024: $456.000).\nRemuneración pagada a familiares cercanos de accionistas sin cargo operativo en la Compañía (cónyuge e hija del accionista mayoritario): $312.000 (2024: $288.000).\nRemuneración del Gerente General (personal clave de la gerencia): $204.000 (2024: $192.000).\nPréstamos otorgados por la Compañía a accionistas: $410.000 (2024: $160.000). Préstamos recibidos de accionistas: $600.000 (2024: $600.000), sin fecha de vencimiento.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    },
+    {
+      "document_id": "doc_eeff_2024",
+      "document_name": "EEFF_2024_Alimentos_Conservas_Oriente.pdf",
+      "document_type": "FINANCIAL_STATEMENTS_PDF",
+      "file_format": "PDF",
+      "description": "Estados financieros comparativos 2024-2023 bajo NIIF para PYMES (Grupo 2) con notas.",
+      "reported_units": "Miles de COP",
+      "pages": [
+        {
+          "page_or_sheet": "Página 3",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nESTADO DE SITUACIÓN FINANCIERA AL 31 DE DICIEMBRE\n(Cifras expresadas en miles de pesos colombianos) | 2024 | 2023\nEfectivo y equivalentes al efectivo (Nota 5) | 1.159.000 | 624.000\nDeudores comerciales, neto (Nota 7) | 3.630.000 | 3.145.000\nOtras cuentas por cobrar (Nota 7) | 310.000 | 220.000\nActivos por impuestos corrientes | 290.000 | 260.000\nInventarios (Nota 8) | 3.400.000 | 3.000.000\nTotal activo corriente | 8.789.000 | 7.249.000\nPropiedades, planta y equipo, neto (Nota 10) | 7.230.000 | 7.160.000\nActivos intangibles | 150.000 | 120.000\nTotal activo no corriente | 7.380.000 | 7.280.000\nTOTAL ACTIVO | 16.169.000 | 14.529.000\nObligaciones financieras corrientes (Nota 12) | 1.800.000 | 1.650.000\nProveedores | 2.520.000 | 2.240.000\nCuentas por pagar y otros pasivos | 658.000 | 580.000\nPasivos por impuestos corrientes | 450.000 | 390.000\nBeneficios a empleados | 340.000 | 305.000\nTotal pasivo corriente | 5.768.000 | 5.165.000\nObligaciones financieras no corrientes (Nota 12) | 4.300.000 | 3.800.000\nCuentas por pagar a accionistas (Nota 24) | 600.000 | 600.000\nTotal pasivo no corriente | 4.900.000 | 4.400.000\nTOTAL PASIVO | 10.668.000 | 9.565.000\nCapital suscrito y pagado | 2.000.000 | 2.000.000\nReservas | 1.000.000 | 1.000.000\nResultados acumulados | 1.664.000 | 1.240.000\nResultado del ejercicio | 837.000 | 724.000\nTOTAL PATRIMONIO | 5.501.000 | 4.964.000\nTOTAL PASIVO Y PATRIMONIO | 16.169.000 | 14.529.000",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 17",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nNOTA 24 - PARTES RELACIONADAS\nArrendamiento de la bodega de producto terminado ubicada en Rionegro, de propiedad del accionista Jorge Enrique Ramírez Gómez: $456.000 (2023: $420.000).\nRemuneración pagada a familiares cercanos de accionistas sin cargo operativo en la Compañía (cónyuge e hija del accionista mayoritario): $288.000 (2023: $265.000).",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    },
+    {
+      "document_id": "doc_avaluo_bodega",
+      "document_name": "Avaluo_Canon_Arrendamiento_Bodega_Rionegro.pdf",
+      "document_type": "APPRAISAL",
+      "file_format": "PDF",
+      "description": "Estudio de canon de arrendamiento de mercado de la bodega arrendada al accionista (avaluador sintético).",
+      "reported_units": "COP",
+      "pages": [
+        {
+          "page_or_sheet": "Página 3",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\n5. CONCLUSIÓN DEL CANON DE MERCADO — Bodega de 2.400 m² en zona industrial de Rionegro\nComparables utilizados: 6 bodegas de 1.800 a 3.000 m² en corredor Rionegro - Marinilla, ofertas y contratos 2023-2025.\nPara 2023 el canon pactado ($420.000.000) supera el canon de mercado estimado ($276.000.000) en $144.000.000.\nPara 2024 el canon pactado ($456.000.000) supera el canon de mercado estimado ($300.000.000) en $156.000.000.\nPara 2025 el canon pactado ($498.000.000) supera el canon de mercado estimado ($330.000.000) en $168.000.000.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    },
+    {
+      "document_id": "doc_camara_comercio",
+      "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+      "document_type": "CHAMBER_OF_COMMERCE_CERT",
+      "file_format": "PDF",
+      "description": "Certificado de existencia y representación legal expedido en diciembre de 2025 (sintético).",
+      "reported_units": "COP",
+      "pages": [
+        {
+          "page_or_sheet": "Página 1",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nCERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL\nRazón social: ALIMENTOS Y CONSERVAS DEL ORIENTE S.A.S.\nNIT: 901.234.567-7\nDomicilio principal: Rionegro (Antioquia)\nConstitución: Escritura Pública No. 812 del 14 de marzo de 2006 como sociedad limitada; transformada en sociedad por acciones simplificada mediante Acta No. 21 de Asamblea del 2 de julio de 2012.\nActividad principal: Código CIIU 1020 - Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos\nActividad secundaria: Código CIIU 4631 - Comercio al por mayor de productos alimenticios\nCapital autorizado: $3.000.000.000 | Capital suscrito: $2.000.000.000 | Capital pagado: $2.000.000.000\nNúmero de acciones suscritas: 2.000.000 | Valor nominal: $1.000",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 2",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nREPRESENTACIÓN LEGAL\nGerente (representante legal principal): JORGE ENRIQUE RAMÍREZ GÓMEZ\nSuplente del Gerente: MARÍA FERNANDA RAMÍREZ OSPINA\nFACULTADES DEL REPRESENTANTE LEGAL: El Gerente requerirá autorización previa de la Asamblea General de Accionistas para celebrar actos o contratos cuya cuantía exceda de quinientos (500) salarios mínimos mensuales legales vigentes.\nIgualmente requerirá autorización de la Asamblea para enajenar o gravar a cualquier título los activos fijos de la sociedad.\nLe está prohibido constituir a la sociedad como garante de obligaciones de terceros o de sus accionistas sin autorización expresa de la Asamblea.\nREVISOR FISCAL: inscrito (persona natural, sintético).",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    },
+    {
+      "document_id": "doc_teaser",
+      "document_name": "Teaser_Proyecto_Conserva.pdf",
+      "document_type": "TEASER",
+      "file_format": "PDF",
+      "description": "Teaser de 2 páginas preparado por el asesor de la compañía para inversionistas (Proyecto Conserva).",
+      "reported_units": "COP millones",
+      "pages": [
+        {
+          "page_or_sheet": "Página 1",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nPROYECTO CONSERVA — Oportunidad de inversión en procesador de frutas y hortalizas del Oriente Antioqueño\nMás de 18 años en el mercado, con planta certificada BPM e INVIMA en Rionegro y portafolio de 64 referencias (conservas, mermeladas, salsas y pulpas).\nCrecimiento anual de ventas superior al 15 % en los últimos tres años.\nEBITDA ajustado 2025: COP 3.900 millones.\nLos tres principales clientes (grandes superficies nacionales) representan el 48 % de las ventas.\nCapacidad instalada utilizada: 62 %, lo que permite crecer sin CAPEX relevante.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        },
+        {
+          "page_or_sheet": "Página 2",
+          "content": "DOCUMENTO SINTÉTICO DE DEMOSTRACIÓN — Catalejo Deal Desk\nESTRUCTURA ACCIONARIA Y TRANSACCIÓN PROPUESTA\nComposición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.\nSe busca un socio financiero para adquirir hasta el 40 % de las acciones mediante una combinación de compra secundaria y capitalización primaria.\nLos recursos primarios se destinarían a una línea de pulpas congeladas para exportación.",
+          "width": null,
+          "height": null,
+          "line_boxes": []
+        }
+      ]
+    }
+  ],
+  "mapped_accounts": [
+    {
+      "raw_account_code": "1105",
+      "raw_account_name": "Caja",
+      "standard_category": "CASH",
+      "period": "2023",
+      "raw_value_cop": 30000000.0,
+      "mapping_rationale": "PUC 1105 Caja: efectivo disponible -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp23_1105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C7",
+        "exact_quote": "1105 | Caja | 30.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1110",
+      "raw_account_name": "Bancos",
+      "standard_category": "CASH",
+      "period": "2023",
+      "raw_value_cop": 594000000.0,
+      "mapping_rationale": "PUC 1110 Bancos: saldos en cuentas bancarias -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp23_1110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C8",
+        "exact_quote": "1110 | Bancos | 594.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1305",
+      "raw_account_name": "Clientes",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2023",
+      "raw_value_cop": 3260000000.0,
+      "mapping_rationale": "PUC 1305 Clientes: cartera comercial bruta -> ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp23_1305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C9",
+        "exact_quote": "1305 | Clientes | 3.260.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1330",
+      "raw_account_name": "Anticipos y avances",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2023",
+      "raw_value_cop": 130000000.0,
+      "mapping_rationale": "PUC 1330 Anticipos y avances a proveedores: activo corriente no comercial -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp23_1330",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C10",
+        "exact_quote": "1330 | Anticipos y avances | 130.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1355",
+      "raw_account_name": "Anticipo de impuestos y contribuciones",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2023",
+      "raw_value_cop": 260000000.0,
+      "mapping_rationale": "PUC 1355 Anticipo de impuestos (retenciones y autorretenciones): activo por impuesto corriente -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp23_1355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C11",
+        "exact_quote": "1355 | Anticipo de impuestos y contribuciones | 260.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1380",
+      "raw_account_name": "Deudores varios",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2023",
+      "raw_value_cop": 90000000.0,
+      "mapping_rationale": "PUC 1380 Deudores varios: incluye préstamos a accionistas (Nota 7). No es cartera comercial -> OTHER_CURRENT_ASSETS; se excluye del capital de trabajo operativo.",
+      "citation": {
+        "citation_id": "cit_bp23_1380",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C12",
+        "exact_quote": "1380 | Deudores varios | 90.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1399",
+      "raw_account_name": "Deterioro de deudores (CR)",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2023",
+      "raw_value_cop": -115000000.0,
+      "mapping_rationale": "PUC 1399 Deterioro (provisión) de deudores: cuenta correctora de naturaleza crédito, se resta de ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp23_1399",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C13",
+        "exact_quote": "1399 | Deterioro de deudores (CR) | -115.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1405",
+      "raw_account_name": "Materias primas",
+      "standard_category": "INVENTORY",
+      "period": "2023",
+      "raw_value_cop": 1050000000.0,
+      "mapping_rationale": "PUC 1405 Materias primas (fruta, hortaliza, azúcar) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp23_1405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C14",
+        "exact_quote": "1405 | Materias primas | 1.050.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1430",
+      "raw_account_name": "Productos terminados",
+      "standard_category": "INVENTORY",
+      "period": "2023",
+      "raw_value_cop": 1620000000.0,
+      "mapping_rationale": "PUC 1430 Productos terminados -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp23_1430",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C15",
+        "exact_quote": "1430 | Productos terminados | 1.620.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1455",
+      "raw_account_name": "Materiales, repuestos y accesorios (envases)",
+      "standard_category": "INVENTORY",
+      "period": "2023",
+      "raw_value_cop": 330000000.0,
+      "mapping_rationale": "PUC 1455 Materiales y repuestos (envases de vidrio y hojalata) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp23_1455",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C16",
+        "exact_quote": "1455 | Materiales, repuestos y accesorios (envases) | 330.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1504",
+      "raw_account_name": "Terrenos",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": 1200000000.0,
+      "mapping_rationale": "PUC 1504 Terrenos -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1504",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C17",
+        "exact_quote": "1504 | Terrenos | 1.200.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1516",
+      "raw_account_name": "Construcciones y edificaciones",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": 2800000000.0,
+      "mapping_rationale": "PUC 1516 Construcciones y edificaciones (planta Rionegro) -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1516",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C18",
+        "exact_quote": "1516 | Construcciones y edificaciones | 2.800.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1520",
+      "raw_account_name": "Maquinaria y equipo",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": 5700000000.0,
+      "mapping_rationale": "PUC 1520 Maquinaria y equipo de proceso -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1520",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C19",
+        "exact_quote": "1520 | Maquinaria y equipo | 5.700.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1540",
+      "raw_account_name": "Flota y equipo de transporte",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": 980000000.0,
+      "mapping_rationale": "PUC 1540 Flota y equipo de transporte -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1540",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C20",
+        "exact_quote": "1540 | Flota y equipo de transporte | 980.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1592",
+      "raw_account_name": "Depreciación acumulada (CR)",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": -3520000000.0,
+      "mapping_rationale": "PUC 1592 Depreciación acumulada: cuenta correctora crédito, se resta de PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1592",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C21",
+        "exact_quote": "1592 | Depreciación acumulada (CR) | -3.520.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1635",
+      "raw_account_name": "Licencias",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2023",
+      "raw_value_cop": 120000000.0,
+      "mapping_rationale": "PUC 1635 Licencias de software: intangible -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp23_1635",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C22",
+        "exact_quote": "1635 | Licencias | 120.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1910",
+      "raw_account_name": "Valorizaciones de propiedades planta y equipo",
+      "standard_category": "UNMAPPED",
+      "period": "2023",
+      "raw_value_cop": 350000000.0,
+      "mapping_rationale": "PUC 1910 Valorizaciones (Decreto 2649/93): no se reconocen bajo NIIF para PYMES; no aparece en el ESF auditado 2023. Se deja UNMAPPED y se excluye de los cálculos.",
+      "citation": {
+        "citation_id": "cit_bp23_1910",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C23",
+        "exact_quote": "1910 | Valorizaciones de propiedades planta y equipo | 350.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051001",
+      "raw_account_name": "Pagarés entidades bancarias - corto plazo",
+      "standard_category": "SHORT_TERM_DEBT",
+      "period": "2023",
+      "raw_value_cop": 1650000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051001 Pagarés bancarios porción corriente: deuda financiera con costo -> SHORT_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp23_21051001",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C24",
+        "exact_quote": "21051001 | Pagarés entidades bancarias - corto plazo | -1.650.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051002",
+      "raw_account_name": "Pagarés entidades bancarias - largo plazo",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2023",
+      "raw_value_cop": 2700000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051002 Pagarés bancarios porción no corriente -> LONG_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp23_21051002",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C25",
+        "exact_quote": "21051002 | Pagarés entidades bancarias - largo plazo | -2.700.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2120",
+      "raw_account_name": "Compañías de financiamiento (leasing)",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2023",
+      "raw_value_cop": 1100000000.0,
+      "mapping_rationale": "PUC 2120 Compañías de financiamiento (leasing financiero de autoclaves, Nota 12) -> LONG_TERM_DEBT. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp23_2120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C26",
+        "exact_quote": "2120 | Compañías de financiamiento (leasing) | -1.100.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2205",
+      "raw_account_name": "Proveedores nacionales",
+      "standard_category": "ACCOUNTS_PAYABLE",
+      "period": "2023",
+      "raw_value_cop": 2240000000.0,
+      "mapping_rationale": "PUC 2205 Proveedores nacionales -> ACCOUNTS_PAYABLE. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp23_2205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C27",
+        "exact_quote": "2205 | Proveedores nacionales | -2.240.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2335",
+      "raw_account_name": "Costos y gastos por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 430000000.0,
+      "mapping_rationale": "PUC 2335 Costos y gastos por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2335",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C28",
+        "exact_quote": "2335 | Costos y gastos por pagar | -430.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2355",
+      "raw_account_name": "Deudas con accionistas o socios",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2023",
+      "raw_value_cop": 600000000.0,
+      "mapping_rationale": "PUC 2355 Deudas con accionistas: préstamos de socios sin vencimiento (Nota 24). Se trata como deuda (debt-like) de forma conservadora -> LONG_TERM_DEBT.",
+      "citation": {
+        "citation_id": "cit_bp23_2355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C29",
+        "exact_quote": "2355 | Deudas con accionistas o socios | -600.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2365",
+      "raw_account_name": "Retención en la fuente",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 80000000.0,
+      "mapping_rationale": "PUC 2365 Retención en la fuente por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2365",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C30",
+        "exact_quote": "2365 | Retención en la fuente | -80.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2404",
+      "raw_account_name": "Impuesto de renta y complementarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 390000000.0,
+      "mapping_rationale": "PUC 2404 Impuesto de renta por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2404",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C31",
+        "exact_quote": "2404 | Impuesto de renta y complementarios por pagar | -390.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2505",
+      "raw_account_name": "Salarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 95000000.0,
+      "mapping_rationale": "PUC 2505 Salarios por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2505",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C32",
+        "exact_quote": "2505 | Salarios por pagar | -95.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2510",
+      "raw_account_name": "Cesantías consolidadas",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 210000000.0,
+      "mapping_rationale": "PUC 2510 Cesantías consolidadas -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2510",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C33",
+        "exact_quote": "2510 | Cesantías consolidadas | -210.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2805",
+      "raw_account_name": "Anticipos y avances recibidos",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2023",
+      "raw_value_cop": 70000000.0,
+      "mapping_rationale": "PUC 2805 Anticipos recibidos de clientes -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp23_2805",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C34",
+        "exact_quote": "2805 | Anticipos y avances recibidos | -70.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3105",
+      "raw_account_name": "Capital suscrito y pagado",
+      "standard_category": "EQUITY",
+      "period": "2023",
+      "raw_value_cop": 2000000000.0,
+      "mapping_rationale": "PUC 3105 Capital suscrito y pagado -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp23_3105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C35",
+        "exact_quote": "3105 | Capital suscrito y pagado | -2.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3305",
+      "raw_account_name": "Reserva legal",
+      "standard_category": "EQUITY",
+      "period": "2023",
+      "raw_value_cop": 1000000000.0,
+      "mapping_rationale": "PUC 3305 Reserva legal -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp23_3305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C36",
+        "exact_quote": "3305 | Reserva legal | -1.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3705",
+      "raw_account_name": "Utilidades acumuladas",
+      "standard_category": "EQUITY",
+      "period": "2023",
+      "raw_value_cop": 1240000000.0,
+      "mapping_rationale": "PUC 3705 Utilidades acumuladas -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp23_3705",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C37",
+        "exact_quote": "3705 | Utilidades acumuladas | -1.240.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3805",
+      "raw_account_name": "Superávit por valorizaciones",
+      "standard_category": "UNMAPPED",
+      "period": "2023",
+      "raw_value_cop": 350000000.0,
+      "mapping_rationale": "PUC 3805 Superávit por valorizaciones: contrapartida de 1910, no reconocido bajo NIIF. UNMAPPED, excluido de los cálculos.",
+      "citation": {
+        "citation_id": "cit_bp23_3805",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C38",
+        "exact_quote": "3805 | Superávit por valorizaciones | -350.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4120",
+      "raw_account_name": "Industrias manufactureras",
+      "standard_category": "REVENUE",
+      "period": "2023",
+      "raw_value_cop": 23410000000.0,
+      "mapping_rationale": "PUC 4120 Ingresos operacionales - industrias manufactureras -> REVENUE. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp23_4120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C39",
+        "exact_quote": "4120 | Industrias manufactureras | -23.410.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4175",
+      "raw_account_name": "Devoluciones en ventas (DB)",
+      "standard_category": "REVENUE",
+      "period": "2023",
+      "raw_value_cop": -512000000.0,
+      "mapping_rationale": "PUC 4175 Devoluciones, rebajas y descuentos en ventas: cuenta débito que reduce ingresos -> REVENUE con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp23_4175",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C40",
+        "exact_quote": "4175 | Devoluciones en ventas (DB) | 512.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4210",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2023",
+      "raw_value_cop": -28000000.0,
+      "mapping_rationale": "PUC 4210 Ingresos financieros: se netea contra gastos financieros -> NET_INTEREST con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp23_4210",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C41",
+        "exact_quote": "4210 | Financieros | -28.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4250",
+      "raw_account_name": "Recuperaciones",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2023",
+      "raw_value_cop": 35000000.0,
+      "mapping_rationale": "PUC 4250 Recuperaciones (reintegro de costos y deterioros) -> OTHER_OP_INCOME_EXP (positivo).",
+      "citation": {
+        "citation_id": "cit_bp23_4250",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C42",
+        "exact_quote": "4250 | Recuperaciones | -35.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5105",
+      "raw_account_name": "Gastos de personal",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 1980000000.0,
+      "mapping_rationale": "PUC 5105 Gastos de personal de administración -> SGA. Incluye remuneración de familiares sin cargo operativo (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp23_5105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C43",
+        "exact_quote": "5105 | Gastos de personal | 1.980.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5110",
+      "raw_account_name": "Honorarios",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 310000000.0,
+      "mapping_rationale": "PUC 5110 Honorarios -> SGA. Incluye honorarios de defensa del proceso laboral (Nota 22).",
+      "citation": {
+        "citation_id": "cit_bp23_5110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C44",
+        "exact_quote": "5110 | Honorarios | 310.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5120",
+      "raw_account_name": "Arrendamientos",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 420000000.0,
+      "mapping_rationale": "PUC 5120 Arrendamientos -> SGA. Incluye arriendo de bodega a accionista (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp23_5120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C45",
+        "exact_quote": "5120 | Arrendamientos | 420.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5135",
+      "raw_account_name": "Servicios",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 380000000.0,
+      "mapping_rationale": "PUC 5135 Servicios (energía, vigilancia, aseo) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp23_5135",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C46",
+        "exact_quote": "5135 | Servicios | 380.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5160",
+      "raw_account_name": "Depreciaciones",
+      "standard_category": "DA",
+      "period": "2023",
+      "raw_value_cop": 610000000.0,
+      "mapping_rationale": "PUC 5160 Depreciaciones: la política contable registra toda la depreciación en el gasto (no se absorbe en el costo) -> DA.",
+      "citation": {
+        "citation_id": "cit_bp23_5160",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C47",
+        "exact_quote": "5160 | Depreciaciones | 610.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5165",
+      "raw_account_name": "Amortizaciones",
+      "standard_category": "DA",
+      "period": "2023",
+      "raw_value_cop": 40000000.0,
+      "mapping_rationale": "PUC 5165 Amortizaciones de intangibles -> DA.",
+      "citation": {
+        "citation_id": "cit_bp23_5165",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C48",
+        "exact_quote": "5165 | Amortizaciones | 40.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5195",
+      "raw_account_name": "Diversos",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 160000000.0,
+      "mapping_rationale": "PUC 5195 Gastos diversos -> SGA. Incluye gastos personales de accionistas (Nota 19).",
+      "citation": {
+        "citation_id": "cit_bp23_5195",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C49",
+        "exact_quote": "5195 | Diversos | 160.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5199",
+      "raw_account_name": "Provisiones - deterioro de deudores",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 45000000.0,
+      "mapping_rationale": "PUC 5199 Provisiones (deterioro de deudores): gasto operativo recurrente asociado a la cartera -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp23_5199",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C50",
+        "exact_quote": "5199 | Provisiones - deterioro de deudores | 45.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5205",
+      "raw_account_name": "Gastos de personal - ventas",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 820000000.0,
+      "mapping_rationale": "PUC 5205 Gastos de personal de ventas -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp23_5205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C51",
+        "exact_quote": "5205 | Gastos de personal - ventas | 820.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5235",
+      "raw_account_name": "Servicios - ventas (fletes y acarreos)",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 640000000.0,
+      "mapping_rationale": "PUC 5235 Servicios de ventas (fletes y acarreos a clientes) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp23_5235",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C52",
+        "exact_quote": "5235 | Servicios - ventas (fletes y acarreos) | 640.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5295",
+      "raw_account_name": "Diversos - ventas (publicidad y degustaciones)",
+      "standard_category": "SGA",
+      "period": "2023",
+      "raw_value_cop": 210000000.0,
+      "mapping_rationale": "PUC 5295 Diversos de ventas (publicidad, degustaciones) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp23_5295",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C53",
+        "exact_quote": "5295 | Diversos - ventas (publicidad y degustaciones) | 210.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5305",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2023",
+      "raw_value_cop": 640000000.0,
+      "mapping_rationale": "PUC 5305 Gastos financieros (intereses, comisiones bancarias) -> NET_INTEREST.",
+      "citation": {
+        "citation_id": "cit_bp23_5305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C54",
+        "exact_quote": "5305 | Financieros | 640.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5315",
+      "raw_account_name": "Gastos extraordinarios",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2023",
+      "raw_value_cop": -22000000.0,
+      "mapping_rationale": "PUC 5315 Gastos extraordinarios: gasto no operativo recurrente pequeño -> OTHER_OP_INCOME_EXP (negativo).",
+      "citation": {
+        "citation_id": "cit_bp23_5315",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C55",
+        "exact_quote": "5315 | Gastos extraordinarios | 22.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5405",
+      "raw_account_name": "Impuesto de renta y complementarios",
+      "standard_category": "TAXES",
+      "period": "2023",
+      "raw_value_cop": 390000000.0,
+      "mapping_rationale": "PUC 5405 Impuesto de renta y complementarios -> TAXES.",
+      "citation": {
+        "citation_id": "cit_bp23_5405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C56",
+        "exact_quote": "5405 | Impuesto de renta y complementarios | 390.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "6120",
+      "raw_account_name": "Costo de ventas - industrias manufactureras",
+      "standard_category": "COGS",
+      "period": "2023",
+      "raw_value_cop": 15570000000.0,
+      "mapping_rationale": "PUC 6120 Costo de ventas - industrias manufactureras (sin depreciación, ver 5160) -> COGS.",
+      "citation": {
+        "citation_id": "cit_bp23_6120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C57",
+        "exact_quote": "6120 | Costo de ventas - industrias manufactureras | 15.570.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1105",
+      "raw_account_name": "Caja",
+      "standard_category": "CASH",
+      "period": "2024",
+      "raw_value_cop": 38000000.0,
+      "mapping_rationale": "PUC 1105 Caja: efectivo disponible -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp24_1105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C7",
+        "exact_quote": "1105 | Caja | 38.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1110",
+      "raw_account_name": "Bancos",
+      "standard_category": "CASH",
+      "period": "2024",
+      "raw_value_cop": 1121000000.0,
+      "mapping_rationale": "PUC 1110 Bancos: saldos en cuentas bancarias -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp24_1110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C8",
+        "exact_quote": "1110 | Bancos | 1.121.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1305",
+      "raw_account_name": "Clientes",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2024",
+      "raw_value_cop": 3780000000.0,
+      "mapping_rationale": "PUC 1305 Clientes: cartera comercial bruta -> ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp24_1305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C9",
+        "exact_quote": "1305 | Clientes | 3.780.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1330",
+      "raw_account_name": "Anticipos y avances",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2024",
+      "raw_value_cop": 150000000.0,
+      "mapping_rationale": "PUC 1330 Anticipos y avances a proveedores: activo corriente no comercial -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp24_1330",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C10",
+        "exact_quote": "1330 | Anticipos y avances | 150.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1355",
+      "raw_account_name": "Anticipo de impuestos y contribuciones",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2024",
+      "raw_value_cop": 290000000.0,
+      "mapping_rationale": "PUC 1355 Anticipo de impuestos (retenciones y autorretenciones): activo por impuesto corriente -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp24_1355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C11",
+        "exact_quote": "1355 | Anticipo de impuestos y contribuciones | 290.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1380",
+      "raw_account_name": "Deudores varios",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2024",
+      "raw_value_cop": 160000000.0,
+      "mapping_rationale": "PUC 1380 Deudores varios: incluye préstamos a accionistas (Nota 7). No es cartera comercial -> OTHER_CURRENT_ASSETS; se excluye del capital de trabajo operativo.",
+      "citation": {
+        "citation_id": "cit_bp24_1380",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C12",
+        "exact_quote": "1380 | Deudores varios | 160.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1399",
+      "raw_account_name": "Deterioro de deudores (CR)",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2024",
+      "raw_value_cop": -150000000.0,
+      "mapping_rationale": "PUC 1399 Deterioro (provisión) de deudores: cuenta correctora de naturaleza crédito, se resta de ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp24_1399",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C13",
+        "exact_quote": "1399 | Deterioro de deudores (CR) | -150.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1405",
+      "raw_account_name": "Materias primas",
+      "standard_category": "INVENTORY",
+      "period": "2024",
+      "raw_value_cop": 1180000000.0,
+      "mapping_rationale": "PUC 1405 Materias primas (fruta, hortaliza, azúcar) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp24_1405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C14",
+        "exact_quote": "1405 | Materias primas | 1.180.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1430",
+      "raw_account_name": "Productos terminados",
+      "standard_category": "INVENTORY",
+      "period": "2024",
+      "raw_value_cop": 1850000000.0,
+      "mapping_rationale": "PUC 1430 Productos terminados -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp24_1430",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C15",
+        "exact_quote": "1430 | Productos terminados | 1.850.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1455",
+      "raw_account_name": "Materiales, repuestos y accesorios (envases)",
+      "standard_category": "INVENTORY",
+      "period": "2024",
+      "raw_value_cop": 370000000.0,
+      "mapping_rationale": "PUC 1455 Materiales y repuestos (envases de vidrio y hojalata) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp24_1455",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C16",
+        "exact_quote": "1455 | Materiales, repuestos y accesorios (envases) | 370.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1504",
+      "raw_account_name": "Terrenos",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": 1200000000.0,
+      "mapping_rationale": "PUC 1504 Terrenos -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1504",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C17",
+        "exact_quote": "1504 | Terrenos | 1.200.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1516",
+      "raw_account_name": "Construcciones y edificaciones",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": 2800000000.0,
+      "mapping_rationale": "PUC 1516 Construcciones y edificaciones (planta Rionegro) -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1516",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C18",
+        "exact_quote": "1516 | Construcciones y edificaciones | 2.800.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1520",
+      "raw_account_name": "Maquinaria y equipo",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": 6350000000.0,
+      "mapping_rationale": "PUC 1520 Maquinaria y equipo de proceso -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1520",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C19",
+        "exact_quote": "1520 | Maquinaria y equipo | 6.350.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1540",
+      "raw_account_name": "Flota y equipo de transporte",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": 980000000.0,
+      "mapping_rationale": "PUC 1540 Flota y equipo de transporte -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1540",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C20",
+        "exact_quote": "1540 | Flota y equipo de transporte | 980.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1592",
+      "raw_account_name": "Depreciación acumulada (CR)",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": -4100000000.0,
+      "mapping_rationale": "PUC 1592 Depreciación acumulada: cuenta correctora crédito, se resta de PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1592",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C21",
+        "exact_quote": "1592 | Depreciación acumulada (CR) | -4.100.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1635",
+      "raw_account_name": "Licencias",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2024",
+      "raw_value_cop": 150000000.0,
+      "mapping_rationale": "PUC 1635 Licencias de software: intangible -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp24_1635",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C22",
+        "exact_quote": "1635 | Licencias | 150.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051001",
+      "raw_account_name": "Pagarés entidades bancarias - corto plazo",
+      "standard_category": "SHORT_TERM_DEBT",
+      "period": "2024",
+      "raw_value_cop": 1800000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051001 Pagarés bancarios porción corriente: deuda financiera con costo -> SHORT_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp24_21051001",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C23",
+        "exact_quote": "21051001 | Pagarés entidades bancarias - corto plazo | -1.800.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051002",
+      "raw_account_name": "Pagarés entidades bancarias - largo plazo",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2024",
+      "raw_value_cop": 3050000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051002 Pagarés bancarios porción no corriente -> LONG_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp24_21051002",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C24",
+        "exact_quote": "21051002 | Pagarés entidades bancarias - largo plazo | -3.050.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2120",
+      "raw_account_name": "Compañías de financiamiento (leasing)",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2024",
+      "raw_value_cop": 1250000000.0,
+      "mapping_rationale": "PUC 2120 Compañías de financiamiento (leasing financiero de autoclaves, Nota 12) -> LONG_TERM_DEBT. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp24_2120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C25",
+        "exact_quote": "2120 | Compañías de financiamiento (leasing) | -1.250.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2205",
+      "raw_account_name": "Proveedores nacionales",
+      "standard_category": "ACCOUNTS_PAYABLE",
+      "period": "2024",
+      "raw_value_cop": 2520000000.0,
+      "mapping_rationale": "PUC 2205 Proveedores nacionales -> ACCOUNTS_PAYABLE. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp24_2205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C26",
+        "exact_quote": "2205 | Proveedores nacionales | -2.520.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2335",
+      "raw_account_name": "Costos y gastos por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 480000000.0,
+      "mapping_rationale": "PUC 2335 Costos y gastos por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2335",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C27",
+        "exact_quote": "2335 | Costos y gastos por pagar | -480.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2355",
+      "raw_account_name": "Deudas con accionistas o socios",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2024",
+      "raw_value_cop": 600000000.0,
+      "mapping_rationale": "PUC 2355 Deudas con accionistas: préstamos de socios sin vencimiento (Nota 24). Se trata como deuda (debt-like) de forma conservadora -> LONG_TERM_DEBT.",
+      "citation": {
+        "citation_id": "cit_bp24_2355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C28",
+        "exact_quote": "2355 | Deudas con accionistas o socios | -600.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2365",
+      "raw_account_name": "Retención en la fuente",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 88000000.0,
+      "mapping_rationale": "PUC 2365 Retención en la fuente por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2365",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C29",
+        "exact_quote": "2365 | Retención en la fuente | -88.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2404",
+      "raw_account_name": "Impuesto de renta y complementarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 450000000.0,
+      "mapping_rationale": "PUC 2404 Impuesto de renta por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2404",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C30",
+        "exact_quote": "2404 | Impuesto de renta y complementarios por pagar | -450.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2505",
+      "raw_account_name": "Salarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 105000000.0,
+      "mapping_rationale": "PUC 2505 Salarios por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2505",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C31",
+        "exact_quote": "2505 | Salarios por pagar | -105.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2510",
+      "raw_account_name": "Cesantías consolidadas",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 235000000.0,
+      "mapping_rationale": "PUC 2510 Cesantías consolidadas -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2510",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C32",
+        "exact_quote": "2510 | Cesantías consolidadas | -235.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2805",
+      "raw_account_name": "Anticipos y avances recibidos",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2024",
+      "raw_value_cop": 90000000.0,
+      "mapping_rationale": "PUC 2805 Anticipos recibidos de clientes -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp24_2805",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C33",
+        "exact_quote": "2805 | Anticipos y avances recibidos | -90.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3105",
+      "raw_account_name": "Capital suscrito y pagado",
+      "standard_category": "EQUITY",
+      "period": "2024",
+      "raw_value_cop": 2000000000.0,
+      "mapping_rationale": "PUC 3105 Capital suscrito y pagado -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp24_3105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C34",
+        "exact_quote": "3105 | Capital suscrito y pagado | -2.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3305",
+      "raw_account_name": "Reserva legal",
+      "standard_category": "EQUITY",
+      "period": "2024",
+      "raw_value_cop": 1000000000.0,
+      "mapping_rationale": "PUC 3305 Reserva legal -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp24_3305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C35",
+        "exact_quote": "3305 | Reserva legal | -1.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3705",
+      "raw_account_name": "Utilidades acumuladas",
+      "standard_category": "EQUITY",
+      "period": "2024",
+      "raw_value_cop": 1664000000.0,
+      "mapping_rationale": "PUC 3705 Utilidades acumuladas -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp24_3705",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C36",
+        "exact_quote": "3705 | Utilidades acumuladas | -1.664.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4120",
+      "raw_account_name": "Industrias manufactureras",
+      "standard_category": "REVENUE",
+      "period": "2024",
+      "raw_value_cop": 25980000000.0,
+      "mapping_rationale": "PUC 4120 Ingresos operacionales - industrias manufactureras -> REVENUE. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp24_4120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C37",
+        "exact_quote": "4120 | Industrias manufactureras | -25.980.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4175",
+      "raw_account_name": "Devoluciones en ventas (DB)",
+      "standard_category": "REVENUE",
+      "period": "2024",
+      "raw_value_cop": -585000000.0,
+      "mapping_rationale": "PUC 4175 Devoluciones, rebajas y descuentos en ventas: cuenta débito que reduce ingresos -> REVENUE con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp24_4175",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C38",
+        "exact_quote": "4175 | Devoluciones en ventas (DB) | 585.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4210",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2024",
+      "raw_value_cop": -35000000.0,
+      "mapping_rationale": "PUC 4210 Ingresos financieros: se netea contra gastos financieros -> NET_INTEREST con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp24_4210",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C39",
+        "exact_quote": "4210 | Financieros | -35.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4250",
+      "raw_account_name": "Recuperaciones",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2024",
+      "raw_value_cop": 28000000.0,
+      "mapping_rationale": "PUC 4250 Recuperaciones (reintegro de costos y deterioros) -> OTHER_OP_INCOME_EXP (positivo).",
+      "citation": {
+        "citation_id": "cit_bp24_4250",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C40",
+        "exact_quote": "4250 | Recuperaciones | -28.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5105",
+      "raw_account_name": "Gastos de personal",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 2240000000.0,
+      "mapping_rationale": "PUC 5105 Gastos de personal de administración -> SGA. Incluye remuneración de familiares sin cargo operativo (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp24_5105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C41",
+        "exact_quote": "5105 | Gastos de personal | 2.240.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5110",
+      "raw_account_name": "Honorarios",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 365000000.0,
+      "mapping_rationale": "PUC 5110 Honorarios -> SGA. Incluye honorarios de defensa del proceso laboral (Nota 22).",
+      "citation": {
+        "citation_id": "cit_bp24_5110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C42",
+        "exact_quote": "5110 | Honorarios | 365.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5120",
+      "raw_account_name": "Arrendamientos",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 456000000.0,
+      "mapping_rationale": "PUC 5120 Arrendamientos -> SGA. Incluye arriendo de bodega a accionista (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp24_5120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C43",
+        "exact_quote": "5120 | Arrendamientos | 456.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5135",
+      "raw_account_name": "Servicios",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 410000000.0,
+      "mapping_rationale": "PUC 5135 Servicios (energía, vigilancia, aseo) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp24_5135",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C44",
+        "exact_quote": "5135 | Servicios | 410.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5160",
+      "raw_account_name": "Depreciaciones",
+      "standard_category": "DA",
+      "period": "2024",
+      "raw_value_cop": 655000000.0,
+      "mapping_rationale": "PUC 5160 Depreciaciones: la política contable registra toda la depreciación en el gasto (no se absorbe en el costo) -> DA.",
+      "citation": {
+        "citation_id": "cit_bp24_5160",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C45",
+        "exact_quote": "5160 | Depreciaciones | 655.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5165",
+      "raw_account_name": "Amortizaciones",
+      "standard_category": "DA",
+      "period": "2024",
+      "raw_value_cop": 45000000.0,
+      "mapping_rationale": "PUC 5165 Amortizaciones de intangibles -> DA.",
+      "citation": {
+        "citation_id": "cit_bp24_5165",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C46",
+        "exact_quote": "5165 | Amortizaciones | 45.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5195",
+      "raw_account_name": "Diversos",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 175000000.0,
+      "mapping_rationale": "PUC 5195 Gastos diversos -> SGA. Incluye gastos personales de accionistas (Nota 19).",
+      "citation": {
+        "citation_id": "cit_bp24_5195",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C47",
+        "exact_quote": "5195 | Diversos | 175.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5199",
+      "raw_account_name": "Provisiones - deterioro de deudores",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 60000000.0,
+      "mapping_rationale": "PUC 5199 Provisiones (deterioro de deudores): gasto operativo recurrente asociado a la cartera -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp24_5199",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C48",
+        "exact_quote": "5199 | Provisiones - deterioro de deudores | 60.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5205",
+      "raw_account_name": "Gastos de personal - ventas",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 905000000.0,
+      "mapping_rationale": "PUC 5205 Gastos de personal de ventas -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp24_5205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C49",
+        "exact_quote": "5205 | Gastos de personal - ventas | 905.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5235",
+      "raw_account_name": "Servicios - ventas (fletes y acarreos)",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 715000000.0,
+      "mapping_rationale": "PUC 5235 Servicios de ventas (fletes y acarreos a clientes) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp24_5235",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C50",
+        "exact_quote": "5235 | Servicios - ventas (fletes y acarreos) | 715.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5295",
+      "raw_account_name": "Diversos - ventas (publicidad y degustaciones)",
+      "standard_category": "SGA",
+      "period": "2024",
+      "raw_value_cop": 230000000.0,
+      "mapping_rationale": "PUC 5295 Diversos de ventas (publicidad, degustaciones) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp24_5295",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C51",
+        "exact_quote": "5295 | Diversos - ventas (publicidad y degustaciones) | 230.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5305",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2024",
+      "raw_value_cop": 735000000.0,
+      "mapping_rationale": "PUC 5305 Gastos financieros (intereses, comisiones bancarias) -> NET_INTEREST.",
+      "citation": {
+        "citation_id": "cit_bp24_5305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C52",
+        "exact_quote": "5305 | Financieros | 735.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5315",
+      "raw_account_name": "Gastos extraordinarios",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2024",
+      "raw_value_cop": -30000000.0,
+      "mapping_rationale": "PUC 5315 Gastos extraordinarios: gasto no operativo recurrente pequeño -> OTHER_OP_INCOME_EXP (negativo).",
+      "citation": {
+        "citation_id": "cit_bp24_5315",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C53",
+        "exact_quote": "5315 | Gastos extraordinarios | 30.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5405",
+      "raw_account_name": "Impuesto de renta y complementarios",
+      "standard_category": "TAXES",
+      "period": "2024",
+      "raw_value_cop": 450000000.0,
+      "mapping_rationale": "PUC 5405 Impuesto de renta y complementarios -> TAXES.",
+      "citation": {
+        "citation_id": "cit_bp24_5405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C54",
+        "exact_quote": "5405 | Impuesto de renta y complementarios | 450.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "6120",
+      "raw_account_name": "Costo de ventas - industrias manufactureras",
+      "standard_category": "COGS",
+      "period": "2024",
+      "raw_value_cop": 17150000000.0,
+      "mapping_rationale": "PUC 6120 Costo de ventas - industrias manufactureras (sin depreciación, ver 5160) -> COGS.",
+      "citation": {
+        "citation_id": "cit_bp24_6120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2024",
+        "cell_or_line_ref": "C55",
+        "exact_quote": "6120 | Costo de ventas - industrias manufactureras | 17.150.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1105",
+      "raw_account_name": "Caja",
+      "standard_category": "CASH",
+      "period": "2025",
+      "raw_value_cop": 45000000.0,
+      "mapping_rationale": "PUC 1105 Caja: efectivo disponible -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp25_1105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C7",
+        "exact_quote": "1105 | Caja | 45.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1110",
+      "raw_account_name": "Bancos",
+      "standard_category": "CASH",
+      "period": "2025",
+      "raw_value_cop": 500000000.0,
+      "mapping_rationale": "PUC 1110 Bancos: saldos en cuentas bancarias -> CASH.",
+      "citation": {
+        "citation_id": "cit_bp25_1110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C8",
+        "exact_quote": "1110 | Bancos | 500.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1305",
+      "raw_account_name": "Clientes",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2025",
+      "raw_value_cop": 4980000000.0,
+      "mapping_rationale": "PUC 1305 Clientes: cartera comercial bruta -> ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp25_1305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C9",
+        "exact_quote": "1305 | Clientes | 4.980.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1330",
+      "raw_account_name": "Anticipos y avances",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2025",
+      "raw_value_cop": 180000000.0,
+      "mapping_rationale": "PUC 1330 Anticipos y avances a proveedores: activo corriente no comercial -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp25_1330",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C10",
+        "exact_quote": "1330 | Anticipos y avances | 180.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1355",
+      "raw_account_name": "Anticipo de impuestos y contribuciones",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2025",
+      "raw_value_cop": 320000000.0,
+      "mapping_rationale": "PUC 1355 Anticipo de impuestos (retenciones y autorretenciones): activo por impuesto corriente -> OTHER_CURRENT_ASSETS.",
+      "citation": {
+        "citation_id": "cit_bp25_1355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C11",
+        "exact_quote": "1355 | Anticipo de impuestos y contribuciones | 320.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1380",
+      "raw_account_name": "Deudores varios",
+      "standard_category": "OTHER_CURRENT_ASSETS",
+      "period": "2025",
+      "raw_value_cop": 410000000.0,
+      "mapping_rationale": "PUC 1380 Deudores varios: incluye préstamos a accionistas (Nota 7). No es cartera comercial -> OTHER_CURRENT_ASSETS; se excluye del capital de trabajo operativo.",
+      "citation": {
+        "citation_id": "cit_bp25_1380",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C12",
+        "exact_quote": "1380 | Deudores varios | 410.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1399",
+      "raw_account_name": "Deterioro de deudores (CR)",
+      "standard_category": "ACCOUNTS_RECEIVABLE",
+      "period": "2025",
+      "raw_value_cop": -210000000.0,
+      "mapping_rationale": "PUC 1399 Deterioro (provisión) de deudores: cuenta correctora de naturaleza crédito, se resta de ACCOUNTS_RECEIVABLE.",
+      "citation": {
+        "citation_id": "cit_bp25_1399",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C13",
+        "exact_quote": "1399 | Deterioro de deudores (CR) | -210.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1405",
+      "raw_account_name": "Materias primas",
+      "standard_category": "INVENTORY",
+      "period": "2025",
+      "raw_value_cop": 1350000000.0,
+      "mapping_rationale": "PUC 1405 Materias primas (fruta, hortaliza, azúcar) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp25_1405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C14",
+        "exact_quote": "1405 | Materias primas | 1.350.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1430",
+      "raw_account_name": "Productos terminados",
+      "standard_category": "INVENTORY",
+      "period": "2025",
+      "raw_value_cop": 2240000000.0,
+      "mapping_rationale": "PUC 1430 Productos terminados -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp25_1430",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C15",
+        "exact_quote": "1430 | Productos terminados | 2.240.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1455",
+      "raw_account_name": "Materiales, repuestos y accesorios (envases)",
+      "standard_category": "INVENTORY",
+      "period": "2025",
+      "raw_value_cop": 410000000.0,
+      "mapping_rationale": "PUC 1455 Materiales y repuestos (envases de vidrio y hojalata) -> INVENTORY.",
+      "citation": {
+        "citation_id": "cit_bp25_1455",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C16",
+        "exact_quote": "1455 | Materiales, repuestos y accesorios (envases) | 410.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1504",
+      "raw_account_name": "Terrenos",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": 1200000000.0,
+      "mapping_rationale": "PUC 1504 Terrenos -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1504",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C17",
+        "exact_quote": "1504 | Terrenos | 1.200.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1516",
+      "raw_account_name": "Construcciones y edificaciones",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": 2800000000.0,
+      "mapping_rationale": "PUC 1516 Construcciones y edificaciones (planta Rionegro) -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1516",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C18",
+        "exact_quote": "1516 | Construcciones y edificaciones | 2.800.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1520",
+      "raw_account_name": "Maquinaria y equipo",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": 6900000000.0,
+      "mapping_rationale": "PUC 1520 Maquinaria y equipo de proceso -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1520",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C19",
+        "exact_quote": "1520 | Maquinaria y equipo | 6.900.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1540",
+      "raw_account_name": "Flota y equipo de transporte",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": 850000000.0,
+      "mapping_rationale": "PUC 1540 Flota y equipo de transporte -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1540",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C20",
+        "exact_quote": "1540 | Flota y equipo de transporte | 850.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1592",
+      "raw_account_name": "Depreciación acumulada (CR)",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": -4650000000.0,
+      "mapping_rationale": "PUC 1592 Depreciación acumulada: cuenta correctora crédito, se resta de PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1592",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C21",
+        "exact_quote": "1592 | Depreciación acumulada (CR) | -4.650.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "1635",
+      "raw_account_name": "Licencias",
+      "standard_category": "PPE_AND_INTANGIBLES",
+      "period": "2025",
+      "raw_value_cop": 180000000.0,
+      "mapping_rationale": "PUC 1635 Licencias de software: intangible -> PPE_AND_INTANGIBLES.",
+      "citation": {
+        "citation_id": "cit_bp25_1635",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C22",
+        "exact_quote": "1635 | Licencias | 180.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051001",
+      "raw_account_name": "Pagarés entidades bancarias - corto plazo",
+      "standard_category": "SHORT_TERM_DEBT",
+      "period": "2025",
+      "raw_value_cop": 2150000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051001 Pagarés bancarios porción corriente: deuda financiera con costo -> SHORT_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp25_21051001",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C23",
+        "exact_quote": "21051001 | Pagarés entidades bancarias - corto plazo | -2.150.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "21051002",
+      "raw_account_name": "Pagarés entidades bancarias - largo plazo",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2025",
+      "raw_value_cop": 3400000000.0,
+      "mapping_rationale": "Auxiliar Siigo 21051002 Pagarés bancarios porción no corriente -> LONG_TERM_DEBT. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp25_21051002",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C24",
+        "exact_quote": "21051002 | Pagarés entidades bancarias - largo plazo | -3.400.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2120",
+      "raw_account_name": "Compañías de financiamiento (leasing)",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2025",
+      "raw_value_cop": 1100000000.0,
+      "mapping_rationale": "PUC 2120 Compañías de financiamiento (leasing financiero de autoclaves, Nota 12) -> LONG_TERM_DEBT. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp25_2120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C25",
+        "exact_quote": "2120 | Compañías de financiamiento (leasing) | -1.100.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2205",
+      "raw_account_name": "Proveedores nacionales",
+      "standard_category": "ACCOUNTS_PAYABLE",
+      "period": "2025",
+      "raw_value_cop": 2760000000.0,
+      "mapping_rationale": "PUC 2205 Proveedores nacionales -> ACCOUNTS_PAYABLE. Se invierte el signo del saldo crédito.",
+      "citation": {
+        "citation_id": "cit_bp25_2205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C26",
+        "exact_quote": "2205 | Proveedores nacionales | -2.760.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2335",
+      "raw_account_name": "Costos y gastos por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 540000000.0,
+      "mapping_rationale": "PUC 2335 Costos y gastos por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2335",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C27",
+        "exact_quote": "2335 | Costos y gastos por pagar | -540.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2355",
+      "raw_account_name": "Deudas con accionistas o socios",
+      "standard_category": "LONG_TERM_DEBT",
+      "period": "2025",
+      "raw_value_cop": 600000000.0,
+      "mapping_rationale": "PUC 2355 Deudas con accionistas: préstamos de socios sin vencimiento (Nota 24). Se trata como deuda (debt-like) de forma conservadora -> LONG_TERM_DEBT.",
+      "citation": {
+        "citation_id": "cit_bp25_2355",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C28",
+        "exact_quote": "2355 | Deudas con accionistas o socios | -600.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2365",
+      "raw_account_name": "Retención en la fuente",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 95000000.0,
+      "mapping_rationale": "PUC 2365 Retención en la fuente por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2365",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C29",
+        "exact_quote": "2365 | Retención en la fuente | -95.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2404",
+      "raw_account_name": "Impuesto de renta y complementarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 423000000.0,
+      "mapping_rationale": "PUC 2404 Impuesto de renta por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2404",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C30",
+        "exact_quote": "2404 | Impuesto de renta y complementarios por pagar | -423.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2505",
+      "raw_account_name": "Salarios por pagar",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 120000000.0,
+      "mapping_rationale": "PUC 2505 Salarios por pagar -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2505",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C31",
+        "exact_quote": "2505 | Salarios por pagar | -120.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2510",
+      "raw_account_name": "Cesantías consolidadas",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 260000000.0,
+      "mapping_rationale": "PUC 2510 Cesantías consolidadas -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2510",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C32",
+        "exact_quote": "2510 | Cesantías consolidadas | -260.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "2805",
+      "raw_account_name": "Anticipos y avances recibidos",
+      "standard_category": "OTHER_CURRENT_LIABILITIES",
+      "period": "2025",
+      "raw_value_cop": 120000000.0,
+      "mapping_rationale": "PUC 2805 Anticipos recibidos de clientes -> OTHER_CURRENT_LIABILITIES.",
+      "citation": {
+        "citation_id": "cit_bp25_2805",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C33",
+        "exact_quote": "2805 | Anticipos y avances recibidos | -120.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3105",
+      "raw_account_name": "Capital suscrito y pagado",
+      "standard_category": "EQUITY",
+      "period": "2025",
+      "raw_value_cop": 2000000000.0,
+      "mapping_rationale": "PUC 3105 Capital suscrito y pagado -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp25_3105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C34",
+        "exact_quote": "3105 | Capital suscrito y pagado | -2.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3305",
+      "raw_account_name": "Reserva legal",
+      "standard_category": "EQUITY",
+      "period": "2025",
+      "raw_value_cop": 1000000000.0,
+      "mapping_rationale": "PUC 3305 Reserva legal -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp25_3305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C35",
+        "exact_quote": "3305 | Reserva legal | -1.000.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3705",
+      "raw_account_name": "Utilidades acumuladas",
+      "standard_category": "EQUITY",
+      "period": "2025",
+      "raw_value_cop": 2151000000.0,
+      "mapping_rationale": "PUC 3705 Utilidades acumuladas -> EQUITY.",
+      "citation": {
+        "citation_id": "cit_bp25_3705",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C36",
+        "exact_quote": "3705 | Utilidades acumuladas | -2.151.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4120",
+      "raw_account_name": "Industrias manufactureras",
+      "standard_category": "REVENUE",
+      "period": "2025",
+      "raw_value_cop": 28790000000.0,
+      "mapping_rationale": "PUC 4120 Ingresos operacionales - industrias manufactureras -> REVENUE. Saldo crédito exportado negativo; se invierte el signo.",
+      "citation": {
+        "citation_id": "cit_bp25_4120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C37",
+        "exact_quote": "4120 | Industrias manufactureras | -28.790.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4175",
+      "raw_account_name": "Devoluciones en ventas (DB)",
+      "standard_category": "REVENUE",
+      "period": "2025",
+      "raw_value_cop": -640000000.0,
+      "mapping_rationale": "PUC 4175 Devoluciones, rebajas y descuentos en ventas: cuenta débito que reduce ingresos -> REVENUE con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp25_4175",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C38",
+        "exact_quote": "4175 | Devoluciones en ventas (DB) | 640.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4210",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2025",
+      "raw_value_cop": -46000000.0,
+      "mapping_rationale": "PUC 4210 Ingresos financieros: se netea contra gastos financieros -> NET_INTEREST con signo negativo.",
+      "citation": {
+        "citation_id": "cit_bp25_4210",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C39",
+        "exact_quote": "4210 | Financieros | -46.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4245",
+      "raw_account_name": "Utilidad en venta de propiedades, planta y equipo",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2025",
+      "raw_value_cop": 38000000.0,
+      "mapping_rationale": "PUC 4245 Utilidad en venta de PPE: ingreso operativo no recurrente -> OTHER_OP_INCOME_EXP (positivo). Candidato a ajuste de normalización.",
+      "citation": {
+        "citation_id": "cit_bp25_4245",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C40",
+        "exact_quote": "4245 | Utilidad en venta de propiedades, planta y equipo | -38.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "4250",
+      "raw_account_name": "Recuperaciones",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2025",
+      "raw_value_cop": 41000000.0,
+      "mapping_rationale": "PUC 4250 Recuperaciones (reintegro de costos y deterioros) -> OTHER_OP_INCOME_EXP (positivo).",
+      "citation": {
+        "citation_id": "cit_bp25_4250",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C41",
+        "exact_quote": "4250 | Recuperaciones | -41.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5105",
+      "raw_account_name": "Gastos de personal",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 2510000000.0,
+      "mapping_rationale": "PUC 5105 Gastos de personal de administración -> SGA. Incluye remuneración de familiares sin cargo operativo (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp25_5105",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C42",
+        "exact_quote": "5105 | Gastos de personal | 2.510.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5110",
+      "raw_account_name": "Honorarios",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 690000000.0,
+      "mapping_rationale": "PUC 5110 Honorarios -> SGA. Incluye honorarios de defensa del proceso laboral (Nota 22).",
+      "citation": {
+        "citation_id": "cit_bp25_5110",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C43",
+        "exact_quote": "5110 | Honorarios | 690.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5120",
+      "raw_account_name": "Arrendamientos",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 498000000.0,
+      "mapping_rationale": "PUC 5120 Arrendamientos -> SGA. Incluye arriendo de bodega a accionista (Nota 24).",
+      "citation": {
+        "citation_id": "cit_bp25_5120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C44",
+        "exact_quote": "5120 | Arrendamientos | 498.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5135",
+      "raw_account_name": "Servicios",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 445000000.0,
+      "mapping_rationale": "PUC 5135 Servicios (energía, vigilancia, aseo) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp25_5135",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C45",
+        "exact_quote": "5135 | Servicios | 445.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5160",
+      "raw_account_name": "Depreciaciones",
+      "standard_category": "DA",
+      "period": "2025",
+      "raw_value_cop": 720000000.0,
+      "mapping_rationale": "PUC 5160 Depreciaciones: la política contable registra toda la depreciación en el gasto (no se absorbe en el costo) -> DA.",
+      "citation": {
+        "citation_id": "cit_bp25_5160",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C46",
+        "exact_quote": "5160 | Depreciaciones | 720.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5165",
+      "raw_account_name": "Amortizaciones",
+      "standard_category": "DA",
+      "period": "2025",
+      "raw_value_cop": 52000000.0,
+      "mapping_rationale": "PUC 5165 Amortizaciones de intangibles -> DA.",
+      "citation": {
+        "citation_id": "cit_bp25_5165",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C47",
+        "exact_quote": "5165 | Amortizaciones | 52.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5195",
+      "raw_account_name": "Diversos",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 230000000.0,
+      "mapping_rationale": "PUC 5195 Gastos diversos -> SGA. Incluye gastos personales de accionistas (Nota 19).",
+      "citation": {
+        "citation_id": "cit_bp25_5195",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C48",
+        "exact_quote": "5195 | Diversos | 230.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5199",
+      "raw_account_name": "Provisiones - deterioro de deudores",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 140000000.0,
+      "mapping_rationale": "PUC 5199 Provisiones (deterioro de deudores): gasto operativo recurrente asociado a la cartera -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp25_5199",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C49",
+        "exact_quote": "5199 | Provisiones - deterioro de deudores | 140.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5205",
+      "raw_account_name": "Gastos de personal - ventas",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 1010000000.0,
+      "mapping_rationale": "PUC 5205 Gastos de personal de ventas -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp25_5205",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C50",
+        "exact_quote": "5205 | Gastos de personal - ventas | 1.010.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5235",
+      "raw_account_name": "Servicios - ventas (fletes y acarreos)",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 805000000.0,
+      "mapping_rationale": "PUC 5235 Servicios de ventas (fletes y acarreos a clientes) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp25_5235",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C51",
+        "exact_quote": "5235 | Servicios - ventas (fletes y acarreos) | 805.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5295",
+      "raw_account_name": "Diversos - ventas (publicidad y degustaciones)",
+      "standard_category": "SGA",
+      "period": "2025",
+      "raw_value_cop": 252000000.0,
+      "mapping_rationale": "PUC 5295 Diversos de ventas (publicidad, degustaciones) -> SGA.",
+      "citation": {
+        "citation_id": "cit_bp25_5295",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C52",
+        "exact_quote": "5295 | Diversos - ventas (publicidad y degustaciones) | 252.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5305",
+      "raw_account_name": "Financieros",
+      "standard_category": "NET_INTEREST",
+      "period": "2025",
+      "raw_value_cop": 790000000.0,
+      "mapping_rationale": "PUC 5305 Gastos financieros (intereses, comisiones bancarias) -> NET_INTEREST.",
+      "citation": {
+        "citation_id": "cit_bp25_5305",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C53",
+        "exact_quote": "5305 | Financieros | 790.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5315",
+      "raw_account_name": "Gastos extraordinarios",
+      "standard_category": "OTHER_OP_INCOME_EXP",
+      "period": "2025",
+      "raw_value_cop": -64000000.0,
+      "mapping_rationale": "PUC 5315 Gastos extraordinarios: gasto no operativo recurrente pequeño -> OTHER_OP_INCOME_EXP (negativo).",
+      "citation": {
+        "citation_id": "cit_bp25_5315",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C54",
+        "exact_quote": "5315 | Gastos extraordinarios | 64.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "5405",
+      "raw_account_name": "Impuesto de renta y complementarios",
+      "standard_category": "TAXES",
+      "period": "2025",
+      "raw_value_cop": 423000000.0,
+      "mapping_rationale": "PUC 5405 Impuesto de renta y complementarios -> TAXES.",
+      "citation": {
+        "citation_id": "cit_bp25_5405",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C55",
+        "exact_quote": "5405 | Impuesto de renta y complementarios | 423.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "6120",
+      "raw_account_name": "Costo de ventas - industrias manufactureras",
+      "standard_category": "COGS",
+      "period": "2025",
+      "raw_value_cop": 18860000000.0,
+      "mapping_rationale": "PUC 6120 Costo de ventas - industrias manufactureras (sin depreciación, ver 5160) -> COGS.",
+      "citation": {
+        "citation_id": "cit_bp25_6120",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C56",
+        "exact_quote": "6120 | Costo de ventas - industrias manufactureras | 18.860.000.000,00",
+        "confidence": 0.99
+      }
+    },
+    {
+      "raw_account_code": "3605",
+      "raw_account_name": "Resultado del ejercicio",
+      "standard_category": "EQUITY",
+      "period": "2025",
+      "raw_value_cop": 786000000.0,
+      "mapping_rationale": "El balance de prueba de Siigo es pre-cierre (no incluye 3605). El resultado del ejercicio se toma del Estado de Situación Financiera dictaminado, columna 2025, expresado en miles de COP (x1.000).",
+      "citation": {
+        "citation_id": "cit_doc_eeff_2025_ni_2025",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Resultado del ejercicio, columna 2025",
+        "exact_quote": "Resultado del ejercicio | 786.000 | 837.000",
+        "confidence": 0.97
+      }
+    },
+    {
+      "raw_account_code": "3605",
+      "raw_account_name": "Resultado del ejercicio",
+      "standard_category": "EQUITY",
+      "period": "2024",
+      "raw_value_cop": 837000000.0,
+      "mapping_rationale": "El balance de prueba de Siigo es pre-cierre (no incluye 3605). El resultado del ejercicio se toma del Estado de Situación Financiera dictaminado, columna 2024, expresado en miles de COP (x1.000).",
+      "citation": {
+        "citation_id": "cit_doc_eeff_2025_ni_2024",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Resultado del ejercicio, columna 2024",
+        "exact_quote": "Resultado del ejercicio | 786.000 | 837.000",
+        "confidence": 0.97
+      }
+    },
+    {
+      "raw_account_code": "3605",
+      "raw_account_name": "Resultado del ejercicio",
+      "standard_category": "EQUITY",
+      "period": "2023",
+      "raw_value_cop": 724000000.0,
+      "mapping_rationale": "El balance de prueba de Siigo es pre-cierre (no incluye 3605). El resultado del ejercicio se toma del Estado de Situación Financiera dictaminado, columna 2023, expresado en miles de COP (x1.000).",
+      "citation": {
+        "citation_id": "cit_doc_eeff_2024_ni_2023",
+        "document_id": "doc_eeff_2024",
+        "document_name": "EEFF_2024_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Resultado del ejercicio, columna 2023",
+        "exact_quote": "Resultado del ejercicio | 837.000 | 724.000",
+        "confidence": 0.97
+      }
+    }
+  ],
+  "unreadable_or_unmapped_items": [
+    {
+      "id": "unr_bp25_2815",
+      "description": "Cuenta 2815 Ingresos recibidos para terceros (BP_2025) con valor ilegible '#¡REF!'.",
+      "reason": "La celda contiene una referencia rota de Excel. No se imputa ningún valor. El balance de 2025 cuadra sin esta fila, lo que sugiere un subtotal roto, pero debe confirmarse con el contador.",
+      "citation": {
+        "citation_id": "cit_bp25_2815",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C57",
+        "exact_quote": "2815 | Ingresos recibidos para terceros | #¡REF!",
+        "confidence": 0.3
+      }
+    },
+    {
+      "id": "unr_bp23_valorizaciones",
+      "description": "Cuentas 1910 Valorizaciones y 3805 Superávit por valorizaciones (BP_2023) por $350.000.000 cada una.",
+      "reason": "Saldos heredados del PUC (Decreto 2649/93) no reconocidos bajo NIIF para PYMES; se excluyen del análisis (categoría UNMAPPED).",
+      "citation": {
+        "citation_id": "cit_bp23_1910",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2023",
+        "cell_or_line_ref": "C23",
+        "exact_quote": "1910 | Valorizaciones de propiedades planta y equipo | 350.000.000,00",
+        "confidence": 0.99
+      }
+    }
+  ],
+  "ebitda_adjustments": [
+    {
+      "id": "adj_2023_fam",
+      "title": "Salarios de familiares sin cargo operativo (cónyuge e hija)",
+      "category": "OWNER_COMPENSATION",
+      "period": "2023",
+      "amount_cop": 265000000.0,
+      "rationale": "La Nota 24 revela salarios pagados al cónyuge y a la hija del accionista mayoritario sin cargo operativo. Un comprador no asumiría este costo: se suma de vuelta al EBITDA. Monto tomado literal de la nota (miles de COP).",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_n24_familiares_2023",
+        "document_id": "doc_eeff_2024",
+        "document_name": "EEFF_2024_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 17",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "(cónyuge e hija del accionista mayoritario): $288.000 (2023: $265.000)",
+        "confidence": 0.95
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2023_rent",
+      "title": "Exceso de arriendo de bodega pagado al socio sobre canon de mercado",
+      "category": "RELATED_PARTY_RENT",
+      "period": "2023",
+      "amount_cop": 144000000.0,
+      "rationale": "La bodega es propiedad del accionista mayoritario. Solo se normaliza el exceso del canon pactado sobre el canon de mercado, cifra que el avalúo independiente reporta literalmente; el canon de mercado sigue siendo un costo operativo.",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_avaluo_2023",
+        "document_id": "doc_avaluo_bodega",
+        "document_name": "Avaluo_Canon_Arrendamiento_Bodega_Rionegro.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "Para 2023 el canon pactado ($420.000.000) supera el canon de mercado estimado ($276.000.000) en $144.000.000.",
+        "confidence": 0.93
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2024_fam",
+      "title": "Salarios de familiares sin cargo operativo (cónyuge e hija)",
+      "category": "OWNER_COMPENSATION",
+      "period": "2024",
+      "amount_cop": 288000000.0,
+      "rationale": "La Nota 24 revela salarios pagados al cónyuge y a la hija del accionista mayoritario sin cargo operativo. Un comprador no asumiría este costo: se suma de vuelta al EBITDA. Monto tomado literal de la nota (miles de COP).",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_n24_familiares_2025",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 18",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "(cónyuge e hija del accionista mayoritario): $312.000 (2024: $288.000)",
+        "confidence": 0.95
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2024_rent",
+      "title": "Exceso de arriendo de bodega pagado al socio sobre canon de mercado",
+      "category": "RELATED_PARTY_RENT",
+      "period": "2024",
+      "amount_cop": 156000000.0,
+      "rationale": "La bodega es propiedad del accionista mayoritario. Solo se normaliza el exceso del canon pactado sobre el canon de mercado, cifra que el avalúo independiente reporta literalmente; el canon de mercado sigue siendo un costo operativo.",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_avaluo_2024",
+        "document_id": "doc_avaluo_bodega",
+        "document_name": "Avaluo_Canon_Arrendamiento_Bodega_Rionegro.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Línea 5",
+        "exact_quote": "Para 2024 el canon pactado ($456.000.000) supera el canon de mercado estimado ($300.000.000) en $156.000.000.",
+        "confidence": 0.93
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2025_fam",
+      "title": "Salarios de familiares sin cargo operativo (cónyuge e hija)",
+      "category": "OWNER_COMPENSATION",
+      "period": "2025",
+      "amount_cop": 312000000.0,
+      "rationale": "La Nota 24 revela salarios pagados al cónyuge y a la hija del accionista mayoritario sin cargo operativo. Un comprador no asumiría este costo: se suma de vuelta al EBITDA. Monto tomado literal de la nota (miles de COP).",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_n24_familiares_2025",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 18",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "(cónyuge e hija del accionista mayoritario): $312.000 (2024: $288.000)",
+        "confidence": 0.95
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2025_rent",
+      "title": "Exceso de arriendo de bodega pagado al socio sobre canon de mercado",
+      "category": "RELATED_PARTY_RENT",
+      "period": "2025",
+      "amount_cop": 168000000.0,
+      "rationale": "La bodega es propiedad del accionista mayoritario. Solo se normaliza el exceso del canon pactado sobre el canon de mercado, cifra que el avalúo independiente reporta literalmente; el canon de mercado sigue siendo un costo operativo.",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_avaluo_2025",
+        "document_id": "doc_avaluo_bodega",
+        "document_name": "Avaluo_Canon_Arrendamiento_Bodega_Rionegro.pdf",
+        "page_or_sheet": "Página 3",
+        "cell_or_line_ref": "Línea 6",
+        "exact_quote": "Para 2025 el canon pactado ($498.000.000) supera el canon de mercado estimado ($330.000.000) en $168.000.000.",
+        "confidence": 0.93
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2025_legal",
+      "title": "Honorarios de defensa del proceso laboral (no recurrentes)",
+      "category": "NON_RECURRING_LEGAL",
+      "period": "2025",
+      "amount_cop": 280000000.0,
+      "rationale": "Honorarios extraordinarios ligados a un único proceso judicial (Nota 22). Se normalizan como no recurrentes; el riesgo del proceso en sí se trata como contingencia, no en el EBITDA.",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_n22_honorarios",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 16",
+        "cell_or_line_ref": "Línea 5",
+        "exact_quote": "pagó honorarios de defensa a la firma de abogados externa por $280.000, registrados en el rubro de honorarios (cuenta 5110)",
+        "confidence": 0.95
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2025_personal",
+      "title": "Gastos personales de accionistas (club social y vehículos)",
+      "category": "PERSONAL_EXPENSES",
+      "period": "2025",
+      "amount_cop": 74000000.0,
+      "rationale": "La Nota 19 identifica cuotas de club y vehículos asignados a accionistas dentro de gastos diversos. Queda en revisión: falta soporte de si los vehículos tienen uso comercial parcial.",
+      "status": "PENDING_REVIEW",
+      "citation": {
+        "citation_id": "cit_n19_personales",
+        "document_id": "doc_eeff_2025",
+        "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+        "page_or_sheet": "Página 15",
+        "cell_or_line_ref": "Línea 3",
+        "exact_quote": "incluye $74.000 correspondientes a cuotas de club social y gastos de vehículos asignados a accionistas",
+        "confidence": 0.95
+      },
+      "origin": "AI_PROPOSED"
+    },
+    {
+      "id": "adj_2025_gain_ppe",
+      "title": "Utilidad no recurrente en venta de vehículo",
+      "category": "OTHER",
+      "period": "2025",
+      "amount_cop": -38000000.0,
+      "rationale": "La cuenta 4245 registra una utilidad por venta de activo fijo incluida en otros ingresos operativos. No es repetible: se resta del EBITDA.",
+      "status": "ACCEPTED",
+      "citation": {
+        "citation_id": "cit_bp25_4245",
+        "document_id": "doc_bp_siigo",
+        "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+        "page_or_sheet": "BP_2025",
+        "cell_or_line_ref": "C40",
+        "exact_quote": "4245 | Utilidad en venta de propiedades, planta y equipo | -38.000.000,00",
+        "confidence": 0.99
+      },
+      "origin": "AI_PROPOSED"
+    }
+  ],
+  "corporate_profile": {
+    "legal_name": {
+      "label": "Razón social",
+      "value": "Alimentos y Conservas del Oriente S.A.S.",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_razon",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 3",
+        "exact_quote": "Razón social: ALIMENTOS Y CONSERVAS DEL ORIENTE S.A.S.",
+        "confidence": 0.97
+      }
+    },
+    "nit": {
+      "label": "NIT",
+      "value": "901.234.567-7",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_nit",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "NIT: 901.234.567-7",
+        "confidence": 0.97
+      }
+    },
+    "ciiu_primary": {
+      "label": "CIIU principal",
+      "value": "1020 - Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_ciiu",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 7",
+        "exact_quote": "Código CIIU 1020 - Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos",
+        "confidence": 0.97
+      }
+    },
+    "ciiu_secondary": {
+      "label": "CIIU secundario",
+      "value": "4631 - Comercio al por mayor de productos alimenticios",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_ciiu2",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 8",
+        "exact_quote": "Código CIIU 4631 - Comercio al por mayor de productos alimenticios",
+        "confidence": 0.97
+      }
+    },
+    "domicile": {
+      "label": "Domicilio",
+      "value": "Rionegro (Antioquia)",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_domicilio",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 5",
+        "exact_quote": "Domicilio principal: Rionegro (Antioquia)",
+        "confidence": 0.97
+      }
+    },
+    "incorporation": {
+      "label": "Constitución",
+      "value": "Constituida como Ltda. en 2006 (E.P. 812); transformada a S.A.S. en 2012 (Acta 21)",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_constitucion",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 1",
+        "cell_or_line_ref": "Línea 6",
+        "exact_quote": "Constitución: Escritura Pública No. 812 del 14 de marzo de 2006 como sociedad limitada; transformada en sociedad por acciones simplificada mediante Acta No. 21 de Asamblea del 2 de julio de 2012.",
+        "confidence": 0.97
+      }
+    },
+    "legal_representative": {
+      "label": "Representante legal (Gerente)",
+      "value": "Jorge Enrique Ramírez Gómez",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_gerente",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 2",
+        "cell_or_line_ref": "Línea 3",
+        "exact_quote": "Gerente (representante legal principal): JORGE ENRIQUE RAMÍREZ GÓMEZ",
+        "confidence": 0.97
+      }
+    },
+    "alternate_legal_representative": {
+      "label": "Suplente del Gerente",
+      "value": "María Fernanda Ramírez Ospina",
+      "status": "VERIFIED",
+      "citation": {
+        "citation_id": "cit_ccio_suplente",
+        "document_id": "doc_camara_comercio",
+        "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+        "page_or_sheet": "Página 2",
+        "cell_or_line_ref": "Línea 4",
+        "exact_quote": "Suplente del Gerente: MARÍA FERNANDA RAMÍREZ OSPINA",
+        "confidence": 0.97
+      }
+    },
+    "statutory_limits": [
+      {
+        "label": "Límite de contratación del Gerente",
+        "value": "Requiere autorización de Asamblea para actos o contratos superiores a 500 SMMLV",
+        "status": "VERIFIED",
+        "citation": {
+          "citation_id": "cit_ccio_limite_500",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 5",
+          "exact_quote": "El Gerente requerirá autorización previa de la Asamblea General de Accionistas para celebrar actos o contratos cuya cuantía exceda de quinientos (500) salarios mínimos mensuales legales vigentes.",
+          "confidence": 0.97
+        }
+      },
+      {
+        "label": "Enajenación o gravamen de activos fijos",
+        "value": "Requiere autorización de Asamblea",
+        "status": "VERIFIED",
+        "citation": {
+          "citation_id": "cit_ccio_activos",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 6",
+          "exact_quote": "Igualmente requerirá autorización de la Asamblea para enajenar o gravar a cualquier título los activos fijos de la sociedad.",
+          "confidence": 0.97
+        }
+      },
+      {
+        "label": "Garantías a terceros o accionistas",
+        "value": "Prohibido sin autorización expresa de Asamblea",
+        "status": "VERIFIED",
+        "citation": {
+          "citation_id": "cit_ccio_garantias",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 7",
+          "exact_quote": "Le está prohibido constituir a la sociedad como garante de obligaciones de terceros o de sus accionistas sin autorización expresa de la Asamblea.",
+          "confidence": 0.97
+        }
+      }
+    ],
+    "shareholders": [
+      {
+        "name": "Jorge Enrique Ramírez Gómez",
+        "ownership_pct": 60.0,
+        "verification_status": "UNVERIFIED",
+        "citation": {
+          "citation_id": "cit_teaser_accionistas",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Composición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.",
+          "confidence": 0.9
+        }
+      },
+      {
+        "name": "Gloria Inés Ospina de Ramírez",
+        "ownership_pct": 20.0,
+        "verification_status": "UNVERIFIED",
+        "citation": {
+          "citation_id": "cit_teaser_accionistas",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Composición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.",
+          "confidence": 0.9
+        }
+      },
+      {
+        "name": "María Fernanda Ramírez Ospina",
+        "ownership_pct": 10.0,
+        "verification_status": "UNVERIFIED",
+        "citation": {
+          "citation_id": "cit_teaser_accionistas",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Composición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.",
+          "confidence": 0.9
+        }
+      },
+      {
+        "name": "Andrés Felipe Ramírez Ospina",
+        "ownership_pct": 10.0,
+        "verification_status": "UNVERIFIED",
+        "citation": {
+          "citation_id": "cit_teaser_accionistas",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Composición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.",
+          "confidence": 0.9
+        }
+      }
+    ],
+    "legal_proceedings": [
+      {
+        "id": "lit_laboral_contrato_realidad",
+        "proceeding_type": "LABORAL",
+        "description": "Proceso laboral ordinario de 11 extrabajadores que reclaman contrato realidad (vinculados vía cooperativa de trabajo asociado 2017-2021).",
+        "claimed_amount_cop": 850000000.0,
+        "provisioned_amount_cop": 0.0,
+        "probability": "POSIBLE",
+        "citation": {
+          "citation_id": "cit_n22_pretensiones",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 16",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Las pretensiones ascienden a $850.000. Los asesores legales califican la probabilidad de pérdida como posible; en consecuencia no se ha reconocido provisión.",
+          "confidence": 0.95
+        }
+      },
+      {
+        "id": "lit_dian_renta_2022",
+        "proceeding_type": "TRIBUTARIO",
+        "description": "Requerimiento especial DIAN sobre renta 2022: rechazo de costos más sanción por inexactitud (sanción no cuantificada).",
+        "claimed_amount_cop": 310000000.0,
+        "provisioned_amount_cop": 0.0,
+        "probability": "POSIBLE",
+        "citation": {
+          "citation_id": "cit_n23_dian",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 17",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "En noviembre de 2025 la DIAN notificó requerimiento especial sobre la declaración de renta del año gravable 2022, proponiendo el rechazo de costos por $310.000 más sanción por inexactitud.",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "red_flags": [
+    {
+      "id": "rf_contingencias",
+      "severity": "CRITICAL_DEALBREAKER",
+      "domain": "TAX_AND_CONTINGENCIES",
+      "title": "Contingencias laboral y tributaria sin provisión",
+      "challenge_by_skeptic": "Hay dos procesos calificados como 'posibles' y sin un peso provisionado: la demanda de 11 extrabajadores por contrato realidad (pretensiones $850.000 miles) y el requerimiento especial de la DIAN sobre renta 2022 ($310.000 miles más una sanción por inexactitud aún sin cuantificar). El revisor fiscal incluyó un párrafo de énfasis. Si la tercerización vía cooperativa se declara ilegal, el riesgo puede extenderse a otros trabajadores del mismo periodo. Sin una indemnidad o un escrow, el comprador hereda ese pasivo en su totalidad.",
+      "mitigation_question": "¿Cuántas personas en total estuvieron vinculadas por la cooperativa entre 2017 y 2021, y aceptarían los accionistas un escrow o una cláusula de indemnidad específica por ambos procesos?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_n22_pretensiones",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 16",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Las pretensiones ascienden a $850.000. Los asesores legales califican la probabilidad de pérdida como posible; en consecuencia no se ha reconocido provisión.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n22_cooperativa",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 16",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "reclaman el reconocimiento de contrato realidad con la Compañía y no con la cooperativa de trabajo asociado que los vinculó entre 2017 y 2021.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n23_dian",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 17",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "En noviembre de 2025 la DIAN notificó requerimiento especial sobre la declaración de renta del año gravable 2022, proponiendo el rechazo de costos por $310.000 más sanción por inexactitud.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_dictamen_enfasis",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "la administración no ha reconocido provisión alguna.",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rf_cartera",
+      "severity": "HIGH",
+      "domain": "FINANCIAL",
+      "title": "Deterioro acelerado de la cartera y cliente en reorganización (Ley 1116)",
+      "challenge_by_skeptic": "La cartera vencida a más de 90 días saltó en un año y uno de los clientes de grandes superficies está en reorganización empresarial con $620.000 miles vencidos. El deterioro registrado en 2025 ($140.000 miles) parece corto frente a esa exposición: el EBITDA 2025 podría estar sobrestimado por provisiones insuficientes.",
+      "mitigation_question": "¿Cuál es el aging de cartera por cliente a diciembre 2025 y qué abonos ha recibido de Supermercados La Económica del Caribe desde su admisión a reorganización?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_n7_vencida_91_180",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 9",
+          "cell_or_line_ref": "Línea 6",
+          "exact_quote": "Vencida 91-180 días | 520.000 | 210.000",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n7_vencida_180",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 9",
+          "cell_or_line_ref": "Línea 7",
+          "exact_quote": "Vencida más de 180 días | 320.000 | 120.000",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n7_reorganizacion",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 9",
+          "cell_or_line_ref": "Línea 9",
+          "exact_quote": "La cartera vencida a más de 90 días incluye $620.000 a cargo de Supermercados La Económica del Caribe S.A.S., sociedad admitida a proceso de reorganización empresarial (Ley 1116 de 2006) en septiembre de 2025.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_bp25_5199",
+          "document_id": "doc_bp_siigo",
+          "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+          "page_or_sheet": "BP_2025",
+          "cell_or_line_ref": "C49",
+          "exact_quote": "5199 | Provisiones - deterioro de deudores | 140.000.000,00",
+          "confidence": 0.99
+        }
+      ]
+    },
+    {
+      "id": "rf_covenant",
+      "severity": "HIGH",
+      "domain": "FINANCIAL",
+      "title": "Covenant bancario Deuda financiera / EBITDA ≤ 2,5x con riesgo de aceleración",
+      "challenge_by_skeptic": "El covenant se mide sobre estados financieros dictaminados, es decir, sobre EBITDA reportado y no ajustado. Los ajustes que mejoran nuestra lectura no le sirven al banco. Si la relación se rompe, el banco puede declarar vencida toda la deuda, que además está garantizada con hipoteca sobre la planta.",
+      "mitigation_question": "¿Cómo calcula el banco la 'Deuda financiera' del covenant (incluye leasing y préstamos de socios) y existe alguna dispensa (waiver) vigente o en trámite para 2025?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_n12_covenant",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 12",
+          "cell_or_line_ref": "Línea 5",
+          "exact_quote": "la relación Deuda financiera / EBITDA no debe superar 2,5 veces",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n12_aceleracion",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 12",
+          "cell_or_line_ref": "Línea 6",
+          "exact_quote": "El incumplimiento de esta condición faculta al banco para declarar el plazo vencido de la totalidad de las obligaciones.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_n12_hipoteca",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 12",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Los créditos están garantizados con hipoteca abierta de primer grado sobre la planta de producción ubicada en Rionegro, Antioquia.",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rf_caja_socios",
+      "severity": "HIGH",
+      "domain": "FINANCIAL",
+      "title": "Salida de caja hacia accionistas: préstamos sin plazo ni intereses",
+      "challenge_by_skeptic": "Los préstamos a accionistas pasaron de $160.000 a $410.000 miles sin plazo ni intereses, mientras el saldo en bancos cayó. Sumado al arriendo de la bodega del socio y a los salarios de familiares, el patrón sugiere que la caja de la compañía financia a la familia. Es una fuga de valor que se repetirá si no se corta en el cierre.",
+      "mitigation_question": "¿Los accionistas están dispuestos a cancelar los $410 millones prestados antes del cierre o a que se descuenten del precio?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_n7_prestamos_socios",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 9",
+          "cell_or_line_ref": "Línea 11",
+          "exact_quote": "Deudores varios incluye préstamos a accionistas por $410.000 (2024: $160.000), sin plazo de pago ni intereses pactados.",
+          "confidence": 0.95
+        },
+        {
+          "citation_id": "cit_bp25_1110",
+          "document_id": "doc_bp_siigo",
+          "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+          "page_or_sheet": "BP_2025",
+          "cell_or_line_ref": "C8",
+          "exact_quote": "1110 | Bancos | 500.000.000,00",
+          "confidence": 0.99
+        },
+        {
+          "citation_id": "cit_bp24_1110",
+          "document_id": "doc_bp_siigo",
+          "document_name": "Balance_Prueba_Siigo_2023-2025.xlsx",
+          "page_or_sheet": "BP_2024",
+          "cell_or_line_ref": "C8",
+          "exact_quote": "1110 | Bancos | 1.121.000.000,00",
+          "confidence": 0.99
+        }
+      ]
+    },
+    {
+      "id": "rf_teaser_inflado",
+      "severity": "HIGH",
+      "domain": "COMMERCIAL_MARKET",
+      "title": "El teaser sobrestima EBITDA ajustado y crecimiento",
+      "challenge_by_skeptic": "El teaser afirma un EBITDA ajustado 2025 de COP 3.900 millones y crecimiento anual superior al 15 %. Ninguna de las dos cifras se reproduce desde el balance de prueba con ajustes soportados (ver motor determinista). Si el vendedor ancla precio sobre 3.900 millones, la brecha de expectativas puede romper la negociación o esconder ajustes agresivos no revelados.",
+      "mitigation_question": "¿Puede el asesor compartir el puente de EBITDA ajustado que soporta los COP 3.900 millones, ajuste por ajuste?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_teaser_ebitda",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 1",
+          "cell_or_line_ref": "Línea 5",
+          "exact_quote": "EBITDA ajustado 2025: COP 3.900 millones.",
+          "confidence": 0.92
+        },
+        {
+          "citation_id": "cit_teaser_crecimiento",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 1",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Crecimiento anual de ventas superior al 15 % en los últimos tres años.",
+          "confidence": 0.92
+        }
+      ]
+    },
+    {
+      "id": "rf_concentracion",
+      "severity": "MEDIUM",
+      "domain": "COMMERCIAL_MARKET",
+      "title": "Concentración de clientes: top 3 = 48 % de ventas",
+      "challenge_by_skeptic": "Casi la mitad de las ventas depende de tres grandes superficies con poder de negociación sobre precio y plazo; uno de los clientes del canal ya está en reorganización. La pérdida de un solo cliente podría borrar buena parte del EBITDA.",
+      "mitigation_question": "¿Qué contratos o acuerdos comerciales vigentes hay con los tres principales clientes y cuáles son sus plazos de pago y condiciones de terminación?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_teaser_concentracion",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 1",
+          "cell_or_line_ref": "Línea 6",
+          "exact_quote": "Los tres principales clientes (grandes superficies nacionales) representan el 48 % de las ventas.",
+          "confidence": 0.92
+        },
+        {
+          "citation_id": "cit_n7_reorganizacion",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 9",
+          "cell_or_line_ref": "Línea 9",
+          "exact_quote": "La cartera vencida a más de 90 días incluye $620.000 a cargo de Supermercados La Económica del Caribe S.A.S., sociedad admitida a proceso de reorganización empresarial (Ley 1116 de 2006) en septiembre de 2025.",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rf_accionistas",
+      "severity": "MEDIUM",
+      "domain": "CORPORATE_LEGAL",
+      "title": "Composición accionaria no verificada",
+      "challenge_by_skeptic": "En una S.A.S. el certificado de Cámara de Comercio no identifica a los accionistas: solo informa número de acciones. La composición 60/20/10/10 proviene únicamente del teaser. Sin libro de accionistas no sabemos si hay prendas, usufructos o acuerdos de accionistas que limiten la venta del 40 %.",
+      "mitigation_question": "¿Pueden enviar copia del libro de registro de accionistas y de cualquier acuerdo de accionistas vigente?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_teaser_accionistas",
+          "document_id": "doc_teaser",
+          "document_name": "Teaser_Proyecto_Conserva.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Composición accionaria: Jorge Enrique Ramírez Gómez 60 %, Gloria Inés Ospina de Ramírez 20 %, María Fernanda Ramírez Ospina 10 %, Andrés Felipe Ramírez Ospina 10 %.",
+          "confidence": 0.9
+        },
+        {
+          "citation_id": "cit_ccio_acciones",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 1",
+          "cell_or_line_ref": "Línea 10",
+          "exact_quote": "Número de acciones suscritas: 2.000.000 | Valor nominal: $1.000",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rf_gobierno",
+      "severity": "MEDIUM",
+      "domain": "CORPORATE_LEGAL",
+      "title": "Gobierno corporativo concentrado en la familia y garantías sobre activos",
+      "challenge_by_skeptic": "Gerente y suplente son padre e hija; no hay junta directiva inscrita. La planta ya está hipotecada y gravar activos exige autorización de Asamblea, que hoy controla la familia. El inversionista minoritario necesitará derechos de veto contractuales.",
+      "mitigation_question": "¿Estarían dispuestos a crear una junta directiva con un miembro designado por el inversionista y una lista de decisiones reservadas?",
+      "status": "ACTIVE",
+      "citations": [
+        {
+          "citation_id": "cit_ccio_gerente",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 3",
+          "exact_quote": "Gerente (representante legal principal): JORGE ENRIQUE RAMÍREZ GÓMEZ",
+          "confidence": 0.97
+        },
+        {
+          "citation_id": "cit_ccio_suplente",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Suplente del Gerente: MARÍA FERNANDA RAMÍREZ OSPINA",
+          "confidence": 0.97
+        },
+        {
+          "citation_id": "cit_ccio_activos",
+          "document_id": "doc_camara_comercio",
+          "document_name": "Certificado_Existencia_Representacion_Legal_2025.pdf",
+          "page_or_sheet": "Página 2",
+          "cell_or_line_ref": "Línea 6",
+          "exact_quote": "Igualmente requerirá autorización de la Asamblea para enajenar o gravar a cualquier título los activos fijos de la sociedad.",
+          "confidence": 0.97
+        },
+        {
+          "citation_id": "cit_n12_hipoteca",
+          "document_id": "doc_eeff_2025",
+          "document_name": "EEFF_2025_Alimentos_Conservas_Oriente.pdf",
+          "page_or_sheet": "Página 12",
+          "cell_or_line_ref": "Línea 4",
+          "exact_quote": "Los créditos están garantizados con hipoteca abierta de primer grado sobre la planta de producción ubicada en Rionegro, Antioquia.",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "missing_info": [
+    {
+      "id": "mi_libro_accionistas",
+      "category": "Societario",
+      "requested_document_or_clarification": "Copia del libro de registro de accionistas y de cualquier acuerdo de accionistas vigente.",
+      "why_it_matters_plain_spanish": "Necesitamos confirmar quién es dueño de qué porcentaje y que las acciones no estén prendadas, para saber que quien vende realmente puede vender.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_concepto_laboral",
+      "category": "Contingencias",
+      "requested_document_or_clarification": "Concepto escrito del abogado sobre el proceso laboral (etapa, cuantía actualizada, probabilidad) y número total de personas vinculadas por la cooperativa entre 2017 y 2021.",
+      "why_it_matters_plain_spanish": "Queremos entender cuánto podría costar en el peor caso para acordar desde ya cómo se cubre, sin que eso afecte la negociación más adelante.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_dian",
+      "category": "Tributario",
+      "requested_document_or_clarification": "Copia del requerimiento especial de la DIAN (renta 2022) y de la respuesta radicada.",
+      "why_it_matters_plain_spanish": "Nos ayuda a dimensionar el valor de la posible sanción y a ver qué tan sólida es la defensa de la empresa.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_aging_cartera",
+      "category": "Financiero",
+      "requested_document_or_clarification": "Antigüedad de cartera por cliente a diciembre 2025 y estado de los pagos de Supermercados La Económica del Caribe.",
+      "why_it_matters_plain_spanish": "Nos permite saber cuánta de la plata que le deben a la empresa realmente va a entrar a caja.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_creditos",
+      "category": "Financiero",
+      "requested_document_or_clarification": "Contratos de crédito y leasing vigentes, con la fórmula del indicador Deuda/EBITDA y cualquier dispensa (waiver) del banco.",
+      "why_it_matters_plain_spanish": "Queremos asegurarnos de que la entrada de un socio no active ninguna cláusula del banco que obligue a pagar los créditos de inmediato.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_contrato_bodega",
+      "category": "Partes relacionadas",
+      "requested_document_or_clarification": "Contrato de arrendamiento de la bodega de Rionegro con el accionista y disposición a renegociarlo a canon de mercado.",
+      "why_it_matters_plain_spanish": "El arriendo está por encima del precio de mercado; queremos ver si se puede ajustar para que la empresa refleje su rentabilidad real.",
+      "priority": "MUST_HAVE_FOR_IC"
+    },
+    {
+      "id": "mi_ventas_cliente",
+      "category": "Comercial",
+      "requested_document_or_clarification": "Ventas mensuales 2024-2025 por cliente y por línea de producto.",
+      "why_it_matters_plain_spanish": "Nos ayuda a entender la estacionalidad del negocio y qué tanto depende de los clientes más grandes.",
+      "priority": "NICE_TO_HAVE"
+    },
+    {
+      "id": "mi_puente_teaser",
+      "category": "Financiero",
+      "requested_document_or_clarification": "Detalle de los ajustes que componen el EBITDA ajustado de COP 3.900 millones del teaser.",
+      "why_it_matters_plain_spanish": "Queremos llegar al mismo número que ustedes para no tener diferencias de expectativas en el precio.",
+      "priority": "NICE_TO_HAVE"
+    },
+    {
+      "id": "mi_declaraciones_renta",
+      "category": "Tributario",
+      "requested_document_or_clarification": "Declaraciones de renta 2023 y 2024 con sus soportes de pago.",
+      "why_it_matters_plain_spanish": "Confirman que los impuestos de los últimos años están al día y que las cifras contables coinciden con lo declarado.",
+      "priority": "NICE_TO_HAVE"
+    }
+  ],
+  "memo_markdown_template": "# Memo de Screening — Alimentos y Conservas del Oriente S.A.S.\n\n**Para:** Comité de Inversión · **Etapa:** Screening preliminar · **Periodo analizado:** 2023–2025\n**Nota metodológica:** las cifras calculadas provienen del motor financiero determinista (0 llamadas a LLM). Cada cifra fuente lleva su cita.\n\n## 1. Resumen ejecutivo\n\nAlimentos y Conservas del Oriente S.A.S. (NIT 901.234.567-7 [[cite:cit_ccio_nit]]) procesa y conserva frutas y hortalizas (CIIU 1020 [[cite:cit_ccio_ciiu]]) desde su planta en Rionegro, Antioquia [[cite:cit_ccio_domicilio]]. En 2025 registró ingresos netos de {{metric:revenue:2025}} [[cite:cit_bp25_4120]] [[cite:cit_bp25_4175]], un crecimiento de {{metric:revenue_growth_yoy_pct:2025}} frente a 2024 y una tasa compuesta 2023–2025 de {{growth:revenue_cagr_pct}}.\n\nEl EBITDA reportado 2025 fue {{metric:ebitda_reported:2025}} (margen {{metric:ebitda_reported_margin_pct:2025}}). Tras los ajustes aceptados por el analista, el EBITDA ajustado es {{metric:ebitda_adjusted:2025}} (margen {{metric:ebitda_adjusted_margin_pct:2025}}), frente a COP 3.900 millones que afirma el teaser [[cite:cit_teaser_ebitda]].\n\n**Recomendación preliminar:** continuar a due diligence confirmatoria, condicionada a (i) cuantificar y blindar contractualmente las contingencias laboral y tributaria, y (ii) verificar el cumplimiento del covenant bancario.\n\n## 2. Tesis de inversión\n\n- **Categoría defensiva con escala regional:** más de 18 años de operación y planta con certificación sanitaria (afirmación del teaser, pendiente de verificar) [[cite:cit_teaser_trayectoria]].\n- **Crecimiento sostenido:** ingresos de {{metric:revenue:2023}} en 2023 a {{metric:revenue:2025}} en 2025 [[cite:cit_bp23_4120]] [[cite:cit_bp25_4120]]. El teaser afirma crecimiento superior al 15 % anual [[cite:cit_teaser_crecimiento]]; el motor calcula {{growth:revenue_cagr_pct}}.\n- **Palanca de normalización:** salarios de familiares sin cargo operativo [[cite:cit_n24_familiares_2025]] y un arriendo al socio por encima del mercado [[cite:cit_avaluo_2025]] son costos que un nuevo gobierno corporativo puede eliminar.\n- **Margen bruto** de {{metric:gross_margin_pct:2025}} vs. mediana sectorial de {{benchmark:gross_margin_pct:median}}.\n\n## 3. Calidad del EBITDA\n\n| Concepto | 2025 |\n|---|---|\n| EBITDA reportado | {{metric:ebitda_reported:2025}} |\n| Ajustes aceptados | {{bridge:2025:total_accepted}} |\n| Ajustes pendientes de revisión (excluidos) | {{bridge:2025:total_pending}} |\n| **EBITDA ajustado** | **{{metric:ebitda_adjusted:2025}}** |\n\n- Salarios de familiares sin cargo operativo [[cite:cit_n24_familiares_2025]].\n- Exceso de arriendo de bodega pagado al socio, según avalúo independiente [[cite:cit_avaluo_2025]].\n- Honorarios de defensa del proceso laboral, no recurrentes [[cite:cit_n22_honorarios]].\n- Utilidad en venta de vehículo, restada por no recurrente [[cite:cit_bp25_4245]].\n- En revisión: gastos personales de accionistas [[cite:cit_n19_personales]].\n\nEl deterioro de cartera de 2025 [[cite:cit_bp25_5199]] podría ser insuficiente frente a la exposición a un cliente en reorganización [[cite:cit_n7_reorganizacion]]; no se ajustó el EBITDA por ese riesgo, se trata como red flag.\n\n## 4. Valoración preliminar (múltiplos EV/EBITDA, sector {{valuation:sector_label}})\n\n| Escenario | Múltiplo | Enterprise Value | Deuda neta | Equity Value |\n|---|---|---|---|---|\n| Conservador (P25) | {{valuation:CONSERVADOR:multiple}} | {{valuation:CONSERVADOR:enterprise_value}} | {{valuation:CONSERVADOR:net_debt}} | {{valuation:CONSERVADOR:equity_value}} |\n| Base (Mediana) | {{valuation:BASE:multiple}} | {{valuation:BASE:enterprise_value}} | {{valuation:BASE:net_debt}} | {{valuation:BASE:equity_value}} |\n| Optimista (P75) | {{valuation:OPTIMISTA:multiple}} | {{valuation:OPTIMISTA:enterprise_value}} | {{valuation:OPTIMISTA:net_debt}} | {{valuation:OPTIMISTA:equity_value}} |\n\nLa deuda neta incluye pagarés bancarios, leasing y préstamos de accionistas [[cite:cit_bp25_21051001]] [[cite:cit_bp25_21051002]] [[cite:cit_bp25_2120]] [[cite:cit_bp25_2355]]. Deuda neta / EBITDA ajustado 2025: {{metric:net_debt_to_ebitda_adjusted:2025}} (reportado: {{metric:net_debt_to_ebitda_reported:2025}}). Los múltiplos son referenciales y deben recalibrarse antes del Comité.\n\n## 5. Riesgos críticos\n\n1. **Contingencias sin provisión:** proceso laboral [[cite:cit_n22_pretensiones]] y requerimiento DIAN [[cite:cit_n23_dian]] suman {{contingencies:unprovisioned}}, equivalente a {{contingencies:pct_adj_ebitda}} del EBITDA ajustado. El revisor fiscal incluyó párrafo de énfasis [[cite:cit_dictamen_enfasis]].\n2. **Cartera:** días de cartera de {{metric:dso_days:2024}} en 2024 a {{metric:dso_days:2025}} en 2025; cliente en reorganización [[cite:cit_n7_reorganizacion]].\n3. **Covenant bancario:** Deuda financiera / EBITDA ≤ 2,5x [[cite:cit_n12_covenant]] con cláusula de aceleración [[cite:cit_n12_aceleracion]]. Deuda neta / EBITDA reportado 2025: {{metric:net_debt_to_ebitda_reported:2025}}.\n4. **Caja:** efectivo de {{metric:cash:2024}} en 2024 a {{metric:cash:2025}} en 2025, con préstamos a accionistas sin plazo [[cite:cit_n7_prestamos_socios]].\n5. **Concentración:** top 3 clientes = 48 % de ventas, según teaser [[cite:cit_teaser_concentracion]].\n\n## 6. Próximos pasos\n\n- Enviar al empresario la solicitud de información faltante (libro de accionistas, concepto laboral, requerimiento DIAN, aging por cliente, contratos de crédito).\n- Recalcular el EBITDA ajustado al resolver el ajuste pendiente de gastos personales.\n- Estructurar escrow o indemnidad específica por contingencias antes de cualquier oferta vinculante.",
+  "memo_citations": [
+    {
+      "citation_id": "cit_teaser_trayectoria",
+      "document_id": "doc_teaser",
+      "document_name": "Teaser_Proyecto_Conserva.pdf",
+      "page_or_sheet": "Página 1",
+      "cell_or_line_ref": "Línea 3",
+      "exact_quote": "Más de 18 años en el mercado, con planta certificada BPM e INVIMA en Rionegro y portafolio de 64 referencias (conservas, mermeladas, salsas y pulpas).",
+      "confidence": 0.9
+    }
+  ]
+}

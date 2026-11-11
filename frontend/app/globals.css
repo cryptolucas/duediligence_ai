@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 215 55% 24%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 214 32% 94%;
+    --secondary-foreground: 222 47% 15%;
+    --muted: 214 30% 95%;
+    --muted-foreground: 215 16% 40%;
+    --accent: 214 60% 94%;
+    --accent-foreground: 215 55% 24%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --positive: 152 60% 32%;
+    --warning: 32 90% 42%;
+    --border: 214 25% 88%;
+    --input: 214 25% 85%;
+    --ring: 215 55% 35%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+@layer components {
+  .num {
+    @apply tabular-nums text-right whitespace-nowrap;
+  }
+
+  .memo h1 {
+    @apply text-xl font-semibold tracking-tight mb-3;
+  }
+  .memo h2 {
+    @apply text-base font-semibold mt-6 mb-2 text-primary border-b pb-1;
+  }
+  .memo p {
+    @apply my-2 leading-relaxed text-[0.92rem];
+  }
+  .memo ul {
+    @apply list-disc pl-5 my-2 space-y-1 text-[0.92rem];
+  }
+  .memo ol {
+    @apply list-decimal pl-5 my-2 space-y-1 text-[0.92rem];
+  }
+  .memo table {
+    @apply w-full my-3 text-sm border-collapse;
+  }
+  .memo th {
+    @apply bg-muted text-left font-medium px-2 py-1.5 border;
+  }
+  .memo td {
+    @apply px-2 py-1.5 border tabular-nums;
+  }
+  .memo strong {
+    @apply font-semibold;
+  }
+  .memo code {
+    @apply rounded bg-destructive/10 text-destructive px-1 text-xs font-mono;
+  }
+}

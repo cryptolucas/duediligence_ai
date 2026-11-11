@@ -1,0 +1,157 @@
+{
+  "_meta": {
+    "dataset": "Benchmarks sectoriales por CIIU Rev. 4 A.C. — Colombia (lower-middle-market)",
+    "version": "2026.11-mvp",
+    "status": "REFERENCIAL_NO_OFICIAL",
+    "currency": "COP",
+    "disclaimer": "Valores de referencia calibrados para el MVP a partir de rangos típicos de mercado para empresas privadas medianas en Colombia (ingresos COP 10.000–150.000 millones). NO son una extracción oficial de Supersociedades. Supersociedades publica estados financieros (Portal de Información Empresarial - PIE / SIIS), no múltiplos de valoración; los múltiplos EV/EBITDA aquí son supuestos de transacciones privadas comparables que deben recalibrarse con fuentes de mercado (transacciones recientes, bases tipo Capital IQ/EMIS) antes de cualquier uso en Comité.",
+    "recalibration_procedure": [
+      "1. Descargar estados financieros del PIE de Supersociedades para el último año fiscal disponible y filtrar por CIIU y por ingresos operacionales entre COP 10.000 y 150.000 millones.",
+      "2. Calcular por empresa margen bruto, margen EBITDA, crecimiento de ingresos, DSO, DIO, DPO y Deuda neta/EBITDA con el mismo motor determinista (financial_engine.py).",
+      "3. Reemplazar los percentiles P25 / mediana / P75 de 'operating_benchmarks'.",
+      "4. Actualizar 'ev_ebitda' con múltiplos de transacciones privadas comparables documentadas."
+    ],
+    "percentile_convention": "p25 = escenario Conservador, median = escenario Base, p75 = escenario Optimista",
+    "units": {
+      "ev_ebitda": "veces (x)",
+      "ev_revenue": "veces (x)",
+      "gross_margin_pct": "puntos porcentuales",
+      "ebitda_margin_pct": "puntos porcentuales",
+      "revenue_growth_pct": "puntos porcentuales (nominal, COP)",
+      "dso_days": "días",
+      "dio_days": "días",
+      "dpo_days": "días",
+      "net_debt_to_ebitda": "veces (x)"
+    }
+  },
+  "sectors": {
+    "AGROINDUSTRIA": {
+      "label": "Agroindustria (cultivos, ganadería y actividades de apoyo agrícola)",
+      "ev_ebitda": { "p25": 4.2, "median": 5.2, "p75": 6.3 },
+      "ev_revenue": { "p25": 0.45, "median": 0.65, "p75": 0.9 },
+      "operating_benchmarks": {
+        "gross_margin_pct": { "p25": 14.0, "median": 21.0, "p75": 29.0 },
+        "ebitda_margin_pct": { "p25": 7.0, "median": 11.5, "p75": 17.0 },
+        "revenue_growth_pct": { "p25": 2.0, "median": 8.0, "p75": 15.0 },
+        "dso_days": { "p25": 30.0, "median": 48.0, "p75": 70.0 },
+        "dio_days": { "p25": 35.0, "median": 65.0, "p75": 110.0 },
+        "dpo_days": { "p25": 25.0, "median": 40.0, "p75": 60.0 },
+        "net_debt_to_ebitda": { "p25": 0.8, "median": 2.0, "p75": 3.4 }
+      },
+      "notes": "Alta exposición a clima, precios internacionales (palma, café) y tasa de cambio. Los activos biológicos bajo NIIF Grupo 2 (Sección 34) pueden distorsionar márgenes por cambios de valor razonable."
+    },
+    "MANUFACTURA_ALIMENTOS": {
+      "label": "Manufactura de alimentos (procesamiento, conservas, lácteos, panadería)",
+      "ev_ebitda": { "p25": 5.0, "median": 6.0, "p75": 7.2 },
+      "ev_revenue": { "p25": 0.5, "median": 0.75, "p75": 1.05 },
+      "operating_benchmarks": {
+        "gross_margin_pct": { "p25": 24.0, "median": 30.0, "p75": 37.0 },
+        "ebitda_margin_pct": { "p25": 7.5, "median": 11.0, "p75": 14.5 },
+        "revenue_growth_pct": { "p25": 4.0, "median": 9.0, "p75": 14.0 },
+        "dso_days": { "p25": 35.0, "median": 50.0, "p75": 65.0 },
+        "dio_days": { "p25": 40.0, "median": 60.0, "p75": 85.0 },
+        "dpo_days": { "p25": 35.0, "median": 50.0, "p75": 70.0 },
+        "net_debt_to_ebitda": { "p25": 0.6, "median": 1.6, "p75": 2.8 }
+      },
+      "notes": "Sensibilidad a costo de materia prima agrícola y envases (hojalata, vidrio). Concentración típica en grandes superficies con plazos de pago de 60–90 días."
+    },
+    "SERVICIOS_B2B": {
+      "label": "Servicios B2B (tecnología, consultoría, ingeniería, outsourcing)",
+      "ev_ebitda": { "p25": 4.5, "median": 5.8, "p75": 7.0 },
+      "ev_revenue": { "p25": 0.5, "median": 0.85, "p75": 1.3 },
+      "operating_benchmarks": {
+        "gross_margin_pct": { "p25": 22.0, "median": 32.0, "p75": 45.0 },
+        "ebitda_margin_pct": { "p25": 8.0, "median": 12.5, "p75": 18.0 },
+        "revenue_growth_pct": { "p25": 3.0, "median": 10.0, "p75": 20.0 },
+        "dso_days": { "p25": 45.0, "median": 70.0, "p75": 100.0 },
+        "dio_days": { "p25": 0.0, "median": 5.0, "p75": 15.0 },
+        "dpo_days": { "p25": 20.0, "median": 35.0, "p75": 55.0 },
+        "net_debt_to_ebitda": { "p25": -0.5, "median": 0.8, "p75": 2.0 }
+      },
+      "notes": "Riesgo de concentración en pocos contratos y dependencia de personas clave. En outsourcing de personal el margen bruto es estructuralmente bajo y la cartera con entidades públicas eleva el DSO."
+    },
+    "COMERCIO_MAYORISTA": {
+      "label": "Comercio al por mayor (alimentos, insumos, materiales, farmacéuticos)",
+      "ev_ebitda": { "p25": 3.8, "median": 4.8, "p75": 5.8 },
+      "ev_revenue": { "p25": 0.2, "median": 0.32, "p75": 0.48 },
+      "operating_benchmarks": {
+        "gross_margin_pct": { "p25": 12.0, "median": 17.0, "p75": 23.0 },
+        "ebitda_margin_pct": { "p25": 3.5, "median": 5.5, "p75": 8.0 },
+        "revenue_growth_pct": { "p25": 2.0, "median": 7.0, "p75": 12.0 },
+        "dso_days": { "p25": 30.0, "median": 45.0, "p75": 65.0 },
+        "dio_days": { "p25": 30.0, "median": 50.0, "p75": 75.0 },
+        "dpo_days": { "p25": 30.0, "median": 45.0, "p75": 65.0 },
+        "net_debt_to_ebitda": { "p25": 0.8, "median": 2.0, "p75": 3.2 }
+      },
+      "notes": "Márgenes delgados: pequeñas variaciones de capital de trabajo dominan la generación de caja. Revisar exclusividades de distribución y concentración de proveedores."
+    },
+    "LOGISTICA": {
+      "label": "Logística (transporte de carga, almacenamiento, mensajería)",
+      "ev_ebitda": { "p25": 4.3, "median": 5.3, "p75": 6.4 },
+      "ev_revenue": { "p25": 0.4, "median": 0.6, "p75": 0.85 },
+      "operating_benchmarks": {
+        "gross_margin_pct": { "p25": 15.0, "median": 22.0, "p75": 30.0 },
+        "ebitda_margin_pct": { "p25": 9.0, "median": 13.0, "p75": 18.0 },
+        "revenue_growth_pct": { "p25": 3.0, "median": 8.0, "p75": 14.0 },
+        "dso_days": { "p25": 40.0, "median": 60.0, "p75": 85.0 },
+        "dio_days": { "p25": 0.0, "median": 3.0, "p75": 10.0 },
+        "dpo_days": { "p25": 25.0, "median": 40.0, "p75": 60.0 },
+        "net_debt_to_ebitda": { "p25": 1.0, "median": 2.2, "p75": 3.5 }
+      },
+      "notes": "Intensiva en activos (flota) y leasing: revisar arrendamientos financieros y vehículos afiliados de terceros. Sensible al precio del ACPM y a peajes."
+    }
+  },
+  "ciiu_catalog": {
+    "0111": { "description": "Cultivo de cereales (excepto arroz), legumbres y semillas oleaginosas", "sector_key": "AGROINDUSTRIA" },
+    "0112": { "description": "Cultivo de arroz", "sector_key": "AGROINDUSTRIA" },
+    "0113": { "description": "Cultivo de hortalizas, raíces y tubérculos", "sector_key": "AGROINDUSTRIA" },
+    "0122": { "description": "Cultivo de plátano y banano", "sector_key": "AGROINDUSTRIA" },
+    "0123": { "description": "Cultivo de café", "sector_key": "AGROINDUSTRIA" },
+    "0125": { "description": "Cultivo de flor de corte", "sector_key": "AGROINDUSTRIA" },
+    "0126": { "description": "Cultivo de palma para aceite (palma africana) y otros frutos oleaginosos", "sector_key": "AGROINDUSTRIA" },
+    "0141": { "description": "Cría de ganado bovino y bufalino", "sector_key": "AGROINDUSTRIA" },
+    "0161": { "description": "Actividades de apoyo a la agricultura", "sector_key": "AGROINDUSTRIA" },
+    "0163": { "description": "Actividades posteriores a la cosecha", "sector_key": "AGROINDUSTRIA" },
+    "1011": { "description": "Procesamiento y conservación de carne y productos cárnicos", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1012": { "description": "Procesamiento y conservación de pescados, crustáceos y moluscos", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1020": { "description": "Procesamiento y conservación de frutas, legumbres, hortalizas y tubérculos", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1030": { "description": "Elaboración de aceites y grasas de origen vegetal y animal", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1040": { "description": "Elaboración de productos lácteos", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1051": { "description": "Elaboración de productos de molinería", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1081": { "description": "Elaboración de productos de panadería", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "1089": { "description": "Elaboración de otros productos alimenticios n.c.p.", "sector_key": "MANUFACTURA_ALIMENTOS" },
+    "6201": { "description": "Actividades de desarrollo de sistemas informáticos", "sector_key": "SERVICIOS_B2B" },
+    "6202": { "description": "Actividades de consultoría informática y administración de instalaciones informáticas", "sector_key": "SERVICIOS_B2B" },
+    "7020": { "description": "Actividades de consultoría de gestión", "sector_key": "SERVICIOS_B2B" },
+    "7110": { "description": "Actividades de arquitectura e ingeniería y otras actividades conexas de consultoría técnica", "sector_key": "SERVICIOS_B2B" },
+    "7830": { "description": "Otras actividades de suministro de recurso humano", "sector_key": "SERVICIOS_B2B" },
+    "8010": { "description": "Actividades de seguridad privada", "sector_key": "SERVICIOS_B2B" },
+    "8121": { "description": "Limpieza general interior de edificios", "sector_key": "SERVICIOS_B2B" },
+    "8211": { "description": "Actividades combinadas de servicios administrativos de oficina", "sector_key": "SERVICIOS_B2B" },
+    "4620": { "description": "Comercio al por mayor de materias primas agropecuarias; animales vivos", "sector_key": "COMERCIO_MAYORISTA" },
+    "4631": { "description": "Comercio al por mayor de productos alimenticios", "sector_key": "COMERCIO_MAYORISTA" },
+    "4645": { "description": "Comercio al por mayor de productos farmacéuticos, medicinales, cosméticos y de tocador", "sector_key": "COMERCIO_MAYORISTA" },
+    "4659": { "description": "Comercio al por mayor de otros tipos de maquinaria y equipo n.c.p.", "sector_key": "COMERCIO_MAYORISTA" },
+    "4663": { "description": "Comercio al por mayor de materiales de construcción, artículos de ferretería, pinturas, productos de vidrio, equipo y materiales de fontanería y calefacción", "sector_key": "COMERCIO_MAYORISTA" },
+    "4690": { "description": "Comercio al por mayor no especializado", "sector_key": "COMERCIO_MAYORISTA" },
+    "4923": { "description": "Transporte de carga por carretera", "sector_key": "LOGISTICA" },
+    "5210": { "description": "Almacenamiento y depósito", "sector_key": "LOGISTICA" },
+    "5229": { "description": "Otras actividades complementarias al transporte", "sector_key": "LOGISTICA" },
+    "5320": { "description": "Actividades de mensajería", "sector_key": "LOGISTICA" }
+  },
+  "ciiu_division_fallback": {
+    "01": "AGROINDUSTRIA",
+    "10": "MANUFACTURA_ALIMENTOS",
+    "46": "COMERCIO_MAYORISTA",
+    "49": "LOGISTICA",
+    "52": "LOGISTICA",
+    "53": "LOGISTICA",
+    "62": "SERVICIOS_B2B",
+    "70": "SERVICIOS_B2B",
+    "71": "SERVICIOS_B2B",
+    "78": "SERVICIOS_B2B",
+    "80": "SERVICIOS_B2B",
+    "81": "SERVICIOS_B2B",
+    "82": "SERVICIOS_B2B"
+  }
+}
