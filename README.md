@@ -24,7 +24,9 @@ http://localhost:3000, vaya a **Nueva operación** y pulse **Abrir caso demo**. 
 `backend/.env.example` a `backend/.env` y agregue una clave **gratuita** de Groq (`GROQ_API_KEY`, <https://console.groq.com/keys>);
 sin claves todo funciona con reglas deterministas.
 
-**Despliegue gratuito con enlace público** (Vercel + Render + Neon + Groq): ver [DESPLIEGUE.md](DESPLIEGUE.md).
+**Despliegue gratuito con enlace público en una sola plataforma** (Render: un servicio + base de datos; IA con Groq): ver
+[DESPLIEGUE.md](DESPLIEGUE.md). El [`Dockerfile`](Dockerfile) compila el frontend como sitio estático (`STATIC_EXPORT=1`) y el
+backend lo sirve en la misma URL que la API (`FRONTEND_DIR`), así que no hay CORS ni dos plataformas que conectar.
 
 ## Estado
 

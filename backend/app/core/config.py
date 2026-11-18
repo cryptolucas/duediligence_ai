@@ -85,6 +85,8 @@ class Settings:
     cors_origin_regex: Optional[str] = None
     access_code: Optional[str] = None
     max_concurrent_jobs: int = 2
+    # Frontend exportado (next build con STATIC_EXPORT=1): si existe, el backend lo sirve en la misma URL que la API.
+    frontend_dir: Optional[Path] = None
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -116,6 +118,7 @@ class Settings:
             cors_origin_regex=os.environ.get("CORS_ORIGIN_REGEX", "").strip() or None,
             access_code=os.environ.get("ACCESS_CODE", "").strip() or None,
             max_concurrent_jobs=max(1, int(os.environ.get("MAX_CONCURRENT_JOBS", "2"))),
+            frontend_dir=Path(os.environ["FRONTEND_DIR"]) if os.environ.get("FRONTEND_DIR", "").strip() else None,
         )
 
     # ------------------------------------------------------------------ modelos cloud

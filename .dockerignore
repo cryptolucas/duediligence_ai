@@ -1,0 +1,17 @@
+.git
+.claude
+entregables
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+backend/.venv
+backend/.env
+backend/*.db
+backend/storage
+backend/demo_files
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/.env.local
+frontend/tsconfig.tsbuildinfo
+*.log

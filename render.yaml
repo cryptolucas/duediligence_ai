@@ -1,31 +1,32 @@
-# Blueprint de Render: backend FastAPI en el plan gratuito.
-# Render → New → Blueprint → seleccione este repositorio. Las variables con "sync: false" se piden al crear.
+# Blueprint de Render: Catalejo Deal Desk completo en UN solo servicio gratuito + base de datos gratuita.
+# Render → New → Blueprint → seleccione este repositorio. Solo le pedirá GROQ_API_KEY y ACCESS_CODE.
+# El enlace público para los usuarios es la URL del servicio (https://catalejo-xxxx.onrender.com).
+databases:
+  - name: catalejo-db
+    plan: free            # vence a los 30 días (+14 de gracia): suficiente para una fase de pruebas
+    databaseName: catalejo
+    user: catalejo
+
 services:
   - type: web
-    name: catalejo-api
-    runtime: python
+    name: catalejo
+    runtime: docker
     plan: free
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /api/health
     autoDeploy: true
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.12.8
+      # Base de datos creada arriba (si prefiere Neon, reemplace este valor por su cadena postgresql://...)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: catalejo-db
+          property: connectionString
       # Clave gratuita de https://console.groq.com/keys
       - key: GROQ_API_KEY
         sync: false
-      # Cadena de conexión de Neon (postgresql://...); sin ella los datos se pierden al reiniciar
-      - key: DATABASE_URL
-        sync: false
-      # URL pública del frontend en Vercel, ej. https://catalejo.vercel.app
-      - key: CORS_ORIGINS
-        sync: false
-      # Código que escribirán los usuarios de prueba (déjelo vacío para acceso libre)
+      # Código que escribirán los usuarios de prueba (vacío = acceso libre)
       - key: ACCESS_CODE
         sync: false
-      - key: STORAGE_DIR
-        value: /tmp/catalejo-storage
       - key: MAX_CONCURRENT_JOBS
         value: "2"

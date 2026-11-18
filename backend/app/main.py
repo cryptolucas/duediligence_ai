@@ -636,7 +636,45 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
         )
         return response
 
+    if settings.frontend_dir is not None and (settings.frontend_dir / "index.html").is_file():
+        mount_frontend(app, settings.frontend_dir)
     return app
+
+
+def frontend_file(root: Path, url_path: str) -> Optional[Path]:
+    """Archivo del sitio estático para una ruta. Todas las operaciones (/deals/<id>) comparten la página exportada
+    deals/_.html (y su carga de navegación deals/_.txt); el id se lee de la URL en el navegador."""
+    path = url_path.strip("/")
+    candidates = ["index.html"] if not path else [path, f"{path}.html", f"{path}/index.html"]
+    parts = path.split("/")
+    if len(parts) == 2 and parts[0] == "deals" and parts[1] and parts[1].rsplit(".", 1)[0] != "new":
+        candidates.append("deals/_.txt" if parts[1].endswith(".txt") else "deals/_.html")
+    base = root.resolve()
+    for candidate in candidates:
+        target = (base / candidate).resolve()
+        if target.is_file() and base in target.parents:  # sin salir de la carpeta (../)
+            return target
+    return None
+
+
+def mount_frontend(app: FastAPI, root: Path) -> None:
+    """Sirve el frontend exportado en la misma URL que la API: un solo servicio, sin CORS."""
+    from fastapi.responses import FileResponse
+
+    @app.get("/{url_path:path}", include_in_schema=False)
+    def frontend(url_path: str):
+        if url_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Ruta de la API no encontrada.")
+        target = frontend_file(root, url_path)
+        if target is None:
+            not_found = root / "404.html"
+            if not_found.is_file():
+                return FileResponse(not_found, status_code=404, media_type="text/html")
+            raise HTTPException(status_code=404)
+        immutable = url_path.startswith("_next/static/")
+        headers = {"Cache-Control": "public, max-age=31536000, immutable" if immutable else "no-cache"}
+        media_type = "text/x-component" if target.suffix == ".txt" else None
+        return FileResponse(target, headers=headers, media_type=media_type)
 
 
 app = create_app()
