@@ -12,7 +12,15 @@ from __future__ import annotations
 import re
 from typing import Optional, Sequence
 
-from app.agents.context import AgentRuntime, NodeTimer, documents_context, units_multiplier
+from app.agents.context import (
+    AgentRuntime,
+    NodeTimer,
+    input_budget_chars,
+    is_supplementary,
+    plan_context,
+    run_chunked,
+    units_multiplier,
+)
 from app.agents.llm_schemas import AnalystResponse, Evidence, ProposedFact
 from app.agents.prompts import FINANCIAL_LEGAL_ANALYST
 from app.schemas.deal import (
@@ -72,20 +80,70 @@ def missing_profile() -> dict:
 # ---------------------------------------------------------------------------
 
 
+ANALYST_MAX_CHUNKS = 4
+
+
+def _norm(text: str) -> str:
+    return " ".join(text.lower().split())[:120]
+
+
+def merge_analyst_responses(responses: Sequence[AnalystResponse]) -> AnalystResponse:
+    """Une las respuestas de cada parte del contexto: primer dato societario encontrado y listas sin duplicados."""
+    if len(responses) == 1:
+        return responses[0]
+
+    def unique(items, key) -> list:
+        seen: set = set()
+        out = []
+        for item in items:
+            if key(item) not in seen:
+                seen.add(key(item))
+                out.append(item)
+        return out
+
+    facts = {
+        key: next((getattr(r, key) for r in responses if getattr(r, key) is not None and getattr(r, key).value.strip()), None)
+        for key in FACT_LABELS
+    }
+    return AnalystResponse(
+        **facts,
+        adjustments=unique(
+            (a for r in responses for a in r.adjustments), lambda a: (a.period, a.category, _norm(a.evidence.exact_quote))
+        ),
+        statutory_limits=unique((x for r in responses for x in r.statutory_limits), lambda x: _norm(x.value)),
+        shareholders=unique((x for r in responses for x in r.shareholders), lambda x: _norm(x.name)),
+        legal_proceedings=unique(
+            (x for r in responses for x in r.legal_proceedings), lambda x: (x.proceeding_type, _norm(x.evidence.exact_quote))
+        ),
+    )
+
+
 def analyze_with_llm(
     documents: Sequence[SourceDocument], periods: Sequence[str], runtime: AgentRuntime, notes: list[str]
 ) -> tuple[list[EbitdaAdjustment], CorporateProfile]:
-    context = documents_context(documents)
-    if not context:
+    fixed = f"Periodos analizados: {', '.join(periods)}\nParte 99 de 99 del expediente.\n\nDOCUMENTOS:\n"
+    plan = plan_context(documents, input_budget_chars(runtime.llm, FINANCIAL_LEGAL_ANALYST + fixed), ANALYST_MAX_CHUNKS)
+    if not plan.chunks:
         notes.append("No hay notas, certificados ni teaser para el agente financiero y societario.")
         return [], CorporateProfile(**missing_profile(), statutory_limits=[], shareholders=[], legal_proceedings=[])
-    response = runtime.llm.complete_json(  # type: ignore[union-attr]
-        FINANCIAL_LEGAL_ANALYST,
-        f"Periodos analizados: {', '.join(periods)}\n\nDOCUMENTOS:\n{context}",
-        AnalystResponse,
-        deal_id=runtime.deal_id,
+    if plan.note():
+        notes.append(plan.note())
+    responses = run_chunked(
+        runtime,
+        system=FINANCIAL_LEGAL_ANALYST,
+        schema=AnalystResponse,
         task="analyst",
+        chunks=plan.chunks,
+        make_user=lambda chunk, i, n: (
+            f"Periodos analizados: {', '.join(periods)}\n"
+            + (f"Parte {i} de {n} del expediente: extrae solo lo que aparece en esta parte.\n" if n > 1 else "")
+            + f"\nDOCUMENTOS:\n{chunk}"
+        ),
+        fixed_text=fixed,
+        notes=notes,
+        max_calls=ANALYST_MAX_CHUNKS * 2,
     )
+    response = merge_analyst_responses(responses)
     rejected: list[str] = []
     by_id = {d.document_id: d for d in documents}
 
@@ -102,8 +160,15 @@ def analyze_with_llm(
         multiplier = units_multiplier(doc)
         amount_cop = abs(prop.amount_as_reported) * multiplier * (1 if prop.direction == "ADD_BACK" else -1)
         literal_ok = amount_supported_by_text(prop.amount_as_reported, result.citation.exact_quote, (1.0,))
-        status = "ACCEPTED" if literal_ok and not result.relocated else "PENDING_REVIEW"
+        supplementary = is_supplementary(doc)
+        # Un ajuste que solo se apoya en «Otros archivos» no mueve el EBITDA hasta que el analista lo acepte.
+        status = "ACCEPTED" if literal_ok and not result.relocated and not supplementary else "PENDING_REVIEW"
         rationale = prop.rationale
+        if supplementary:
+            rationale = (
+                f"⚠ Fuente complementaria ({doc.document_name}, cargado en «Otros archivos»): queda pendiente hasta que "
+                f"el analista lo valide. {rationale}"
+            )
         if not literal_ok:
             rationale = f"⚠ La cifra propuesta no aparece literalmente en la cita; requiere revisión. {rationale}"
         rationale += f" (Monto convertido desde {doc.reported_units}.)"
@@ -160,7 +225,8 @@ def analyze_with_llm(
             LegalProceeding(
                 id=f"lit_{n:02d}_{proc.proceeding_type.lower()}",
                 proceeding_type=proc.proceeding_type,
-                description=proc.description,
+                description=proc.description
+                + (" (según «Otros archivos»: verificar con las notas o el abogado)" if is_supplementary(by_id[result.citation.document_id]) else ""),
                 claimed_amount_cop=None if claimed is None else abs(claimed) * multiplier,
                 provisioned_amount_cop=abs(proc.provisioned_amount_as_reported) * multiplier,
                 probability=proc.probability,
@@ -249,6 +315,30 @@ def resolve_company(profile: CorporateProfile, hints: dict, documents: Sequence[
     }
 
 
+_NIT_ANY = re.compile(r"\b(\d{3})\.?(\d{3})\.?(\d{3})\s*-\s*\d\b")
+
+
+def foreign_document_notes(documents: Sequence[SourceDocument], company: dict) -> list[str]:
+    """Avisa si un documento de «Otros archivos» parece de otra empresa (menciona otro NIT y no menciona a esta)."""
+    nit_digits = re.sub(r"\D", "", company.get("nit", ""))[:9]
+    name_words = [w for w in re.findall(r"[a-záéíóúñ]{4,}", company.get("company_name", "").lower()) if w not in ("sociedad", "empresa")][:2]
+    if len(nit_digits) != 9:
+        return []
+    notes = []
+    for doc in documents:
+        if not is_supplementary(doc):
+            continue
+        text = "\n".join(p.content for p in doc.pages)
+        nits = {"".join(m.groups()) for m in _NIT_ANY.finditer(text)}
+        mentions_company = nit_digits in nits or (name_words and all(w in text.lower() for w in name_words))
+        if nits and not mentions_company:
+            notes.append(
+                f"«{doc.document_name}» menciona otro NIT ({', '.join(sorted(nits)[:3])}) y no menciona a {company.get('company_name')}: "
+                "verifique que corresponda a esta operación. Se usó solo como contexto y sus datos quedan sin verificar."
+            )
+    return notes
+
+
 def run_analyst(state: dict, runtime: AgentRuntime) -> dict:
     timer = NodeTimer("node_financial_and_legal_analyst", runtime.effective_mode)
     calls_before = getattr(runtime.llm, "calls", 0)
@@ -264,6 +354,7 @@ def run_analyst(state: dict, runtime: AgentRuntime) -> dict:
     if profile is None:
         profile = analyze_with_rules(documents, notes)
     company = resolve_company(profile, state.get("company_hints", {}), documents)
+    notes.extend(foreign_document_notes(documents, company))
     return {
         "ebitda_adjustments": adjustments,
         "corporate_profile": profile,

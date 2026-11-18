@@ -200,9 +200,9 @@ def test_pdf_lines_have_columns_and_coordinates(tmp_path):
 
 
 def test_unsupported_extension(tmp_path):
-    path = tmp_path / "memo.docx"
+    path = tmp_path / "memo.doc"
     path.write_bytes(b"x")
-    with pytest.raises(UnsupportedDocumentError):
+    with pytest.raises(UnsupportedDocumentError, match=r"\.docx"):  # explica cómo solucionarlo
         parse_document(path, "doc_x")
 
 

@@ -5,17 +5,19 @@ uvicorn[standard]>=0.30
 python-multipart>=0.0.9
 python-dotenv>=1.0
 
-# Persistencia
+# Persistencia (SQLite local; PostgreSQL en despliegue, ej. Neon)
 sqlmodel>=0.0.22
+psycopg[binary]>=3.2
 
 # Parsers documentales
 pymupdf>=1.24
 pdfplumber>=0.11
 openpyxl>=3.1
+xlrd>=2.0          # Excel 97-2003 (.xls)
+python-docx>=1.1   # Word (.docx) en «Otros archivos»
 
-# Agentes
+# Agentes (el LLM se llama por HTTP con httpx: API compatible con OpenAI, sin SDKs pesados)
 langgraph>=0.2
-litellm>=1.50
 httpx>=0.27
 
 # Tests

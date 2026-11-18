@@ -128,9 +128,13 @@ export function ProcessingView({ job }: { job: JobStatus }) {
               <Link href="/deals/new">Volver a cargar documentos</Link>
             </Button>
           ) : (
-            <p className="text-xs text-muted-foreground">
-              Puede cerrar esta pestaña: el procesamiento continúa en el servidor y la operación aparecerá en la lista de inicio.
-            </p>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <p>
+                Normalmente tarda entre 2 y 8 minutos. Si el modelo gratuito de IA alcanza su límite por minuto, el sistema espera y
+                reintenta solo: es normal que un paso se quede quieto un momento.
+              </p>
+              <p>Puede cerrar esta pestaña: el procesamiento continúa en el servidor y la operación aparecerá en «Operaciones» de este navegador.</p>
+            </div>
           )}
         </CardContent>
       </Card>

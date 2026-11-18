@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { Plus, Telescope } from "lucide-react";
+import { AppGate } from "@/components/app-gate";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -17,12 +18,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen font-sans">
         <header className="sticky top-0 z-40 h-12 border-b bg-primary text-primary-foreground">
           <div className="flex h-full items-center justify-between px-4">
-            <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-              <Telescope className="h-5 w-5" aria-hidden />
+            <Link href="/" className="flex min-w-0 items-center gap-2 whitespace-nowrap text-sm font-semibold tracking-tight">
+              <Telescope className="h-5 w-5 shrink-0" aria-hidden />
               Catalejo Deal Desk
             </Link>
-            <nav className="flex items-center gap-4 text-xs">
-              <Link href="/" className="opacity-80 hover:opacity-100">
+            <nav className="flex shrink-0 items-center gap-4 whitespace-nowrap text-xs">
+              <Link href="/" className="hidden opacity-80 hover:opacity-100 sm:inline">
                 Operaciones
               </Link>
               <Link
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </div>
         </header>
-        {children}
+        <AppGate>{children}</AppGate>
       </body>
     </html>
   );

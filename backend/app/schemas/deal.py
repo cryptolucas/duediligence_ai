@@ -84,6 +84,8 @@ RedFlagDomain = Literal["FINANCIAL", "CORPORATE_LEGAL", "TAX_AND_CONTINGENCIES",
 # CLOUD_API / LOCAL_OLLAMA: agentes LLM activos. SEED_FALLBACK: caso demo precargado.
 # RULES_FALLBACK: documentos propios procesados solo con reglas deterministas (sin claves o sin Ollama).
 LlmMode = Literal["CLOUD_API", "LOCAL_OLLAMA", "SEED_FALLBACK", "RULES_FALLBACK"]
+# Casillas de carga: tres documentos obligatorios y «Otros archivos» (opcionales, complementarios).
+UploadSlot = Literal["TRIAL_BALANCE", "FINANCIAL_STATEMENTS", "CHAMBER_CERTIFICATE", "OTHER"]
 
 ANALYST_INPUT_DOCUMENT_ID = "analyst_input"
 
@@ -140,10 +142,17 @@ class SourceDocument(_StrictModel):
         "APPRAISAL",
         "OTHER",
     ]
-    file_format: Literal["PDF", "XLSX", "CSV"]
+    file_format: Literal["PDF", "XLSX", "XLS", "CSV", "DOCX", "TXT"]
     description: str
     reported_units: str = Field(..., description="Unidades del documento original, ej. 'Miles de COP' o 'COP'.")
     pages: List[DocumentPage]
+    upload_slot: Optional[UploadSlot] = Field(
+        default=None,
+        description=(
+            "Casilla en la que el usuario cargó el documento. OTHER = «Otros archivos»: contexto complementario que "
+            "nunca alimenta el motor ni se considera fuente autoritativa. None = expedientes previos o caso demo."
+        ),
+    )
 
 
 class CitedFact(_StrictModel):

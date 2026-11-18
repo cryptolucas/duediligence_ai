@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 import time
 from dataclasses import dataclass, field
-from typing import Any, Mapping, Optional, Sequence
+from typing import Any, Callable, Mapping, Optional, Sequence
 
 from app.schemas.deal import SourceCitation, SourceDocument
 from app.schemas.financials import FinancialEngineResult
@@ -29,6 +29,21 @@ NOTE_KEYWORDS = re.compile(
 )
 
 
+# Páginas de "Otros archivos" (fuentes complementarias): se envían al modelo solo si hablan de temas útiles
+# para el screening; las demás se descartan para no meter ruido en el análisis.
+RELEVANCE_KEYWORDS = re.compile(
+    r"venta|ingreso|ebitda|utilidad|margen|deuda|activo|pasivo|patrimonio|flujo|caja|efectivo|cliente|proveedor|"
+    r"contrato|socio|accionist|riesgo|valor|aval[úu]|arrend|canon|emplead|trabajador|producci|mercado|competen|"
+    r"crecimiento|proyecci|presupuesto|cartera|inventario|impuesto|dian|litig|demanda|garant|cr[ée]dito|banco|"
+    r"pr[ée]stamo|dividend|junta|asamblea|acta|gerente|representante|nit|tesis|inversi|adquisici|transacci|"
+    r"exportaci|planta|capacidad|concentraci|contingen|provisi|seguro|licencia|ambiental|propiedad",
+    re.IGNORECASE,
+)
+CHARS_PER_TOKEN = 3.0  # conservador para español con cifras y tablas
+DEFAULT_INPUT_TOKENS = 16000  # clientes sin límite declarado (ej. simulados en tests)
+SUPPLEMENTARY_SHARE = 0.35  # espacio máximo de las fuentes complementarias cuando las principales no caben
+
+
 @dataclass
 class AgentRuntime:
     """Dependencias de una ejecución del grafo (una por deal: aislamiento estricto)."""
@@ -41,6 +56,17 @@ class AgentRuntime:
     @property
     def uses_llm(self) -> bool:
         return self.llm is not None and self.effective_mode in ("CLOUD_API", "LOCAL_OLLAMA")
+
+
+def is_supplementary(document: SourceDocument) -> bool:
+    """Documento cargado en «Otros archivos»: contexto complementario, nunca fuente de cifras del motor."""
+    return document.upload_slot == "OTHER"
+
+
+def input_budget_chars(llm: Any, fixed_text: str = "") -> int:
+    """Caracteres disponibles para documentos en una llamada, descontando prompt de sistema, esquema y partes fijas."""
+    tokens = int(getattr(llm, "max_input_tokens", None) or DEFAULT_INPUT_TOKENS)
+    return max(1500, int(tokens * CHARS_PER_TOKEN) - len(fixed_text) - 300)
 
 
 @dataclass
@@ -64,37 +90,249 @@ def units_multiplier(document: SourceDocument) -> float:
     return UNIT_MULTIPLIERS.get(document.reported_units, 1.0)
 
 
+@dataclass
+class ContextBlock:
+    """Una página (o fragmento de página) de un documento, lista para enviar al modelo."""
+
+    text: str
+    priority: tuple[int, int, int]
+    supplementary: bool
+    relevance: int
+
+
+@dataclass
+class ContextPlan:
+    chunks: list[str]
+    primary_pages: int = 0
+    supplementary_pages: int = 0
+    irrelevant_supplementary: int = 0
+    dropped_primary: int = 0
+    dropped_supplementary: int = 0
+
+    def note(self) -> Optional[str]:
+        if not self.chunks:
+            return None
+        parts = [f"Contexto enviado al modelo en {len(self.chunks)} parte(s): {self.primary_pages} página(s) de documentos principales"]
+        if self.supplementary_pages or self.irrelevant_supplementary or self.dropped_supplementary:
+            parts.append(f"{self.supplementary_pages} de «Otros archivos»")
+        text = " y ".join(parts) + "."
+        if self.irrelevant_supplementary:
+            text += f" {self.irrelevant_supplementary} página(s) de «Otros archivos» se descartaron por no tener información relevante."
+        if self.dropped_primary or self.dropped_supplementary:
+            text += (
+                f" Por el límite del modelo no se enviaron {self.dropped_primary} página(s) principales y "
+                f"{self.dropped_supplementary} complementarias de menor prioridad."
+            )
+        return text
+
+
+def _split_lines(text: str, max_chars: int) -> list[str]:
+    """Divide un texto por renglones en fragmentos de hasta ``max_chars`` (un renglón enorme se corta)."""
+    parts: list[str] = []
+    current: list[str] = []
+    size = 0
+    for line in text.splitlines():
+        while len(line) > max_chars:
+            if current:
+                parts.append("\n".join(current))
+                current, size = [], 0
+            parts.append(line[:max_chars])
+            line = line[max_chars:]
+        if size + len(line) + 1 > max_chars and current:
+            parts.append("\n".join(current))
+            current, size = [], 0
+        current.append(line)
+        size += len(line) + 1
+    if current:
+        parts.append("\n".join(current))
+    return parts
+
+
+def context_blocks(
+    documents: Sequence[SourceDocument], include_types: Optional[set[str]] = None, max_block_chars: Optional[int] = None
+) -> list[ContextBlock]:
+    """Páginas de los documentos cualitativos con su prioridad.
+
+    Fuentes principales (certificado, notas relevantes de los EEFF, avalúos y teaser cargados como principales)
+    primero; las de «Otros archivos» se etiquetan como complementarias y se ordenan por relevancia. El balance de
+    prueba no se envía: sus cifras ya están en el motor.
+    """
+    blocks: list[ContextBlock] = []
+    for doc_idx, doc in enumerate(documents):
+        if include_types is not None and doc.document_type not in include_types:
+            continue
+        supplementary = is_supplementary(doc)
+        if doc.document_type == "TRIAL_BALANCE_XLSX" and not supplementary:
+            continue
+        priority = DOC_TYPE_PRIORITY.get(doc.document_type, 5)
+        role = "FUENTE COMPLEMENTARIA («Otros archivos»)" if supplementary else "FUENTE PRINCIPAL"
+        for idx, page in enumerate(doc.pages):
+            content = page.content.strip()
+            if not content:
+                continue
+            hits = len({m.group(0).lower() for m in RELEVANCE_KEYWORDS.finditer(content)})
+            if supplementary:
+                relevance = hits + (2 if NOTE_KEYWORDS.search(content) else 0)
+            else:
+                relevance = 0 if doc.document_type != "FINANCIAL_STATEMENTS_PDF" or NOTE_KEYWORDS.search(content) else 1
+            header = (
+                f"### [{role}] document_id={doc.document_id} | {doc.document_name} | "
+                f"page_or_sheet={page.page_or_sheet} | unidades={doc.reported_units}"
+            )
+            pieces = [content] if max_block_chars is None else _split_lines(content, max(400, max_block_chars - len(header) - 30))
+            for n, piece in enumerate(pieces, start=1):
+                suffix = f" | fragmento {n}/{len(pieces)}" if len(pieces) > 1 else ""
+                blocks.append(
+                    ContextBlock(
+                        text=f"{header}{suffix}\n{piece}",
+                        priority=(priority * 10 + (relevance if not supplementary else 0), doc_idx, idx * 100 + n),
+                        supplementary=supplementary,
+                        relevance=relevance,
+                    )
+                )
+    blocks.sort(key=lambda b: b.priority)
+    return blocks
+
+
+def plan_context(
+    documents: Sequence[SourceDocument],
+    chunk_chars: int,
+    max_chunks: int = 1,
+    include_types: Optional[set[str]] = None,
+    supplementary_share: float = SUPPLEMENTARY_SHARE,
+) -> ContextPlan:
+    """Reparte las páginas en hasta ``max_chunks`` partes de ``chunk_chars`` caracteres.
+
+    * Las fuentes complementarias sin relevancia se descartan.
+    * Si todo no cabe, las complementarias se limitan a ``supplementary_share`` del espacio total, para que
+      nunca desplacen a los documentos obligatorios; si las principales son pocas, aprovechan el espacio libre.
+    """
+    chunk_chars = max(800, chunk_chars)
+    blocks = context_blocks(documents, include_types, max_block_chars=chunk_chars)
+    primary = [b for b in blocks if not b.supplementary]
+    supplementary = sorted(
+        (b for b in blocks if b.supplementary and b.relevance > 0), key=lambda b: (-b.relevance, b.priority)
+    )
+    plan = ContextPlan(chunks=[], irrelevant_supplementary=sum(1 for b in blocks if b.supplementary and b.relevance == 0))
+    total = chunk_chars * max_chunks
+    reserve = min(sum(len(b.text) + 2 for b in supplementary), int(total * supplementary_share))
+
+    bins: list[list[str]] = [[] for _ in range(max_chunks)]
+    sizes = [0] * max_chunks
+
+    def place(block: ContextBlock, limit_total: int) -> bool:
+        size = len(block.text) + 2
+        if sum(sizes) + size > limit_total:
+            return False
+        for i in range(max_chunks):
+            if sizes[i] + size <= chunk_chars:
+                bins[i].append(block.text)
+                sizes[i] += size
+                return True
+        return False
+
+    for block in primary:
+        if place(block, total - reserve):
+            plan.primary_pages += 1
+        else:
+            plan.dropped_primary += 1
+    for block in supplementary:
+        if place(block, total):
+            plan.supplementary_pages += 1
+        else:
+            plan.dropped_supplementary += 1
+    plan.chunks = ["\n\n".join(b) for b in bins if b]
+    return plan
+
+
 def documents_context(
     documents: Sequence[SourceDocument],
     max_chars: int = 60_000,
     include_types: Optional[set[str]] = None,
 ) -> str:
-    """Texto de los documentos cualitativos, priorizando certificado, notas relevantes, avalúos y teaser."""
-    blocks: list[tuple[int, int, str]] = []
-    for doc in documents:
-        if include_types is not None and doc.document_type not in include_types:
-            continue
-        if doc.document_type == "TRIAL_BALANCE_XLSX":
-            continue
-        priority = DOC_TYPE_PRIORITY.get(doc.document_type, 5)
-        for idx, page in enumerate(doc.pages):
-            if not page.content.strip():
-                continue
-            relevance = 0 if doc.document_type != "FINANCIAL_STATEMENTS_PDF" or NOTE_KEYWORDS.search(page.content) else 1
-            header = f"### document_id={doc.document_id} | {doc.document_name} | page_or_sheet={page.page_or_sheet} | unidades={doc.reported_units}"
-            blocks.append((priority * 10 + relevance, idx, f"{header}\n{page.content}"))
-    blocks.sort(key=lambda b: (b[0], b[1]))
+    """Texto de los documentos cualitativos en un solo bloque de hasta ``max_chars`` (prioridad: certificado,
+    notas relevantes, avalúos, teaser; las fuentes complementarias, solo si son relevantes)."""
+    plan = plan_context(documents, max_chars, 1, include_types)
+    return plan.chunks[0] if plan.chunks else ""
+
+
+def split_to_size(text: str, max_chars: int) -> list[str]:
+    """Divide una parte de contexto respetando los encabezados ``### `` de cada página cuando es posible."""
+    if len(text) <= max_chars:
+        return [text]
+    sections = re.split(r"\n\n(?=### )", text)
     out: list[str] = []
-    used = 0
-    for _, _, text in blocks:
-        if used + len(text) > max_chars:
-            remaining = max_chars - used
-            if remaining > 500:
-                out.append(text[:remaining] + "\n[...truncado...]")
+    current = ""
+    for section in sections:
+        pieces = [section] if len(section) <= max_chars else _split_lines(section, max_chars)
+        for piece in pieces:
+            if current and len(current) + len(piece) + 2 > max_chars:
+                out.append(current)
+                current = ""
+            current = f"{current}\n\n{piece}" if current else piece
+    if current:
+        out.append(current)
+    return out
+
+
+def run_chunked(
+    runtime: "AgentRuntime",
+    *,
+    system: str,
+    schema: type,
+    task: str,
+    chunks: Sequence[str],
+    make_user: Callable[[str, int, int], str],
+    fixed_text: str,
+    notes: list[str],
+    max_calls: int = 8,
+) -> list[Any]:
+    """Llama al modelo una vez por parte de contexto y devuelve las respuestas válidas.
+
+    Si el proveedor rechaza una parte por tamaño (límite de tokens del plan gratuito), el cliente reduce su
+    presupuesto y las partes pendientes se vuelven a dividir. Si falla por otra causa (cuota, red), se conservan
+    las respuestas ya obtenidas; si no hay ninguna, se propaga el error para degradar a reglas.
+    """
+    from app.services.llm_client import LLMContextTooLarge, LLMError
+    from app.services.llm_client import schema_instructions
+
+    overhead = system + schema_instructions(schema) + fixed_text
+    queue = list(chunks)
+    results: list[Any] = []
+    error: Optional[Exception] = None
+    calls = 0
+    done = 0
+    while queue and calls < max_calls:
+        chunk = queue.pop(0)
+        calls += 1
+        try:
+            results.append(
+                runtime.llm.complete_json(  # type: ignore[union-attr]
+                    system, make_user(chunk, done + 1, done + 1 + len(queue)), schema, deal_id=runtime.deal_id, task=task
+                )
+            )
+            done += 1
+        except LLMContextTooLarge as exc:
+            budget = input_budget_chars(runtime.llm, overhead)
+            pieces = split_to_size(chunk, budget) if budget < len(chunk) else split_to_size(chunk, max(800, len(chunk) // 2))
+            if len(pieces) < 2:
+                error = exc
+                break
+            queue = pieces + [p for rest in queue for p in split_to_size(rest, budget)]
+        except LLMError as exc:
+            error = exc
             break
-        out.append(text)
-        used += len(text)
-    return "\n\n".join(out)
+    skipped = len(queue)
+    if not results:
+        if error is not None:
+            raise error
+        return results
+    if error is not None or skipped:
+        notes.append(
+            f"{task}: se analizaron {done} parte(s) del contexto; {skipped + (1 if error else 0)} quedaron sin analizar"
+            + (f" ({str(error)[:160]})." if error else " (límite de llamadas por agente).")
+        )
+    return results
 
 
 def engine_summary(result: FinancialEngineResult) -> str:

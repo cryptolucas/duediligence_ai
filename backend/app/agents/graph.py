@@ -233,11 +233,20 @@ class ProgressReportingLLM:
         self._inner = inner
         self._emit = emit
         self.mode = inner.mode
-        self.model = inner.model
 
     @property
     def calls(self) -> int:
         return self._inner.calls
+
+    @property
+    def model(self) -> str:
+        return self._inner.model  # puede cambiar si el cliente pasa al modelo de respaldo
+
+    def __getattr__(self, name):
+        # max_input_tokens y demás atributos del cliente real (el presupuesto baja si el proveedor lo pide).
+        if name == "_inner":
+            raise AttributeError(name)
+        return getattr(self._inner, name)
 
     def complete_json(self, system, user, schema, *, deal_id, task):
         self._emit(

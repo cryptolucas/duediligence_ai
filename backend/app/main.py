@@ -1,12 +1,14 @@
 """API FastAPI de Catalejo Deal Desk.
 
 Endpoints:
-    GET  /api/health                      Estado del servicio.
-    GET  /api/llm/status                  Modelos disponibles (cloud / Ollama local).
+    GET  /api/health                      Estado del servicio (y si exige código de acceso).
+    GET  /api/llm/status                  Modelos disponibles (cloud gratuito / Ollama local).
     GET  /api/benchmarks                  Benchmarks sectoriales por CIIU.
-    GET  /api/deals                       Lista de operaciones.
+    GET  /api/upload-requirements         Casillas de carga: documentos obligatorios y «Otros archivos».
+    POST /api/documents/validate          Valida un archivo para una casilla (qué está mal y cómo solucionarlo).
+    GET  /api/deals                       Lista de operaciones del espacio de trabajo (X-Workspace-Id).
     GET  /api/deals/{deal_id}             Expediente completo + cálculos + memo renderizado.
-    POST /api/deals/upload                Caso demo (201, síncrono) o documentos PDF/XLSX/CSV (202, en segundo plano).
+    POST /api/deals/upload                Caso demo (201, síncrono) o documentos por casilla (202, en segundo plano).
     GET  /api/deals/{deal_id}/status      Progreso del grafo de agentes (nodo actual, llamadas LLM, eventos).
     GET  /api/jobs                        Procesamientos en curso o fallidos.
     POST /api/deals/{deal_id}/recalculate Toggles de ajustes/red flags y recálculo determinista instantáneo.
@@ -15,11 +17,16 @@ Endpoints:
 
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import re
 import shutil
+import tempfile
+import threading
 import time
 import uuid
+from pathlib import Path
 from typing import Callable, List, Optional
 
 from datetime import datetime, timezone
@@ -28,6 +35,7 @@ from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from app import __version__
 from app.agents.graph import NODE_LABELS, NODE_SEQUENCE, run_deal_pipeline
@@ -39,23 +47,32 @@ from app.schemas.api import (
     ChatResponse,
     DealSummary,
     DealView,
+    DocumentValidation,
     JobStatus,
     LlmStatus,
     ManualAdjustmentInput,
     PipelineStep,
     RecalculateRequest,
     RecalculateResponse,
+    UploadRequirements,
 )
 from app.schemas.deal import ANALYST_INPUT_DOCUMENT_ID, DealDossier, EbitdaAdjustment, SourceCitation
 from app.services.chat import answer_question
 from app.services.citation_guard import verify_quote
 from app.services.data_loader import load_benchmarks, load_demo_dossier
-from app.services.document_parser import SUPPORTED_EXTENSIONS, UnsupportedDocumentError, parse_document
+from app.services.document_validation import (
+    MAX_FILE_MB,
+    SLOT_SPECS,
+    SPECS_BY_ID,
+    assign_slot,
+    missing_required,
+    validate_file,
+)
 from app.services.financial_engine import ENGINE_VERSION, apply_adjustment_overrides, recalculate_dossier
-from app.services.llm_client import LLMResolution, ollama_models, pick_ollama_model, resolve_llm
+from app.services.llm_client import LLMResolution, describe_model, ollama_models, pick_ollama_model, resolve_llm
 from app.services.memo_renderer import render_memo
 
-MAX_FILE_BYTES = 25 * 1024 * 1024
+MAX_TOTAL_UPLOAD_MB = 150
 LlmResolver = Callable[[str, Settings], LLMResolution]
 
 
@@ -66,15 +83,44 @@ def _utc(dt: datetime) -> datetime:
 
 def _safe_filename(name: str) -> str:
     base = re.sub(r"[^\w.\- ]", "_", name or "archivo").strip(" .") or "archivo"
-    return base[:120]
+    if len(base) > 120:  # conserva la extensión
+        stem, dot, ext = base.rpartition(".")
+        base = (stem[: 115 - len(ext)] + dot + ext) if dot and len(ext) <= 5 else base[:120]
+    return base
+
+
+def _owner(request: Request) -> str:
+    """Espacio de trabajo del navegador (cabecera X-Workspace-Id); vacío si no se envía."""
+    return re.sub(r"[^A-Za-z0-9-]", "", request.headers.get("x-workspace-id", ""))[:64]
+
+
+class AccessCodeMiddleware(BaseHTTPMiddleware):
+    """Si ACCESS_CODE está definido, la API exige la cabecera X-Access-Code (salvo /api/health)."""
+
+    def __init__(self, app, code: str):
+        super().__init__(app)
+        self.code = code
+
+    async def dispatch(self, request, call_next):
+        path = request.url.path
+        if request.method == "OPTIONS" or not path.startswith("/api/") or path == "/api/health":
+            return await call_next(request)
+        given = request.headers.get("x-access-code", "")
+        if not hmac.compare_digest(given.encode(), self.code.encode()):
+            return JSONResponse(status_code=401, content={"detail": "Código de acceso inválido o faltante."})
+        return await call_next(request)
 
 
 def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmResolver] = None) -> FastAPI:
     settings = settings or Settings.from_env()
     app = FastAPI(title="Catalejo Deal Desk API", version=__version__)
+    if settings.access_code:
+        app.add_middleware(AccessCodeMiddleware, code=settings.access_code)
+    # CORS va por fuera (se agrega al final) para que también las respuestas 401 lleven sus cabeceras.
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+        allow_origins=list(settings.cors_origins),
+        allow_origin_regex=settings.cors_origin_regex,
         allow_methods=["*"],
         allow_headers=["*"],
     )
@@ -82,6 +128,8 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
     app.state.repo = DealRepository(settings.database_url)
     app.state.repo.fail_interrupted_jobs()
     app.state.llm_resolver = llm_resolver or resolve_llm
+    # Pocos análisis simultáneos: los planes gratuitos de IA limitan tokens por minuto y el servidor es pequeño.
+    job_slots = threading.BoundedSemaphore(settings.max_concurrent_jobs)
 
     # ------------------------------------------------------------------ utilidades
 
@@ -111,17 +159,25 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
 
     @app.get("/api/health")
     def health() -> dict:
-        return {"status": "ok", "version": __version__, "engine_version": ENGINE_VERSION}
+        return {
+            "status": "ok",
+            "version": __version__,
+            "engine_version": ENGINE_VERSION,
+            "access_code_required": bool(settings.access_code),
+        }
 
     @app.get("/api/llm/status", response_model=LlmStatus)
     def llm_status(request: Request) -> LlmStatus:
         s: Settings = request.app.state.settings
-        model = s.cloud_model()
-        installed = ollama_models(s.ollama_base_url)
+        candidates = s.cloud_candidates()
+        model = candidates[0] if candidates else None
+        installed = ollama_models(s.ollama_base_url, timeout_s=0.8)
         local_model = pick_ollama_model(s.ollama_model, installed)[0] if installed else None
         return LlmStatus(
             cloud_model=model,
             cloud_available=model is not None,
+            cloud_label=describe_model(model) if model else None,
+            cloud_fallback_labels=[describe_model(m) for m in candidates[1:]],
             ollama_model=local_model.split("/", 1)[1] if local_model else s.ollama_model,
             ollama_base_url=s.ollama_base_url,
             ollama_available=local_model is not None,
@@ -132,11 +188,28 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
     def benchmarks() -> dict:
         return load_benchmarks()
 
+    @app.get("/api/upload-requirements", response_model=UploadRequirements)
+    def upload_requirements() -> UploadRequirements:
+        return UploadRequirements(slots=list(SLOT_SPECS), max_file_mb=MAX_FILE_MB)
+
+    @app.post("/api/documents/validate", response_model=DocumentValidation)
+    def validate_document(file: UploadFile = File(...), slot: str = Form(...)) -> DocumentValidation:
+        """Valida un archivo para una casilla sin crear la operación. Siempre 200: el estado va en el cuerpo."""
+        if slot not in SPECS_BY_ID:
+            raise HTTPException(status_code=422, detail=f"Casilla desconocida: {slot}.")
+        name = _safe_filename(file.filename or "archivo")
+        with tempfile.TemporaryDirectory(prefix="catalejo_val_") as tmp:
+            target = Path(tmp) / name
+            with target.open("wb") as fh:
+                shutil.copyfileobj(file.file, fh)
+            validation, _ = validate_file(target, slot, file.filename or name, "doc_validacion")
+        return validation
+
     @app.get("/api/deals", response_model=List[DealSummary])
     def list_deals(request: Request) -> List[DealSummary]:
         summaries = []
         benchmarks_data = load_benchmarks()
-        for record in repo(request).list_records():
+        for record in repo(request).list_records(_owner(request)):
             dossier = repo(request).load_dossier(record)
             _, result = recalculate_dossier(dossier, benchmarks_data)
             last = result.income_statement[-1]
@@ -199,8 +272,21 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
             elapsed_s=round((end - _utc(job.created_at)).total_seconds(), 1),
         )
 
-    def run_job(deal_id: str, parsed: list, resolution: LLMResolution, requested_mode: str, hints: dict, storage) -> None:
-        """Ejecuta el grafo en segundo plano y deja el progreso en la tabla deal_jobs."""
+    def run_job(
+        deal_id: str, parsed: list, resolution: LLMResolution, requested_mode: str, hints: dict, storage, owner_id: str = ""
+    ) -> None:
+        """Ejecuta el grafo en segundo plano (máximo MAX_CONCURRENT_JOBS a la vez) y deja el progreso en deal_jobs."""
+        if not job_slots.acquire(blocking=False):
+            app.state.repo.update_job(deal_id, current_message="En cola: hay otros análisis en curso; empezará en cuanto termine uno.")
+            job_slots.acquire()
+        try:
+            _run_job(deal_id, parsed, resolution, requested_mode, hints, storage, owner_id)
+        finally:
+            job_slots.release()
+
+    def _run_job(
+        deal_id: str, parsed: list, resolution: LLMResolution, requested_mode: str, hints: dict, storage, owner_id: str
+    ) -> None:
         r: DealRepository = app.state.repo
         started = time.perf_counter()
         r.update_job(
@@ -243,7 +329,9 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
                     "message": f"Expediente generado a partir de {len(parsed)} documento(s).",
                 }
             )
-            r.create(dossier, requested_mode, resolution.reason, log)
+            r.create(dossier, requested_mode, resolution.reason, log, owner_id=owner_id)
+            # El texto de los documentos ya está en el expediente: los archivos originales no se conservan.
+            shutil.rmtree(storage, ignore_errors=True)
             r.update_job(
                 deal_id,
                 status="DONE",
@@ -253,13 +341,18 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
                 event={"type": "done", "message": f"Expediente listo en {elapsed_ms / 1000:.1f} s."},
             )
         except Exception as exc:  # noqa: BLE001 - cualquier fallo queda registrado en el job
-            message = str(exc) if isinstance(exc, IngestionError) else f"{type(exc).__name__}: {exc}"
+            message = (
+                str(exc)
+                if isinstance(exc, IngestionError)
+                else f"Ocurrió un error inesperado al procesar los documentos ({type(exc).__name__}: {str(exc)[:300]}). "
+                "Intente de nuevo; si se repite, comparta este mensaje con el equipo de Catalejo."
+            )
             r.update_job(deal_id, status="FAILED", error=message, current_message="Error", event={"type": "error", "message": message})
             shutil.rmtree(storage, ignore_errors=True)
 
     @app.get("/api/jobs", response_model=List[JobStatus])
     def list_jobs(request: Request) -> List[JobStatus]:
-        return [build_job_status(job) for job in repo(request).list_jobs()]
+        return [build_job_status(job) for job in repo(request).list_jobs(owner_id=_owner(request))]
 
     @app.get("/api/deals/{deal_id}/status", response_model=JobStatus)
     def deal_status(deal_id: str, request: Request) -> JobStatus:
@@ -310,16 +403,21 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
     def upload_deal(
         request: Request,
         background_tasks: BackgroundTasks,
-        files: List[UploadFile] = File(default=[]),
+        trial_balance_files: List[UploadFile] = File(default=[]),
+        financial_statements_files: List[UploadFile] = File(default=[]),
+        chamber_certificate_files: List[UploadFile] = File(default=[]),
+        other_files: List[UploadFile] = File(default=[]),
+        files: List[UploadFile] = File(default=[], description="Compatibilidad: archivos sin casilla, se clasifican solos."),
         llm_mode: str = Form("CLOUD_API"),
         use_demo: bool = Form(False),
         company_name: Optional[str] = Form(None),
         nit: Optional[str] = Form(None),
         ciiu_code: Optional[str] = Form(None),
     ) -> JSONResponse:
-        """Caso demo: síncrono (201 + expediente). Archivos propios: se validan y parsean de inmediato y el
-        grafo de agentes corre en segundo plano (202 + estado); el progreso se consulta en /status."""
+        """Caso demo: síncrono (201 + expediente). Documentos propios: se validan por casilla (3 obligatorios +
+        «Otros archivos» opcionales), se parsean de inmediato y el grafo corre en segundo plano (202 + estado)."""
         s: Settings = request.app.state.settings
+        owner = _owner(request)
 
         if use_demo:
             deal_id = f"demo-{uuid.uuid4().hex[:10]}"
@@ -328,38 +426,93 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
                 deal_id=deal_id, effective_mode="SEED_FALLBACK", benchmarks=load_benchmarks(), seed=seed
             )
             reason = "Caso demo precargado (Alimentos y Conservas del Oriente S.A.S.); cifras recalculadas por el motor."
-            record = repo(request).create(dossier, "SEED_FALLBACK", reason, log)
+            record = repo(request).create(dossier, "SEED_FALLBACK", reason, log, owner_id=owner)
             return JSONResponse(status_code=201, content=jsonable_encoder(build_view(request, record)))
 
         if llm_mode not in ("CLOUD_API", "LOCAL_OLLAMA"):
             raise HTTPException(status_code=422, detail="llm_mode debe ser CLOUD_API o LOCAL_OLLAMA.")
-        real_files = [f for f in files if f.filename]
-        if not real_files:
-            raise HTTPException(status_code=422, detail="Cargue al menos un archivo (PDF, XLSX o CSV) o use el caso demo.")
+        by_slot = {
+            "TRIAL_BALANCE": trial_balance_files,
+            "FINANCIAL_STATEMENTS": financial_statements_files,
+            "CHAMBER_CERTIFICATE": chamber_certificate_files,
+            "OTHER": other_files,
+        }
+        entries: list[tuple[Optional[str], UploadFile]] = [
+            (slot, f) for slot, uploads in by_slot.items() for f in uploads if f.filename
+        ] + [(None, f) for f in files if f.filename]
+        if not entries:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "message": "Cargue los documentos obligatorios o abra el caso demo.",
+                    "issues": [
+                        {"file": None, "slot": spec.id, "message": f"Falta: {spec.label}.", "fix": spec.what_to_upload}
+                        for spec in SLOT_SPECS
+                        if spec.required
+                    ],
+                },
+            )
+        for slot, uploads in by_slot.items():
+            spec = SPECS_BY_ID[slot]
+            count = sum(1 for f in uploads if f.filename)
+            if count > spec.max_files:
+                raise HTTPException(status_code=422, detail=f"«{spec.label}» admite máximo {spec.max_files} archivo(s); se enviaron {count}.")
 
         deal_id = f"deal-{uuid.uuid4().hex[:12]}"
         storage = s.deal_storage(deal_id)
         parsed = []
+        issues: list[dict] = []
+        valid_slots: list[str] = []
+        seen_hashes: dict[str, str] = {}
+        total_bytes = 0
         try:
-            for i, upload in enumerate(real_files, start=1):
-                name = _safe_filename(upload.filename or f"archivo_{i}")
-                suffix = "." + name.rsplit(".", 1)[-1].lower() if "." in name else ""
-                if suffix not in SUPPORTED_EXTENSIONS:
-                    raise HTTPException(status_code=415, detail=f"Formato no soportado: {name}. Use PDF, XLSX o CSV.")
+            for i, (slot, upload) in enumerate(entries, start=1):
+                original = upload.filename or f"archivo_{i}"
+                name = _safe_filename(original)
                 target = storage / f"{i:02d}_{name}"
+                digest = hashlib.sha256()
                 with target.open("wb") as fh:
-                    shutil.copyfileobj(upload.file, fh)
-                if target.stat().st_size > MAX_FILE_BYTES:
-                    raise HTTPException(status_code=413, detail=f"{name} supera el límite de 25 MB.")
+                    while chunk := upload.file.read(1024 * 1024):
+                        digest.update(chunk)
+                        fh.write(chunk)
+                total_bytes += target.stat().st_size
+                if total_bytes > MAX_TOTAL_UPLOAD_MB * 1024 * 1024:
+                    raise HTTPException(status_code=413, detail=f"Los archivos suman más de {MAX_TOTAL_UPLOAD_MB} MB. Quite los opcionales más pesados.")
+                if digest.hexdigest() in seen_hashes:
+                    issues.append(
+                        {
+                            "file": original,
+                            "slot": slot,
+                            "message": f"{original} es el mismo archivo que {seen_hashes[digest.hexdigest()]}.",
+                            "fix": "Quite el archivo repetido.",
+                        }
+                    )
+                    continue
+                seen_hashes[digest.hexdigest()] = original
                 slug = re.sub(r"[^a-z0-9]+", "_", name.lower().rsplit(".", 1)[0]).strip("_")[:40]
-                parsed.append(parse_document(target, f"doc_{i:02d}_{slug}", name))
-        except UnsupportedDocumentError as exc:
-            shutil.rmtree(storage, ignore_errors=True)
-            raise HTTPException(status_code=415, detail=str(exc)) from exc
+                validation, doc = validate_file(target, slot, original, f"doc_{i:02d}_{slug}")
+                if validation.status == "error" or doc is None:
+                    for issue in validation.issues:
+                        if issue.level == "error":
+                            issues.append({"file": original, "slot": validation.slot, "message": issue.message, "fix": issue.fix})
+                    continue
+                parsed.append(assign_slot(doc, validation.slot))
+                valid_slots.append(validation.slot)
+            for spec in missing_required(valid_slots):
+                if not any(i["slot"] == spec.id for i in issues):
+                    issues.append({"file": None, "slot": spec.id, "message": f"Falta: {spec.label}.", "fix": spec.what_to_upload})
+            if issues:
+                raise HTTPException(
+                    status_code=422,
+                    detail={
+                        "message": "Hay documentos faltantes o con problemas. Corríjalos para iniciar el análisis.",
+                        "issues": issues,
+                    },
+                )
         except HTTPException:
             shutil.rmtree(storage, ignore_errors=True)
             raise
-        except Exception as exc:  # noqa: BLE001 - archivo corrupto o ilegible
+        except Exception as exc:  # noqa: BLE001 - archivo ilegible no previsto
             shutil.rmtree(storage, ignore_errors=True)
             raise HTTPException(status_code=422, detail=f"No se pudo leer un archivo: {type(exc).__name__}: {exc}") from exc
 
@@ -370,10 +523,15 @@ def create_app(settings: Optional[Settings] = None, llm_resolver: Optional[LlmRe
             raise HTTPException(status_code=422, detail=problem)
         hints = {"company_name": company_name, "nit": nit, "ciiu_code": ciiu_code}
         job = repo(request).create_job(
-            deal_id, llm_mode, resolution.effective_mode, resolution.reason, [p.source.document_name for p in parsed]
+            deal_id,
+            llm_mode,
+            resolution.effective_mode,
+            resolution.reason,
+            [p.source.document_name for p in parsed],
+            owner_id=owner,
         )
         background_tasks.add_task(
-            run_job, deal_id, parsed, resolution, llm_mode, {k: v for k, v in hints.items() if v}, storage
+            run_job, deal_id, parsed, resolution, llm_mode, {k: v.strip() for k, v in hints.items() if v and v.strip()}, storage, owner
         )
         return JSONResponse(status_code=202, content=jsonable_encoder(build_job_status(job)))
 

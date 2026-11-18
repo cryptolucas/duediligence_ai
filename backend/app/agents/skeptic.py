@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import Optional, Sequence
 
-from app.agents.context import AgentRuntime, NodeTimer, documents_context, engine_summary
+from app.agents.context import AgentRuntime, NodeTimer, engine_summary, input_budget_chars, plan_context, run_chunked
 from app.agents.llm_schemas import SkepticResponse
 from app.agents.prompts import SKEPTIC_RED_TEAM
 from app.schemas.deal import (
@@ -32,6 +32,9 @@ from app.services.memo_renderer import format_cop_millions, format_days, format_
 DSO_DETERIORATION_PCT = 15.0
 CASH_DROP_PCT = 25.0
 CRITICAL_CONTINGENCY_PCT_EBITDA = 25.0
+SKEPTIC_MAX_CHUNKS = 2
+MAX_AI_FLAGS = 12
+MAX_AI_MISSING = 12
 _ALL_CATEGORIES = (
     "REVENUE", "COGS", "SGA", "DA", "OTHER_OP_INCOME_EXP", "NET_INTEREST", "TAXES", "CASH", "ACCOUNTS_RECEIVABLE",
     "INVENTORY", "OTHER_CURRENT_ASSETS", "PPE_AND_INTANGIBLES", "ACCOUNTS_PAYABLE", "SHORT_TERM_DEBT",
@@ -247,17 +250,41 @@ def _llm_flags(state: dict, runtime: AgentRuntime, notes: list[str]) -> tuple[li
         f"- {a.id} [{a.status}] {a.period} {a.title}: {format_cop_millions(a.amount_cop)}" for a in adjustments
     ) or "(sin ajustes)"
     procs = "\n".join(f"- {p.proceeding_type} {p.probability}: {p.description}" for p in profile.legal_proceedings) or "(sin litigios)"
-    user = (
+    fixed = (
         f"EMPRESA: {state['company']['company_name']} (CIIU {state['company']['ciiu_code']})\n\n"
         f"{engine_summary(result)}\n\nAJUSTES DE EBITDA:\n{adj_text}\n\nLITIGIOS:\n{procs}\n\n"
-        f"DOCUMENTOS:\n{documents_context(documents, max_chars=50_000)}"
     )
-    response = runtime.llm.complete_json(  # type: ignore[union-attr]
-        SKEPTIC_RED_TEAM, user, SkepticResponse, deal_id=runtime.deal_id, task="skeptic"
+    plan = plan_context(documents, input_budget_chars(runtime.llm, SKEPTIC_RED_TEAM + fixed + "DOCUMENTOS (parte 9 de 9):\n"), SKEPTIC_MAX_CHUNKS)
+    if plan.note():
+        notes.append(plan.note())
+    responses = run_chunked(
+        runtime,
+        system=SKEPTIC_RED_TEAM,
+        schema=SkepticResponse,
+        task="skeptic",
+        chunks=plan.chunks or [""],
+        make_user=lambda chunk, i, n: fixed + (f"DOCUMENTOS (parte {i} de {n}):\n" if n > 1 else "DOCUMENTOS:\n") + chunk,
+        fixed_text=fixed + "DOCUMENTOS (parte 9 de 9):\n",
+        notes=notes,
+        max_calls=SKEPTIC_MAX_CHUNKS * 2,
     )
+    seen_titles: set[str] = set()
+    proposals = []
+    for prop in (p for r in responses for p in r.red_flags):
+        key = " ".join(prop.title.lower().split())
+        if key not in seen_titles:
+            seen_titles.add(key)
+            proposals.append(prop)
+    seen_missing: set[str] = set()
+    missing_props = []
+    for item in (m for r in responses for m in r.missing_info):
+        key = " ".join(item.requested_document_or_clarification.lower().split())[:100]
+        if key not in seen_missing:
+            seen_missing.add(key)
+            missing_props.append(item)
     flags: list[RedFlagItem] = []
     dropped: list[str] = []
-    for n, prop in enumerate(response.red_flags, start=1):
+    for n, prop in enumerate(proposals[:MAX_AI_FLAGS], start=1):
         citations = []
         for ev in prop.evidence:
             verified = verify_quote(documents, ev.document_id, ev.page_or_sheet, ev.exact_quote, 0.85).citation
@@ -280,7 +307,7 @@ def _llm_flags(state: dict, runtime: AgentRuntime, notes: list[str]) -> tuple[li
     if dropped:
         notes.append("Red flags descartadas por no tener evidencia literal verificable: " + "; ".join(dropped))
     missing = [
-        MissingInfoItem(id=f"mi_ai_{n:02d}", **item.model_dump()) for n, item in enumerate(response.missing_info, start=1)
+        MissingInfoItem(id=f"mi_ai_{n:02d}", **item.model_dump()) for n, item in enumerate(missing_props[:MAX_AI_MISSING], start=1)
     ]
     return flags, missing
 

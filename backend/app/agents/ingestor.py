@@ -14,7 +14,7 @@ import re
 from collections import defaultdict
 from typing import Optional, Sequence
 
-from app.agents.context import AgentRuntime, NodeTimer, units_multiplier
+from app.agents.context import AgentRuntime, NodeTimer, input_budget_chars, run_chunked, split_to_size, units_multiplier
 from app.agents.llm_schemas import AccountMappingResponse, StatementMappingResponse
 from app.agents.prompts import INGESTOR_ACCOUNTS, INGESTOR_STATEMENTS
 from app.schemas.deal import MappedAccountItem, SourceDocument, UnreadableItem
@@ -55,8 +55,11 @@ def _llm_review_categories(
     if not runtime.uses_llm or not rows:
         return {}
     reviewed: dict[str, tuple[str, str, float]] = {}
-    for start in range(0, len(rows), LLM_BATCH_SIZE):
-        batch = rows[start : start + LLM_BATCH_SIZE]
+    # Lote ajustado al presupuesto del modelo (~110 caracteres por cuenta): en planes gratuitos con pocos tokens
+    # por minuto se envían lotes más pequeños.
+    batch_size = max(20, min(LLM_BATCH_SIZE, input_budget_chars(runtime.llm, INGESTOR_ACCOUNTS) // 110))
+    for start in range(0, len(rows), batch_size):
+        batch = rows[start : start + batch_size]
         listing = "\n".join(
             f"- row_id={r.sheet}:{r.row}:{r.period} | código {r.code} | {r.name} | sugerencia regla: "
             f"{rule_based_mapping(r.code, r.name).category}"
@@ -172,6 +175,22 @@ def _statement_lines(documents: Sequence[SourceDocument]) -> dict[str, tuple[Sou
     return lines
 
 
+def statement_years(lines: dict[str, tuple[SourceDocument, str, str]]) -> set[str]:
+    """Años de las columnas de los EEFF: los que aparecen en renglones con al menos dos años (encabezados
+    "2025 | 2024") o, si no hay, en cualquier renglón de las páginas de estados."""
+    pages = {(doc.document_id, page): doc for doc, page, _ in lines.values()}
+    header_years: set[str] = set()
+    any_years: set[str] = set()
+    for (doc_id, page_name), doc in pages.items():
+        page = next(p for p in doc.pages if p.page_or_sheet == page_name)
+        for line in page.content.splitlines():
+            years = YEAR_RE.findall(line)
+            any_years.update(years)
+            if len(set(years)) >= 2:
+                header_years.update(years)
+    return header_years or any_years
+
+
 def _signed_statement_value(category: str, nature: Optional[str], reported: float) -> float:
     magnitude = abs(reported)
     if category in ("REVENUE", "COGS", "SGA", "DA", "TAXES"):
@@ -191,6 +210,20 @@ def map_pdf_statements(
     lines = _statement_lines(documents)
     if not lines:
         return [], []
+    covered_years = sorted(int(p) for p in covered_periods if YEAR_RE.fullmatch(p))
+    uncovered = {
+        y
+        for y in statement_years(lines)
+        if not covered_years or covered_years[0] - 3 <= int(y) <= covered_years[-1] + 1  # descarta "Ley 1116 de 2006"
+    } - covered_periods
+    if covered_years and not uncovered:
+        # El balance de prueba ya trae todos los años de los EEFF: leerlos con el LLM sería redundante (y es la
+        # llamada más grande del grafo, crítica con los límites de tokens de los planes gratuitos).
+        log_notes.append(
+            f"Estados financieros en PDF: los periodos {', '.join(sorted(statement_years(lines)))} ya están cubiertos por el "
+            "balance de prueba; se usan como soporte cualitativo (notas) y no como fuente de cifras."
+        )
+        return [], []
     if not runtime.uses_llm:
         docs = sorted({doc.document_name for doc, _, _ in lines.values()})
         return [], [
@@ -204,14 +237,18 @@ def map_pdf_statements(
             )
         ]
     listing = "\n".join(f"- line_id={lid} | {text}" for lid, (_, _, text) in lines.items())
+    header = f"Periodos ya cubiertos por balances de prueba (no los mapees): {sorted(covered_periods) or 'ninguno'}\nLíneas:\n"
+    chunks = split_to_size(listing, input_budget_chars(runtime.llm, INGESTOR_STATEMENTS + header))
     try:
-        response = runtime.llm.complete_json(  # type: ignore[union-attr]
-            INGESTOR_STATEMENTS,
-            f"Periodos ya cubiertos por balances de prueba (no los mapees): {sorted(covered_periods) or 'ninguno'}\n"
-            f"Líneas:\n{listing[:60_000]}",
-            StatementMappingResponse,
-            deal_id=runtime.deal_id,
+        responses = run_chunked(
+            runtime,
+            system=INGESTOR_STATEMENTS,
+            schema=StatementMappingResponse,
             task="ingestor.statements",
+            chunks=chunks[:6],
+            make_user=lambda chunk, i, n: header + chunk,
+            fixed_text=header,
+            notes=log_notes,
         )
     except LLMError as exc:
         log_notes.append(f"No se pudieron clasificar líneas de EEFF en PDF: {exc}")
@@ -220,7 +257,7 @@ def map_pdf_statements(
     accounts: list[MappedAccountItem] = []
     unreadable: list[UnreadableItem] = []
     seen: set[tuple[str, str]] = set()
-    for item in response.items:
+    for item in (item for response in responses for item in response.items):
         if item.action != "MAP" or item.line_id not in lines or item.standard_category is None:
             continue
         if not item.period or not YEAR_RE.fullmatch(item.period) or item.period in covered_periods:

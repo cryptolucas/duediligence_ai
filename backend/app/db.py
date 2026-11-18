@@ -2,6 +2,10 @@
 
 Cada operación es una fila independiente (``deal_id``); el expediente completo se guarda como JSON
 validado por Pydantic, junto con la bitácora del grafo y el historial del chat.
+
+``owner_id`` es el espacio de trabajo del navegador que creó la operación (cabecera ``X-Workspace-Id``): en las
+pruebas con usuarios, cada persona ve solo sus operaciones en la lista. No es autenticación: quien tenga el enlace
+directo a una operación puede abrirla.
 """
 
 from __future__ import annotations
@@ -11,7 +15,7 @@ import threading
 from datetime import datetime, timezone
 from typing import Optional
 
-from sqlalchemy import Text
+from sqlalchemy import Text, inspect, text
 from sqlmodel import Column, Field, Session, SQLModel, create_engine, select
 
 from app.schemas.deal import DealDossier
@@ -21,6 +25,7 @@ class DealRecord(SQLModel, table=True):
     __tablename__ = "deals"
 
     deal_id: str = Field(primary_key=True)
+    owner_id: str = Field(default="", index=True)
     company_name: str
     requested_mode: str
     llm_mode: str
@@ -38,6 +43,7 @@ class DealJob(SQLModel, table=True):
     __tablename__ = "deal_jobs"
 
     deal_id: str = Field(primary_key=True)
+    owner_id: str = Field(default="", index=True)
     status: str  # QUEUED | RUNNING | DONE | FAILED
     requested_mode: str
     effective_mode: str
@@ -67,10 +73,21 @@ class DealRepository:
 
     def __init__(self, database_url: str):
         connect_args = {"check_same_thread": False} if database_url.startswith("sqlite") else {}
-        self.engine = create_engine(database_url, connect_args=connect_args)
+        # pool_pre_ping: las bases gratuitas (Neon) cierran conexiones inactivas; se reconecta sin error.
+        self.engine = create_engine(database_url, connect_args=connect_args, pool_pre_ping=True)
         SQLModel.metadata.create_all(self.engine)
+        self._add_missing_columns()
         self._cache: dict[str, tuple[datetime, DealDossier]] = {}
         self._lock = threading.Lock()
+
+    def _add_missing_columns(self) -> None:
+        """Migración mínima para bases creadas con versiones anteriores (columnas nuevas con valor por defecto)."""
+        inspector = inspect(self.engine)
+        for table in ("deals", "deal_jobs"):
+            columns = {c["name"] for c in inspector.get_columns(table)}
+            if "owner_id" not in columns:
+                with self.engine.begin() as conn:
+                    conn.execute(text(f"ALTER TABLE {table} ADD COLUMN owner_id VARCHAR NOT NULL DEFAULT ''"))
 
     def create(
         self,
@@ -78,10 +95,12 @@ class DealRepository:
         requested_mode: str,
         mode_reason: str,
         processing_log: list[dict],
+        owner_id: str = "",
     ) -> DealRecord:
         now = _now()
         record = DealRecord(
             deal_id=dossier.deal_id,
+            owner_id=owner_id,
             company_name=dossier.company_name,
             requested_mode=requested_mode,
             llm_mode=dossier.llm_mode,
@@ -103,9 +122,13 @@ class DealRepository:
         with Session(self.engine) as session:
             return session.get(DealRecord, deal_id)
 
-    def list_records(self) -> list[DealRecord]:
+    def list_records(self, owner_id: Optional[str] = None) -> list[DealRecord]:
         with Session(self.engine) as session:
-            return list(session.exec(select(DealRecord).order_by(DealRecord.updated_at.desc())))
+            query = select(DealRecord).order_by(DealRecord.updated_at.desc())
+            if owner_id is not None:
+                # Las operaciones sin espacio de trabajo (creadas antes de esta función) siguen visibles para todos.
+                query = query.where(DealRecord.owner_id.in_([owner_id, ""]))
+            return list(session.exec(query))
 
     def load_dossier(self, record: DealRecord) -> DealDossier:
         with self._lock:
@@ -134,11 +157,18 @@ class DealRepository:
     # ------------------------------------------------------------------ jobs
 
     def create_job(
-        self, deal_id: str, requested_mode: str, effective_mode: str, mode_reason: str, document_names: list[str]
+        self,
+        deal_id: str,
+        requested_mode: str,
+        effective_mode: str,
+        mode_reason: str,
+        document_names: list[str],
+        owner_id: str = "",
     ) -> DealJob:
         now = _now()
         job = DealJob(
             deal_id=deal_id,
+            owner_id=owner_id,
             status="QUEUED",
             requested_mode=requested_mode,
             effective_mode=effective_mode,
@@ -158,10 +188,14 @@ class DealRepository:
         with Session(self.engine) as session:
             return session.get(DealJob, deal_id)
 
-    def list_jobs(self, statuses: tuple[str, ...] = ("QUEUED", "RUNNING", "FAILED"), limit: int = 20) -> list[DealJob]:
+    def list_jobs(
+        self, statuses: tuple[str, ...] = ("QUEUED", "RUNNING", "FAILED"), limit: int = 20, owner_id: Optional[str] = None
+    ) -> list[DealJob]:
         with Session(self.engine) as session:
-            query = select(DealJob).where(DealJob.status.in_(statuses)).order_by(DealJob.created_at.desc()).limit(limit)
-            return list(session.exec(query))
+            query = select(DealJob).where(DealJob.status.in_(statuses))
+            if owner_id is not None:
+                query = query.where(DealJob.owner_id.in_([owner_id, ""]))
+            return list(session.exec(query.order_by(DealJob.created_at.desc()).limit(limit)))
 
     def update_job(self, deal_id: str, *, event: Optional[dict] = None, completed_node: Optional[str] = None, **fields) -> None:
         """Actualiza un job; ``event`` se agrega a la bitácora (últimos MAX_JOB_EVENTS)."""

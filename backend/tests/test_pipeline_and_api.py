@@ -167,7 +167,14 @@ def _fake_handlers():
 
     def memo(prompt):
         real_id = re.search(r"^- (cit_[0-9a-f]{12}):", prompt, flags=re.MULTILINE).group(1)
-        return {"memo_markdown": f"# Memo\n\nIngresos {{{{metric:revenue:2025}}}} [[cite:{real_id}]] [[cite:cit_inventada]]."}
+        return {
+            "memo_markdown": (
+                f"# Memo\n\nIngresos {{{{metric:revenue:2025}}}} [[cite:{real_id}]] [[cite:cit_inventada]]. "
+                "EBITDA {{metric:ebitda_reported:2025}} y ajustado {{metric:ebitda_adjusted:2025}} "
+                "({{metric:ebitda_adjusted_margin_pct:2025}}); TCAC {{growth:revenue_cagr_pct}}; "
+                "EV base {{valuation:BASE:enterprise_value}}."
+            )
+        }
 
     return {
         "ingestor.accounts": accounts,
@@ -183,7 +190,10 @@ def test_llm_mode_guards_against_hallucinations(demo_files):
     dossier, result, log = run_deal_pipeline(
         deal_id="deal-llm", effective_mode="CLOUD_API", benchmarks=load_benchmarks(), llm=llm, parsed_documents=parse_demo_files(demo_files)
     )
-    assert llm.calls == 5  # cuentas ambiguas, EEFF PDF, analista, escéptico, redactor
+    # cuentas ambiguas, analista, escéptico, redactor. Los EEFF en PDF no se leen con el LLM: el balance de prueba
+    # ya cubre 2023-2025 (era la llamada más grande del grafo).
+    assert llm.calls == 4
+    assert "ingestor.statements" not in [task for task, _, _ in llm.prompts]
     assert all(deal_id == "deal-llm" for _, deal_id, _ in llm.prompts)  # aislamiento por operación
     adjustments = {a.title: a for a in dossier.ebitda_adjustments}
     # Ajuste válido: monto convertido de miles a COP por código, no por el LLM
@@ -213,14 +223,14 @@ def test_llm_mode_guards_against_hallucinations(demo_files):
 
 
 def test_ollama_unavailable_never_falls_back_to_cloud(settings):
-    cloud_settings = settings.__class__(**{**settings.__dict__, "api_keys": {"OPENAI_API_KEY": "sk-test"}})
+    cloud_settings = settings.__class__(**{**settings.__dict__, "api_keys": {"GROQ_API_KEY": "gsk-test"}})
     resolution = resolve_llm("LOCAL_OLLAMA", cloud_settings)
     assert resolution.effective_mode == "RULES_FALLBACK"
     assert resolution.client is None
     assert "confidencialidad" in resolution.reason
     assert resolve_llm("CLOUD_API", settings).effective_mode == "RULES_FALLBACK"  # sin claves
     cloud = resolve_llm("CLOUD_API", cloud_settings)
-    assert cloud.effective_mode == "CLOUD_API" and cloud.client.model == "openai/gpt-4.1"
+    assert cloud.effective_mode == "CLOUD_API" and cloud.client.model == "groq/llama-3.3-70b-versatile"
 
 
 # ---------------------------------------------------------------------------
@@ -417,8 +427,8 @@ def test_pipeline_emits_progress_and_llm_call_events(demo_files):
     finished = [e["node"] for e in events if e["type"] == "node_finished"]
     assert started == finished == [n for n, _ in NODE_SEQUENCE]
     llm_tasks = [e["task"] for e in events if e["type"] == "llm_call"]
-    assert llm_tasks == ["ingestor.accounts", "ingestor.statements", "analyst", "skeptic", "memo_writer"]
-    assert llm.calls == 5
+    assert llm_tasks == ["ingestor.accounts", "analyst", "skeptic", "memo_writer"]
+    assert llm.calls == 4
 
 
 def test_deal_status_for_demo_and_unknown(client, demo_deal):
@@ -449,7 +459,8 @@ def test_upload_with_fake_cloud_llm(settings, demo_files):
     "files, data, status",
     [
         ([], {"llm_mode": "CLOUD_API"}, 422),
-        ([("files", ("contrato.docx", b"x"))], {"llm_mode": "CLOUD_API"}, 415),
+        ([("files", ("foto.jpg", b"x"))], {"llm_mode": "CLOUD_API"}, 422),
+        ([("files", ("contrato.docx", b"x"))], {"llm_mode": "CLOUD_API"}, 422),
         ([("files", ("notas.csv", b"solo texto sin cifras"))], {"llm_mode": "CLOUD_API"}, 422),
         ([("files", ("bp.csv", b"Cuenta;Saldo\n1105;100"))], {"llm_mode": "OTRO"}, 422),
     ],

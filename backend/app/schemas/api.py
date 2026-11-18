@@ -132,7 +132,48 @@ class JobStatus(BaseModel):
 class LlmStatus(BaseModel):
     cloud_model: Optional[str]
     cloud_available: bool
+    cloud_label: Optional[str] = Field(None, description="Ej. 'Groq · llama-3.3-70b-versatile'.")
+    cloud_fallback_labels: List[str] = Field(default_factory=list)
     ollama_model: str
     ollama_base_url: str
     ollama_available: bool
     ollama_installed_models: List[str] = Field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
+# Carga de documentos: casillas y validación
+# ---------------------------------------------------------------------------
+
+
+class UploadSlotSpec(BaseModel):
+    id: Literal["TRIAL_BALANCE", "FINANCIAL_STATEMENTS", "CHAMBER_CERTIFICATE", "OTHER"]
+    number: int
+    label: str
+    required: bool
+    max_files: int
+    accepted_extensions: List[str]
+    what_to_upload: str
+    must_contain: List[str]
+    examples: List[str]
+    why_it_matters: str
+
+
+class UploadRequirements(BaseModel):
+    slots: List[UploadSlotSpec]
+    max_file_mb: int
+
+
+class ValidationIssue(BaseModel):
+    level: Literal["error", "warning"]
+    message: str = Field(..., description="Qué está mal, en lenguaje sencillo.")
+    fix: Optional[str] = Field(None, description="Cómo solucionarlo.")
+
+
+class DocumentValidation(BaseModel):
+    file_name: str
+    slot: str
+    status: Literal["valid", "warning", "error"]
+    summary: str = Field(..., description="Lo que se detectó, ej. '151 cuentas con saldo · periodos 2023, 2024, 2025'.")
+    periods: List[str] = Field(default_factory=list)
+    issues: List[ValidationIssue] = Field(default_factory=list)
+    suggested_slot: Optional[str] = Field(None, description="Casilla donde parece corresponder el archivo, si es otra.")

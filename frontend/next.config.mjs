@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+// Local: /api se reenvía al backend. En producción (Vercel) se define NEXT_PUBLIC_API_BASE_URL y el navegador llama
+// directo al backend (ver lib/api.ts), así que este reenvío no se usa.
 // 127.0.0.1 y no localhost: en Windows "localhost" resuelve primero por IPv6 y suma ~200 ms por llamada.
 const backendUrl = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
 

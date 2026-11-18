@@ -42,7 +42,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     },
     {
       "document_id": "doc_eeff_2025",
@@ -115,7 +116,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     },
     {
       "document_id": "doc_eeff_2024",
@@ -139,7 +141,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     },
     {
       "document_id": "doc_avaluo_bodega",
@@ -156,7 +159,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     },
     {
       "document_id": "doc_camara_comercio",
@@ -180,7 +184,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     },
     {
       "document_id": "doc_teaser",
@@ -204,7 +209,8 @@
           "height": null,
           "line_boxes": []
         }
-      ]
+      ],
+      "upload_slot": null
     }
   ],
   "mapped_accounts": [

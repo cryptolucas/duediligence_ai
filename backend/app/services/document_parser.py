@@ -26,7 +26,36 @@ from pydantic import BaseModel, Field
 from app.schemas.deal import DocumentPage, LineBox, SourceDocument
 from app.services.numbers import parse_number
 
-SUPPORTED_EXTENSIONS = {".pdf": "PDF", ".xlsx": "XLSX", ".xlsm": "XLSX", ".csv": "CSV"}
+SUPPORTED_EXTENSIONS = {
+    ".pdf": "PDF",
+    ".xlsx": "XLSX",
+    ".xlsm": "XLSX",
+    ".xls": "XLS",
+    ".csv": "CSV",
+    ".docx": "DOCX",
+    ".txt": "TXT",
+    ".md": "TXT",
+}
+TABULAR_FORMATS = {"XLSX", "XLS", "CSV"}
+# Extensiones conocidas que no se pueden leer, con la indicación para el usuario.
+_IMAGE_HINT = "Las fotos e imágenes no se pueden leer. Use el PDF digital del documento."
+UNSUPPORTED_HINTS = {
+    ".doc": "Guarde el documento de Word como .docx o expórtelo a PDF.",
+    ".jpg": _IMAGE_HINT,
+    ".jpeg": _IMAGE_HINT,
+    ".png": _IMAGE_HINT,
+    ".heic": _IMAGE_HINT,
+    ".tif": _IMAGE_HINT,
+    ".tiff": _IMAGE_HINT,
+    ".zip": "Descomprima el archivo y cargue los documentos uno por uno.",
+    ".rar": "Descomprima el archivo y cargue los documentos uno por uno.",
+    ".pptx": "Exporte la presentación a PDF (Archivo → Exportar → PDF).",
+    ".ppt": "Exporte la presentación a PDF (Archivo → Exportar → PDF).",
+    ".ods": "Guarde la hoja de cálculo como .xlsx.",
+    ".numbers": "Exporte la hoja de cálculo a .xlsx.",
+    ".pages": "Exporte el documento a PDF o .docx.",
+}
+TEXT_PART_CHARS = 3500
 MAX_ROWS_PER_SHEET = 10_000
 YEAR_RE = re.compile(r"(?<!\d)(20\d{2})(?!\d)")
 CODE_RE = re.compile(r"^\d{1,10}$")
@@ -34,6 +63,10 @@ CODE_RE = re.compile(r"^\d{1,10}$")
 
 class UnsupportedDocumentError(ValueError):
     pass
+
+
+class DocumentReadError(ValueError):
+    """El archivo tiene una extensión soportada pero no se puede abrir (dañado, protegido, vacío)."""
 
 
 class TrialBalanceRow(BaseModel):
@@ -87,7 +120,7 @@ def cell_text(value: object) -> str:
 
 def guess_document_type(file_name: str, text_sample: str, file_format: str) -> str:
     haystack = f"{file_name} {text_sample[:6000]}".lower()
-    if file_format in ("XLSX", "CSV") and re.search(r"balance\s*de\s*prueba|saldo\s*final|nuevo\s*saldo|auxiliar|bp_", haystack):
+    if file_format in TABULAR_FORMATS and re.search(r"balance\s*de\s*prueba|saldo\s*final|nuevo\s*saldo|auxiliar|bp_", haystack):
         return "TRIAL_BALANCE_XLSX"
     if re.search(r"existencia\s+y\s+representaci|c[áa]mara\s+de\s+comercio|matr[íi]cula\s+mercantil", haystack):
         return "CHAMBER_OF_COMMERCE_CERT"
@@ -96,8 +129,8 @@ def guess_document_type(file_name: str, text_sample: str, file_format: str) -> s
     if re.search(r"aval[úu]o|canon de mercado", haystack):
         return "APPRAISAL"
     if re.search(r"estados?\s+financieros|situaci[óo]n\s+financiera|estado\s+de\s+resultados|notas?\s+a\s+los|revisor\s+fiscal|eeff", haystack):
-        return "FINANCIAL_STATEMENTS_PDF" if file_format == "PDF" else "TRIAL_BALANCE_XLSX"
-    if file_format in ("XLSX", "CSV"):
+        return "TRIAL_BALANCE_XLSX" if file_format in TABULAR_FORMATS else "FINANCIAL_STATEMENTS_PDF"
+    if file_format in TABULAR_FORMATS:
         return "TRIAL_BALANCE_XLSX"
     return "OTHER"
 
@@ -165,6 +198,11 @@ def parse_pdf(path: Path, document_id: str, display_name: str) -> ParsedDocument
 
     if fitz is not None:
         with fitz.open(path) as pdf:
+            if pdf.needs_pass:
+                raise DocumentReadError(
+                    f"{display_name} está protegido con contraseña. Ábralo, use Imprimir → Guardar como PDF (sin "
+                    "contraseña) y vuelva a cargarlo."
+                )
             for index, page in enumerate(pdf, start=1):
                 name = f"Página {index}"
                 lines = _group_words_into_lines(page.get_text("words"))
@@ -351,6 +389,9 @@ def extract_trial_balance(
     return result, warnings
 
 
+TABULAR_LABELS = {"XLSX": "Libro Excel", "XLS": "Libro Excel (.xls)"}
+
+
 def _parse_tabular(sheets: Iterable[tuple[str, list[Row]]], document_id: str, display_name: str, file_format: str) -> ParsedDocument:
     pages: list[DocumentPage] = []
     tb_rows: list[TrialBalanceRow] = []
@@ -372,7 +413,7 @@ def _parse_tabular(sheets: Iterable[tuple[str, list[Row]]], document_id: str, di
         document_name=display_name,
         document_type=guess_document_type(display_name, text_sample, file_format),
         file_format=file_format,  # type: ignore[arg-type]
-        description=f"{'Libro Excel' if file_format == 'XLSX' else 'Archivo CSV'} con {len(pages)} hoja(s) con datos.",
+        description=f"{TABULAR_LABELS.get(file_format, 'Archivo CSV')} con {len(pages)} hoja(s) con datos.",
         reported_units=guess_units(text_sample, file_format),
         pages=pages or [DocumentPage(page_or_sheet="Hoja1", content="")],
     )
@@ -421,16 +462,126 @@ def parse_csv(path: Path, document_id: str, display_name: str) -> ParsedDocument
     return _parse_tabular([(Path(display_name).stem, rows)], document_id, display_name, "CSV")
 
 
+def parse_xls(path: Path, document_id: str, display_name: str) -> ParsedDocument:
+    """Excel 97-2003 (.xls), formato que aún exportan World Office, Helisa y otros programas contables."""
+    import xlrd
+
+    book = xlrd.open_workbook(str(path), on_demand=True)
+    sheets: list[tuple[str, list[Row]]] = []
+    try:
+        for sheet in book.sheets():
+            rows: list[Row] = []
+            for r in range(min(sheet.nrows, MAX_ROWS_PER_SHEET + 1)):
+                cells: list[tuple[int, object]] = []
+                for c in range(sheet.ncols):
+                    cell = sheet.cell(r, c)
+                    if cell.ctype in (xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK):
+                        continue
+                    value: object = "#ERROR" if cell.ctype == xlrd.XL_CELL_ERROR else cell.value
+                    if isinstance(value, str) and not value.strip():
+                        continue
+                    cells.append((c, value))
+                if cells:
+                    rows.append((r + 1, cells))
+            sheets.append((_nfc(sheet.name), rows))
+    finally:
+        book.release_resources()
+    return _parse_tabular(sheets, document_id, display_name, "XLS")
+
+
+def _text_pages(lines: Iterable[str]) -> list[DocumentPage]:
+    """Agrupa renglones de texto en partes de ~TEXT_PART_CHARS caracteres (documentos sin paginación)."""
+    pages: list[DocumentPage] = []
+    current: list[str] = []
+    size = 0
+    for line in lines:
+        line = _nfc(line).strip()
+        if not line:
+            continue
+        if current and size + len(line) > TEXT_PART_CHARS:
+            pages.append(DocumentPage(page_or_sheet=f"Parte {len(pages) + 1}", content="\n".join(current)))
+            current, size = [], 0
+        current.append(line)
+        size += len(line) + 1
+    if current:
+        pages.append(DocumentPage(page_or_sheet=f"Parte {len(pages) + 1}", content="\n".join(current)))
+    return pages
+
+
+def _text_document(lines: Iterable[str], document_id: str, display_name: str, file_format: str, kind: str) -> ParsedDocument:
+    pages = _text_pages(lines)
+    text_sample = "\n".join(p.content for p in pages[:6])
+    source = SourceDocument(
+        document_id=document_id,
+        document_name=display_name,
+        document_type=guess_document_type(display_name, text_sample, file_format),
+        file_format=file_format,  # type: ignore[arg-type]
+        description=f"{kind} con {len(pages)} parte(s) de texto.",
+        reported_units=guess_units(text_sample, file_format),
+        pages=pages or [DocumentPage(page_or_sheet="Parte 1", content="")],
+    )
+    return ParsedDocument(source=source)
+
+
+def parse_docx(path: Path, document_id: str, display_name: str) -> ParsedDocument:
+    """Word (.docx): párrafos y tablas en orden de aparición; las celdas de una fila se unen con ' | '."""
+    from docx import Document
+    from docx.table import Table
+    from docx.text.paragraph import Paragraph
+
+    document = Document(str(path))
+    lines: list[str] = []
+    for child in document.element.body.iterchildren():
+        tag = child.tag.rsplit("}", 1)[-1]
+        if tag == "p":
+            lines.append(Paragraph(child, document).text)
+        elif tag == "tbl":
+            for row in Table(child, document).rows:
+                cells: list[str] = []
+                for cell in row.cells:
+                    text = " ".join(cell.text.split())
+                    if text and (not cells or cells[-1] != text):  # las celdas combinadas se repiten
+                        cells.append(text.replace("|", "/"))
+                if cells:
+                    lines.append(" | ".join(cells))
+    return _text_document(lines, document_id, display_name, "DOCX", "Documento Word")
+
+
+def parse_txt(path: Path, document_id: str, display_name: str) -> ParsedDocument:
+    return _text_document(_decode_csv(path.read_bytes()).splitlines(), document_id, display_name, "TXT", "Archivo de texto")
+
+
+_READ_ERROR_HINTS = {
+    "PDF": "El PDF está dañado o no es un PDF real. Si abre bien en su computador, use Imprimir → Guardar como PDF y vuelva a cargarlo.",
+    "XLSX": (
+        "El archivo Excel está dañado, protegido con contraseña o no es un .xlsx real (¿se cambió la extensión?). "
+        "Ábralo en Excel, quite la contraseña si la tiene y guárdelo de nuevo como .xlsx."
+    ),
+    "XLS": "El archivo .xls está dañado o protegido. Ábralo en Excel y guárdelo como .xlsx.",
+    "CSV": "No se pudo leer el CSV. Ábralo en Excel y guárdelo de nuevo como .xlsx o CSV UTF-8.",
+    "DOCX": "El documento de Word está dañado o protegido. Ábralo en Word y guárdelo de nuevo como .docx o expórtelo a PDF.",
+    "TXT": "No se pudo leer el archivo de texto.",
+}
+
+
 def parse_document(path: Path, document_id: str, display_name: Optional[str] = None) -> ParsedDocument:
-    """Punto de entrada: elige el parser por extensión."""
+    """Punto de entrada: elige el parser por extensión.
+
+    Lanza ``UnsupportedDocumentError`` (extensión no admitida) o ``DocumentReadError`` (archivo vacío, dañado o
+    protegido) con un mensaje que explica al usuario cómo solucionarlo.
+    """
     display_name = display_name or path.name
-    file_format = SUPPORTED_EXTENSIONS.get(path.suffix.lower())
+    suffix = path.suffix.lower()
+    file_format = SUPPORTED_EXTENSIONS.get(suffix)
     if file_format is None:
-        raise UnsupportedDocumentError(
-            f"Formato no soportado: {path.suffix or 'sin extensión'} ({display_name}). Use PDF, XLSX o CSV."
-        )
-    if file_format == "PDF":
-        return parse_pdf(path, document_id, display_name)
-    if file_format == "XLSX":
-        return parse_xlsx(path, document_id, display_name)
-    return parse_csv(path, document_id, display_name)
+        hint = UNSUPPORTED_HINTS.get(suffix, "Use PDF, Excel (XLSX/XLS), CSV, Word (DOCX) o TXT.")
+        raise UnsupportedDocumentError(f"Formato no soportado: {suffix or 'sin extensión'} ({display_name}). {hint}")
+    if path.stat().st_size == 0:
+        raise DocumentReadError(f"{display_name} está vacío (0 bytes). Vuelva a descargarlo o exportarlo y cárguelo de nuevo.")
+    parsers = {"PDF": parse_pdf, "XLSX": parse_xlsx, "XLS": parse_xls, "CSV": parse_csv, "DOCX": parse_docx, "TXT": parse_txt}
+    try:
+        return parsers[file_format](path, document_id, display_name)
+    except (DocumentReadError, UnsupportedDocumentError):
+        raise
+    except Exception as exc:  # noqa: BLE001 - cada librería lanza sus propios errores
+        raise DocumentReadError(f"No se pudo abrir {display_name}. {_READ_ERROR_HINTS[file_format]}") from exc

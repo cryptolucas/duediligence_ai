@@ -35,10 +35,12 @@ export interface SourceDocument {
   document_id: string;
   document_name: string;
   document_type: "FINANCIAL_STATEMENTS_PDF" | "TRIAL_BALANCE_XLSX" | "CHAMBER_OF_COMMERCE_CERT" | "TEASER" | "APPRAISAL" | "OTHER";
-  file_format: "PDF" | "XLSX" | "CSV";
+  file_format: "PDF" | "XLSX" | "XLS" | "CSV" | "DOCX" | "TXT";
   description: string;
   reported_units: string;
   pages: DocumentPage[];
+  /** Casilla de carga; OTHER = «Otros archivos» (fuente complementaria). */
+  upload_slot?: UploadSlotId | null;
 }
 
 export interface CitedFact {
@@ -417,8 +419,58 @@ export interface JobStatus {
 export interface LlmStatus {
   cloud_model: string | null;
   cloud_available: boolean;
+  cloud_label: string | null;
+  cloud_fallback_labels: string[];
   ollama_model: string;
   ollama_base_url: string;
   ollama_available: boolean;
   ollama_installed_models: string[];
+}
+
+// ---------------------------------------------------------------------------
+// Carga de documentos por casillas
+// ---------------------------------------------------------------------------
+
+export type UploadSlotId = "TRIAL_BALANCE" | "FINANCIAL_STATEMENTS" | "CHAMBER_CERTIFICATE" | "OTHER";
+
+export interface UploadSlotSpec {
+  id: UploadSlotId;
+  number: number;
+  label: string;
+  required: boolean;
+  max_files: number;
+  accepted_extensions: string[];
+  what_to_upload: string;
+  must_contain: string[];
+  examples: string[];
+  why_it_matters: string;
+}
+
+export interface UploadRequirements {
+  slots: UploadSlotSpec[];
+  max_file_mb: number;
+}
+
+export interface ValidationIssue {
+  level: "error" | "warning";
+  message: string;
+  fix: string | null;
+}
+
+export interface DocumentValidation {
+  file_name: string;
+  slot: UploadSlotId;
+  status: "valid" | "warning" | "error";
+  summary: string;
+  periods: string[];
+  issues: ValidationIssue[];
+  suggested_slot: UploadSlotId | null;
+}
+
+/** Problema devuelto por POST /api/deals/upload (422) para un archivo o una casilla. */
+export interface UploadIssue {
+  file: string | null;
+  slot: UploadSlotId | null;
+  message: string;
+  fix: string | null;
 }

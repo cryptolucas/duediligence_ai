@@ -7,9 +7,10 @@ Sin LLM se genera una plantilla determinista con la misma estructura.
 
 from __future__ import annotations
 
+import re
 from typing import Sequence
 
-from app.agents.context import AgentRuntime, NodeTimer, citation_catalog, engine_summary, placeholder_catalog
+from app.agents.context import AgentRuntime, NodeTimer, citation_catalog, engine_summary, input_budget_chars, placeholder_catalog
 from app.agents.llm_schemas import MemoResponse
 from app.agents.prompts import IC_MEMO_WRITER
 from app.schemas.deal import (
@@ -21,7 +22,7 @@ from app.schemas.deal import (
     SourceCitation,
 )
 from app.schemas.financials import FinancialEngineResult
-from app.services.llm_client import LLMError
+from app.services.llm_client import LLMError, schema_instructions
 from app.services.memo_renderer import CITATION_RE, extract_placeholders, render_memo
 
 SEVERITY_LABEL = {"CRITICAL_DEALBREAKER": "Crítico", "HIGH": "Alto", "MEDIUM": "Medio"}
@@ -122,6 +123,15 @@ def deterministic_memo(
     return "\n".join(lines) + "\n"
 
 
+MIN_MEMO_PLACEHOLDERS = 5
+_LOOSE_CITATION_RE = re.compile(r"[\(\[]\s*(cit_[A-Za-z0-9_]+)\s*[\)\]]")
+
+
+def normalize_citations(markdown: str, valid_ids: set[str]) -> str:
+    """Los modelos pequeños escriben '(cit_xxx)' o '[cit_xxx]': se convierten a [[cite:cit_xxx]] si el id existe."""
+    return _LOOSE_CITATION_RE.sub(lambda m: f"[[cite:{m.group(1)}]]" if m.group(1) in valid_ids else m.group(0), markdown)
+
+
 def sanitize_memo(markdown: str, valid_ids: set[str]) -> tuple[str, int]:
     """Elimina citas cuyo id no existe en el expediente (un LLM puede inventarlas)."""
     removed = 0
@@ -148,21 +158,39 @@ def run_memo_writer(state: dict, runtime: AgentRuntime, all_citations: Sequence[
         adjs = "\n".join(f"- {a.id} [{a.status}] {a.period} {a.title} (cita {a.citation.citation_id})" for a in state["ebitda_adjustments"])
         missing = "\n".join(f"- {m.priority}: {m.requested_document_or_clarification}" for m in state["missing_info"])
         company = state["company"]
-        user = (
+        fixed = (
             f"EMPRESA: {company['company_name']} | NIT {company['nit']} | CIIU {company['ciiu_code']} | {company['city']}\n\n"
             f"{engine_summary(result)}\n\n{placeholder_catalog(result)}\n\nAJUSTES:\n{adjs or '(ninguno)'}\n\n"
-            f"RED FLAGS:\n{flags or '(ninguna)'}\n\nINFORMACIÓN FALTANTE:\n{missing or '(ninguna)'}\n\n{citation_catalog(all_citations)}"
+            f"RED FLAGS:\n{flags or '(ninguna)'}\n\nINFORMACIÓN FALTANTE:\n{missing or '(ninguna)'}\n\n"
         )
+        # El catálogo de citas se ajusta al presupuesto del modelo (~230 caracteres por cita).
+        room = input_budget_chars(runtime.llm, IC_MEMO_WRITER + schema_instructions(MemoResponse) + fixed)
+        user = fixed + citation_catalog(all_citations, max_items=max(15, min(180, room // 230)))
         try:
-            response = runtime.llm.complete_json(  # type: ignore[union-attr]
-                IC_MEMO_WRITER, user, MemoResponse, deal_id=runtime.deal_id, task="memo_writer"
-            )
-            memo, removed = sanitize_memo(response.memo_markdown, valid_ids)
-            if removed:
-                notes.append(f"{removed} cita(s) inventadas por el LLM fueron removidas del memo.")
-            unresolved = render_memo(memo, result).count("MISSING_DATA")
-            if unresolved:
-                notes.append(f"{unresolved} marcador(es) del memo no se pudieron resolver y quedan como MISSING_DATA.")
+            for attempt in range(2):
+                response = runtime.llm.complete_json(  # type: ignore[union-attr]
+                    IC_MEMO_WRITER, user, MemoResponse, deal_id=runtime.deal_id, task="memo_writer"
+                )
+                candidate, removed = sanitize_memo(normalize_citations(response.memo_markdown, valid_ids), valid_ids)
+                used = len(extract_placeholders(candidate))
+                if used >= MIN_MEMO_PLACEHOLDERS:
+                    memo = candidate
+                    if removed:
+                        notes.append(f"{removed} cita(s) inventadas por el LLM fueron removidas del memo.")
+                    unresolved = render_memo(memo, result).count("MISSING_DATA")
+                    if unresolved:
+                        notes.append(f"{unresolved} marcador(es) del memo no se pudieron resolver y quedan como MISSING_DATA.")
+                    break
+                # Un memo sin marcadores trae cifras calculadas por el modelo: no son confiables.
+                notes.append(
+                    f"El memo del modelo usó {used} marcador(es) del motor (mínimo {MIN_MEMO_PLACEHOLDERS}): sus cifras no "
+                    "serían trazables" + ("; se pidió corregirlo." if attempt == 0 else "; se usa la plantilla determinista.")
+                )
+                user += (
+                    "\n\nCORRECCIÓN: tu memo anterior escribió cifras en lugar de marcadores. Reescríbelo usando los marcadores "
+                    "{{metric:...}}, {{valuation:...}}, {{bridge:...}} y {{growth:...}} para TODA cifra calculada, y cita con "
+                    "[[cite:<citation_id>]]."
+                )
         except LLMError as exc:
             notes.append(f"Fallo del LLM redactor ({exc}); se usa plantilla determinista.")
             memo = None

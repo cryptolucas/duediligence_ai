@@ -13,14 +13,14 @@ import re
 import unicodedata
 from typing import Mapping, Optional, Sequence
 
-from app.agents.context import citation_catalog, engine_summary, placeholder_catalog
+from app.agents.context import citation_catalog, engine_summary, input_budget_chars, placeholder_catalog
 from app.agents.llm_schemas import ChatLLMResponse
 from app.agents.prompts import DOSSIER_CHAT
 from app.schemas.api import ChatResponse, KeyMetrics, ScenarioResult
 from app.schemas.deal import DealDossier, EbitdaAdjustment, SourceCitation
 from app.schemas.financials import FinancialEngineResult
 from app.services.financial_engine import recalculate_dossier
-from app.services.llm_client import LLMError, StructuredLLM
+from app.services.llm_client import LLMError, StructuredLLM, schema_instructions
 from app.services.memo_renderer import CITATION_RE, format_cop_millions, format_multiple, format_pct, render_memo
 
 TOPIC_KEYWORDS: dict[str, tuple[str, ...]] = {
@@ -197,11 +197,13 @@ def llm_answer(
     )
     flags = "\n".join(f"- {f.id} [{f.severity}/{f.status}] {f.title}" for f in dossier.red_flags)
     past = "\n".join(f"{h.get('role')}: {str(h.get('content'))[:600]}" for h in list(history)[-6:])
-    user = (
+    head = (
         f"EXPEDIENTE: {dossier.company_name} (NIT {dossier.nit}, CIIU {dossier.ciiu_code})\n\n{engine_summary(base)}\n\n"
         f"{placeholder_catalog(base)}\n\nAJUSTES DE EBITDA:\n{adjustments}\n\nRED FLAGS:\n{flags}\n\n"
-        f"{citation_catalog(list(index.values()), max_items=150)}\n\nCONVERSACIÓN PREVIA:\n{past or '(ninguna)'}\n\nPREGUNTA: {message}"
     )
+    tail = f"\n\nCONVERSACIÓN PREVIA:\n{past or '(ninguna)'}\n\nPREGUNTA: {message}"
+    room = input_budget_chars(llm, DOSSIER_CHAT + schema_instructions(ChatLLMResponse) + head + tail)
+    user = head + citation_catalog(list(index.values()), max_items=max(10, min(150, room // 230))) + tail
     response = llm.complete_json(DOSSIER_CHAT, user, ChatLLMResponse, deal_id=dossier.deal_id, task="chat")
     valid_ids = {a.id for a in dossier.ebitda_adjustments}
     overrides = {k: v for k, v in response.scenario_overrides.items() if k in valid_ids}

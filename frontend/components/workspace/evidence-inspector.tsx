@@ -132,7 +132,11 @@ export function EvidenceInspector() {
 
       {docs.length > 0 && (
         <div className="flex items-center gap-1.5 border-b px-3 py-1.5">
-          {doc?.file_format === "PDF" ? <FileText className="h-3.5 w-3.5 shrink-0" /> : <FileSpreadsheet className="h-3.5 w-3.5 shrink-0" />}
+          {doc && ["XLSX", "XLS", "CSV"].includes(doc.file_format) ? (
+            <FileSpreadsheet className="h-3.5 w-3.5 shrink-0" />
+          ) : (
+            <FileText className="h-3.5 w-3.5 shrink-0" />
+          )}
           <Select
             className="h-7 text-xs"
             value={current?.docId}
@@ -144,7 +148,7 @@ export function EvidenceInspector() {
           >
             {docs.map((d) => (
               <option key={d.document_id} value={d.document_id}>
-                {d.document_name} ({DOC_TYPE_LABEL[d.document_type]})
+                {d.document_name} ({d.upload_slot === "OTHER" ? "Otros archivos · complementario" : DOC_TYPE_LABEL[d.document_type]})
               </option>
             ))}
           </Select>
