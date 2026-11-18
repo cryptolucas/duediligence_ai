@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Catalejo Deal Desk — Informe de avance y validación</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  :root {
+    --navy: #1e3a5f; --ink: #0f172a; --muted: #475569; --line: #d8dee8; --soft: #f1f5f9;
+    --ok: #15803d; --okbg: #dcfce7; --part: #b45309; --partbg: #fef3c7; --todo: #475569; --todobg: #e2e8f0;
+    --pend: #9a3412; --pendbg: #fff7ed;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 10.3pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 24pt; line-height: 1.15; margin: 0 0 6pt; color: var(--navy); letter-spacing: -0.3pt; }
+  h2 { font-size: 15pt; color: var(--navy); margin: 20pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid var(--navy); break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 14pt 0 4pt; color: var(--ink); break-after: avoid; }
+  p { margin: 4pt 0 7pt; }
+  ul, ol { margin: 3pt 0 8pt; padding-left: 16pt; }
+  li { margin: 2pt 0; }
+  a { color: var(--navy); }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: var(--soft); padding: 0 3px; border-radius: 3px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.8pt; }
+
+  /* Portada */
+  .cover { height: 245mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .cover .brand { display: flex; align-items: center; gap: 10pt; color: var(--navy); font-weight: 700; font-size: 13pt; }
+  .cover .logo { width: 34pt; height: 34pt; border-radius: 8pt; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17pt; }
+  .cover .subtitle { font-size: 13pt; color: var(--muted); margin-top: 4pt; }
+  .cover .hero { border-left: 4px solid var(--navy); padding: 10pt 14pt; background: var(--soft); border-radius: 0 8pt 8pt 0; margin-top: 18pt; }
+  .meta { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .meta td { padding: 4pt 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .meta td:first-child { color: var(--muted); width: 34%; }
+
+  /* Componentes */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7pt; margin: 8pt 0 10pt; }
+  .kpi { border: 1px solid var(--line); border-radius: 7pt; padding: 7pt 9pt; break-inside: avoid; }
+  .kpi b { display: block; font-size: 15pt; color: var(--navy); line-height: 1.2; }
+  .kpi span { font-size: 8.5pt; color: var(--muted); }
+  figure { margin: 8pt 0 12pt; break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid var(--line); border-radius: 6pt; display: block; }
+  figcaption { font-size: 8.8pt; color: var(--muted); margin-top: 4pt; }
+  figcaption b { color: var(--ink); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+  table.t { width: 100%; border-collapse: collapse; font-size: 9.2pt; margin: 6pt 0 10pt; }
+  table.t th { background: var(--navy); color: #fff; text-align: left; padding: 5pt 6pt; font-weight: 600; }
+  table.t td { border-bottom: 1px solid var(--line); padding: 5pt 6pt; vertical-align: top; }
+  table.t tr { break-inside: avoid; }
+  .tag { display: inline-block; font-size: 8pt; font-weight: 700; padding: 1pt 6pt; border-radius: 10pt; white-space: nowrap; }
+  .ok { background: var(--okbg); color: var(--ok); }
+  .part { background: var(--partbg); color: var(--part); }
+  .todo { background: var(--todobg); color: var(--todo); }
+  .box { border: 1px solid var(--line); background: var(--soft); border-radius: 7pt; padding: 8pt 11pt; margin: 8pt 0; break-inside: avoid; }
+  .pending { border: 1.5px dashed #ea580c; background: var(--pendbg); color: var(--pend); border-radius: 7pt; padding: 7pt 10pt; margin: 6pt 0; font-size: 9.5pt; break-inside: avoid; }
+  .pending::before { content: "PENDIENTE — "; font-weight: 700; }
+  .page-break { break-before: page; }
+
+  /* Diagrama de arquitectura */
+  .flow { display: grid; grid-template-columns: 1fr 18pt 1.15fr 18pt 1fr; align-items: stretch; margin: 8pt 0 4pt; break-inside: avoid; }
+  .flow .col { display: flex; flex-direction: column; gap: 5pt; }
+  .flow .arrow { display: flex; align-items: center; justify-content: center; color: var(--navy); font-size: 14pt; }
+  .node { border: 1px solid var(--line); border-radius: 6pt; padding: 5pt 7pt; font-size: 8.6pt; background: #fff; }
+  .node b { display: block; font-size: 9pt; color: var(--navy); }
+  .node.det { border-color: var(--ok); background: #f0fdf4; }
+  .node.det b { color: var(--ok); }
+  .node.llm { border-color: #c7d2fe; background: #eef2ff; }
+  .legend { font-size: 8.4pt; color: var(--muted); }
+  .legend i { display: inline-block; width: 9pt; height: 9pt; border-radius: 2pt; vertical-align: -1pt; margin: 0 3pt 0 8pt; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ PORTADA -->
+<section class="cover">
+  <div>
+    <div class="brand"><div class="logo">🔭</div> Catalejo Deal Desk</div>
+    <div style="margin-top: 60pt">
+      <h1>Informe de avance del prototipo y primera validación con usuario externo</h1>
+      <div class="subtitle">Plataforma AI-first de screening financiero y due diligence preliminar para Private Equity lower-middle-market en Colombia</div>
+    </div>
+    <div class="hero">
+      <b>En una frase:</b> el analista carga los documentos desordenados de una empresa mediana (estados financieros, balance de prueba de Siigo / World Office, certificado de Cámara de Comercio, teaser) y en minutos obtiene un expediente de inversión estandarizado donde <b>cada cifra está citada a su documento fuente</b> y <b>toda la aritmética la hace un motor determinista</b>, no el LLM.
+    </div>
+  </div>
+  <table class="meta">
+    <tr><td>Equipo</td><td><div class="pending">nombre del equipo e integrantes</div></td></tr>
+    <tr><td>Curso / sección</td><td><div class="pending">curso, sección y profesor(a)</div></td></tr>
+    <tr><td>Fecha</td><td>15 de noviembre de 2026</td></tr>
+    <tr><td>Repositorio</td><td><a href="https://github.com/cryptolucas/duediligence_ai">github.com/cryptolucas/duediligence_ai</a></td></tr>
+    <tr><td>Estado</td><td>MVP funcional de extremo a extremo (backend + frontend) ejecutándose en local</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 1. RESUMEN -->
+<h2>1. Resumen</h2>
+<p>
+  Construimos un MVP funcional que cubre el flujo completo: carga de documentos → lectura y normalización contable → análisis por un grafo de cinco agentes → expediente interactivo con memo de Comité, sandbox de EBITDA, red flags e inspector de evidencia. El prototipo corre en local con un caso demo realista precargado (una empresa sintética de alimentos de ~COP 28.000 millones de ventas) y también procesa archivos reales PDF, Excel y CSV.
+</p>
+<div class="kpis">
+  <div class="kpi"><b>5</b><span>agentes en el grafo (LangGraph), 1 de ellos 100 % determinista</span></div>
+  <div class="kpi"><b>159</b><span>pruebas automáticas del backend, todas en verde</span></div>
+  <div class="kpi"><b>27–75 ms</b><span>recálculo completo al activar/desactivar un ajuste</span></div>
+  <div class="kpi"><b>189</b><span>citas literales verificadas en el caso demo</span></div>
+</div>
+<div class="pending">resumen de la validación en 2–3 líneas: quién probó, si completó la tarea y el hallazgo más importante.</div>
+
+<!-- ============================================================ 2. AVANCES -->
+<h2>2. Avances del prototipo</h2>
+
+<h3>2.1 Principios de diseño (por qué está construido así)</h3>
+<ul>
+  <li><b>Cero cifras sin fuente.</b> Toda cifra, ajuste o alerta lleva una cita (documento, página u hoja, celda o línea, texto literal). Si no hay fuente se marca <code>MISSING_DATA</code>; nunca se inventa.</li>
+  <li><b>El LLM no hace aritmética.</b> Los agentes solo clasifican cuentas, extraen texto y proponen ajustes. Márgenes, crecimientos, deuda neta, capital de trabajo y valoración los calcula un módulo Python determinista que además valida <i>Activo = Pasivo + Patrimonio</i>.</li>
+  <li><b>Humano en el circuito.</b> El analista acepta o rechaza cada ajuste y cada red flag; todo se recalcula al instante sin volver a llamar al LLM.</li>
+  <li><b>Confidencialidad.</b> Cada operación corre aislada. Se puede elegir un LLM en la nube o uno local (Ollama); si se pide local y no está disponible, el documento <b>nunca</b> se envía a la nube.</li>
+</ul>
+
+<h3>2.2 Arquitectura</h3>
+<div class="flow">
+  <div class="col">
+    <div class="node"><b>Documentos</b>EEFF y notas (PDF), balance de prueba Siigo/World Office (XLSX/CSV), Cámara de Comercio, teaser, avalúos</div>
+    <div class="node det"><b>Parser determinista</b>Texto con coordenadas, filas de Excel, detección de balances de prueba y cuentas hoja</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="col">
+    <div class="node llm"><b>1. Ingesta y mapeo PUC</b>Reglas PUC + revisión LLM de cuentas ambiguas</div>
+    <div class="node llm"><b>2. Analista financiero y societario</b>Ajustes de EBITDA, accionistas, litigios</div>
+    <div class="node det"><b>3. Motor financiero</b>Cálculos, cuadre contable, valoración P25/mediana/P75 — 0 LLM</div>
+    <div class="node llm"><b>4. Escéptico (red team)</b>Red flags e información faltante</div>
+    <div class="node llm"><b>5. Redactor del memo</b>Memo con marcadores que llena el motor</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="col">
+    <div class="node det"><b>Guardián de citas</b>Descarta toda afirmación del LLM cuya cita no aparezca literalmente en el documento</div>
+    <div class="node"><b>Expediente interactivo</b>Memo, sandbox de EBITDA, red flags, inspector de evidencia, chat</div>
+  </div>
+</div>
+<p class="legend"><i style="background:#f0fdf4;border:1px solid #15803d"></i>determinista <i style="background:#eef2ff;border:1px solid #c7d2fe"></i>agente LLM (nube u Ollama local; si no hay LLM, cae a reglas)</p>
+<p class="small muted">Stack: Python 3.14 · FastAPI · LangGraph · Pydantic v2 · LiteLLM · PyMuPDF/pdfplumber · OpenPyXL · SQLModel/SQLite — Next.js 14 · TypeScript · Tailwind · componentes estilo shadcn/ui.</p>
+
+<h3>2.3 Pantallas y flujos desarrollados</h3>
+
+<figure>
+  <img src="img/02_nueva_operacion.jpg" alt="Pantalla Nueva operación">
+  <figcaption><b>Nueva operación.</b> Caso demo en 1 clic o carga de documentos propios (arrastrar y soltar). El selector muestra si el LLM en la nube o el local están realmente disponibles; aquí no hay API key, así que se avisa que se procesará con reglas.</figcaption>
+</figure>
+
+<figure>
+  <img src="img/12_progreso_asincrono.jpg" alt="Vista de progreso">
+  <figcaption><b>Procesamiento en segundo plano.</b> La carga responde al instante y el grafo de agentes corre en el servidor; la pantalla muestra el paso actual, cada llamada al LLM y el tiempo transcurrido. Captura real de un procesamiento con el modelo local qwen3:8b.</figcaption>
+</figure>
+
+<figure>
+  <img src="img/03_workspace_memo_evidencia.jpg" alt="Memo con inspector de evidencia">
+  <figcaption><b>Workspace 60/40 — Memo de Comité.</b> Cada cifra del memo trae su cita (los recuadros grises). Al hacer clic, el panel derecho abre el documento en la página exacta con el texto resaltado (aquí, la nota 22 sobre honorarios legales). Abajo, el chat con el expediente.</figcaption>
+</figure>
+
+<div class="page-break"></div>
+<figure>
+  <img src="img/05_sandbox_toggle_recalculo.jpg" alt="Sandbox de EBITDA">
+  <figcaption><b>Sandbox de EBITDA.</b> Cada ajuste propuesto (sueldos de familiares, arriendo al socio sobre el canon de mercado, honorarios no recurrentes…) tiene su cita y un switch. Al rechazar los honorarios legales, el motor recalcula en 27 ms: EBITDA ajustado de COP 3.447 M a 3.167 M, deuda neta/EBITDA de 1,95x a 2,12x y Enterprise Value base de COP 20.682 M a 19.002 M.</figcaption>
+</figure>
+
+<figure>
+  <img src="img/06_valoracion_trazabilidad.jpg" alt="Valoración y trazabilidad">
+  <figcaption><b>Valoración y trazabilidad de cifras.</b> Valoración por múltiplos EV/EBITDA sectoriales (P25 / mediana / P75) y comparación de la empresa contra el sector. Al hacer clic en una cifra de las tablas (ingresos 2025), el inspector muestra las filas exactas del balance de prueba de las que sale.</figcaption>
+</figure>
+
+<div class="page-break"></div>
+<figure>
+  <img src="img/10_chat_escenario.jpg" alt="Red flags e información faltante con chat">
+  <figcaption><b>Red flags e información faltante + chat.</b> El agente escéptico ataca la tesis (contingencias sin provisión, cartera, covenant, préstamos a socios…) con evidencia citada y una pregunta concreta para el empresario. En el chat, "¿qué pasa si rechazamos los honorarios legales?" se responde con una tabla antes/después calculada por el motor.</figcaption>
+</figure>
+
+<div class="two">
+  <figure>
+    <img src="img/09_solicitud_empresario.jpg" alt="Solicitud al empresario">
+    <figcaption><b>Solicitud al empresario.</b> Convierte la información faltante en un mensaje en español sencillo, listo para WhatsApp o correo.</figcaption>
+  </figure>
+  <figure>
+    <img src="img/11_bitacora_ollama.jpg" alt="Bitácora del grafo">
+    <figcaption><b>Bitácora del grafo.</b> Registro auditable de cada agente: modo, duración, llamadas al LLM y propuestas descartadas por el guardián de citas.</figcaption>
+  </figure>
+</div>
+
+<h3>2.4 Estado de las funcionalidades</h3>
+<table class="t">
+  <tr><th style="width:34%">Funcionalidad</th><th style="width:14%">Estado</th><th>Comentario</th></tr>
+  <tr><td>Caso demo realista en 1 clic</td><td><span class="tag ok">Funciona</span></td><td>6 documentos sintéticos, 153 cuentas, 189 citas.</td></tr>
+  <tr><td>Carga de PDF, XLSX y CSV</td><td><span class="tag ok">Funciona</span></td><td>Validación inmediata; formatos no soportados se rechazan con un mensaje claro.</td></tr>
+  <tr><td>Lectura de balances de Siigo / World Office</td><td><span class="tag ok">Funciona</span></td><td>Detecta saldos crédito negativos, balances pre-cierre y niveles agregados del PUC para no sumar dos veces.</td></tr>
+  <tr><td>Motor financiero determinista</td><td><span class="tag ok">Funciona</span></td><td>Márgenes, YoY/CAGR, puente de EBITDA, capital de trabajo, deuda neta, cuadre contable, valoración y contingencias.</td></tr>
+  <tr><td>Sandbox de EBITDA y ajustes manuales</td><td><span class="tag ok">Funciona</span></td><td>Recálculo en 27–75 ms medido en la interfaz.</td></tr>
+  <tr><td>Memo con citas e inspector de evidencia</td><td><span class="tag ok">Funciona</span></td><td>El memo se actualiza solo al cambiar ajustes.</td></tr>
+  <tr><td>Red flags, información faltante y mensaje al empresario</td><td><span class="tag ok">Funciona</span></td><td>Descartar / reactivar red flags; mensaje para WhatsApp o correo.</td></tr>
+  <tr><td>Chat con escenarios</td><td><span class="tag ok">Funciona</span></td><td>Sin LLM responde con un enrutador determinista; con LLM, el motor recalcula los escenarios que propone.</td></tr>
+  <tr><td>Procesamiento asíncrono con progreso</td><td><span class="tag ok">Funciona</span></td><td>Sobrevive al cierre de la pestaña; si el servidor se reinicia, el proceso se marca como interrumpido.</td></tr>
+  <tr><td>Modo sin API key (solo reglas)</td><td><span class="tag ok">Funciona</span></td><td>Extrae cifras, identidad de la empresa y red flags por reglas; no propone ajustes de EBITDA.</td></tr>
+  <tr><td>Agentes LLM en la nube (Claude / Gemini / OpenAI)</td><td><span class="tag part">Parcial</span></td><td>Implementados y probados con un LLM simulado; falta probarlos con una API key real.</td></tr>
+  <tr><td>LLM local (Ollama)</td><td><span class="tag part">Parcial</span></td><td>Funciona de extremo a extremo, pero con qwen3:8b en este equipo tomó 37 min y 2 de 5 llamadas expiraron (el sistema siguió con reglas).</td></tr>
+  <tr><td>Benchmarks sectoriales por CIIU</td><td><span class="tag part">Parcial</span></td><td>Valores referenciales, no oficiales; falta recalibrarlos con datos del PIE de Supersociedades y transacciones comparables.</td></tr>
+  <tr><td>Excel adicionales (aging de cartera, ventas por cliente)</td><td><span class="tag todo">En construcción</span></td><td>Hoy solo se ven en el inspector; el LLM aún no los lee.</td></tr>
+  <tr><td>OCR de PDF escaneados</td><td><span class="tag todo">En construcción</span></td><td>Se detectan y se marcan como ilegibles.</td></tr>
+  <tr><td>Usuarios, permisos y despliegue en la nube</td><td><span class="tag todo">En construcción</span></td><td>El MVP corre en local con SQLite.</td></tr>
+  <tr><td>Exportar el memo a PDF / Word</td><td><span class="tag todo">En construcción</span></td><td>—</td></tr>
+</table>
+
+<h3>2.5 Dificultades encontradas</h3>
+<table class="t">
+  <tr><th style="width:30%">Dificultad</th><th>Cómo la abordamos</th></tr>
+  <tr><td>Los LLM inventan citas o cifras</td><td>Guardián de citas: toda cita propuesta se busca literalmente en el documento; si no aparece, se descarta. Si el monto de un ajuste no está en su cita, el ajuste queda "pendiente de revisión".</td></tr>
+  <tr><td>Los LLM se equivocan en aritmética</td><td>El LLM nunca calcula: escribe marcadores (ej. <code>{{metric:ebitda_adjusted:2025}}</code>) que el motor llena. Incluso las conversiones de unidades (miles → COP) se hacen en código.</td></tr>
+  <tr><td>Formatos contables reales "desordenados"</td><td>Los balances de Siigo traen saldos crédito en negativo, niveles agregados (1, 11, 1105…) y son pre-cierre. Se resolvieron con reglas PUC y validación de la ecuación contable.</td></tr>
+  <tr><td>LLM local muy lento</td><td>Con qwen3:8b una llamada mínima tardó 113 s y el flujo completo 37 min. Respuesta: procesamiento en segundo plano con progreso, enviar al LLM solo las cuentas ambiguas y timeout propio para Ollama.</td></tr>
+  <tr><td>Sin datos oficiales de múltiplos</td><td>Supersociedades publica estados financieros, no múltiplos. Usamos valores referenciales marcados como "no oficiales" y documentamos cómo recalibrarlos.</td></tr>
+</table>
+
+<!-- ============================================================ 3. VALIDACIÓN -->
+<h2 class="page-break">3. Primera validación con un usuario externo</h2>
+
+<div class="box">
+  <b>Evaluador:</b> empresario del sector de consultoría con experiencia en procesos de M&amp;A, externo al equipo.
+  <div class="pending">nombre o iniciales (o "anónimo"), cargo, años de experiencia y relación con el equipo.</div>
+</div>
+
+<h3>3.1 Tarea asignada</h3>
+<div class="pending">la consigna exacta que le dieron. Sugerencia de redacción si fue así: "Usted es analista de un fondo y recibió los documentos de Alimentos y Conservas del Oriente. Abra el caso, revise el memo, verifique de dónde sale al menos una cifra, decida si acepta o rechaza los ajustes al EBITDA y prepare la solicitud de información para el empresario."</div>
+
+<h3>3.2 Resultados</h3>
+<table class="t">
+  <tr><th style="width:20%">Aspecto</th><th>Resultado</th></tr>
+  <tr><td><b>Flujo evaluado</b></td><td><div class="pending">qué funcionalidad probaron (p. ej. caso demo → memo → inspector de evidencia → sandbox de EBITDA → red flags → solicitud al empresario; ¿probó también la carga de archivos o el chat?).</div></td></tr>
+  <tr><td><b>Metodología</b></td><td><div class="pending">presencial o remota, fecha, duración, quién observó y quién tomó notas, si se le pidió pensar en voz alta, si se grabó, y si se le explicó algo antes de empezar.</div></td></tr>
+  <tr><td><b>Resultado</b></td><td><div class="pending">¿completó la tarea sin ayuda? ¿cuánto tardó? ¿en qué pasos necesitó ayuda?</div></td></tr>
+  <tr><td><b>Dificultades</b></td><td><div class="pending">errores, dudas o confusiones observadas (dónde se detuvo, qué no encontró, qué malinterpretó).</div></td></tr>
+  <tr><td><b>Feedback</b></td><td><div class="pending">comentarios del evaluador, idealmente citas textuales; qué le pareció útil, qué no, qué le faltó desde su experiencia en M&amp;A.</div></td></tr>
+  <tr><td><b>Aprendizajes</b></td><td><div class="pending">qué cambiaríamos a partir de la prueba.</div></td></tr>
+</table>
+
+<h3>3.3 Evidencias</h3>
+<div class="pending">fotos o capturas de la sesión, grabación (enlace) o notas escaneadas. Si no hubo, indicarlo.</div>
+
+<!-- ============================================================ 4. APRENDIZAJES -->
+<h2>4. Aprendizajes y próximos pasos</h2>
+<h3>4.1 Aprendizajes del desarrollo</h3>
+<ul>
+  <li>La confianza del analista depende de poder <b>verificar cada cifra en un clic</b>; por eso la trazabilidad es el núcleo del producto y no un adorno.</li>
+  <li>Separar "el LLM lee y propone" de "el código calcula" elimina una clase entera de errores y hace el resultado auditable.</li>
+  <li>Un LLM local es viable para la confidencialidad, pero no con hardware modesto: hay que reducir lo que se le envía y procesar en segundo plano.</li>
+</ul>
+<div class="pending">aprendizajes que salieron de la validación con el empresario.</div>
+
+<h3>4.2 Próximos pasos</h3>
+<ol>
+  <li>Probar los agentes con un LLM en la nube real (API key) sobre el caso demo y sobre documentos de una empresa real anonimizada.</li>
+  <li>Recalibrar los benchmarks por CIIU con datos del PIE de Supersociedades y transacciones comparables.</li>
+  <li>Leer con el LLM los Excel que no son balances (aging de cartera, ventas por cliente) y avisar cuando un documento se recorta por tamaño.</li>
+  <li>Exportar el memo de Comité a PDF / Word y agregar usuarios y despliegue en la nube.</li>
+  <li>Repetir la validación con 2–3 analistas de fondos o bancas de inversión boutique.</li>
+</ol>
+<div class="pending">próximos pasos derivados del feedback del evaluador (y ordenar la lista por prioridad).</div>
+
+<h2>Anexo. Cómo ejecutar el prototipo</h2>
+<p>Desde la raíz del repositorio, en Windows: <code>powershell -ExecutionPolicy Bypass -File .\dev.ps1</code> (en macOS / Linux: <code>./dev.sh</code>). Luego abrir <code>http://localhost:3000</code> → <i>Nueva operación</i> → <i>Abrir caso demo en 1 clic</i>. Pruebas automáticas: <code>.venv\Scripts\python -m pytest</code> desde <code>backend</code>.</p>
+<p class="small muted">Todos los documentos, personas y cifras del caso demo son sintéticos y fueron creados para la demostración.</p>
+
+</body>
+</html>
